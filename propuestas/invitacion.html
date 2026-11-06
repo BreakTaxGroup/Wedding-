@@ -1,0 +1,369 @@
+<title>Nuestra Boda</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Parisienne&family=Waterfall&display=swap">
+<style>
+/* Layout: two phases on one page.
+   1) Intro: full-screen opening clip (Gemini video, real text on the card, guest name tracked live on the envelope). Nothing on top of it.
+   2) Site: the card dissolves into a centered stationery website in Gemini's style (cream paper, watercolor florals, gold lines,
+      falling petals): hero with countdown, photo band, story, location, dress code, gifts, RSVP. */
+:root{
+  --paper:#F6F1E7;
+  --paper-2:#EFE8DA;
+  --ink:#4B3D35;
+  --ink-soft:#7A6A5F;
+  --gold:#B89558;
+  --gold-2:#D9BE86;
+  --night:#130C08;
+  --f-script:"Parisienne","Snell Roundhand",cursive;
+  --f-caps:"Cinzel","Trajan Pro",Georgia,serif;
+  --f-body:"EB Garamond","Cormorant Garamond",Georgia,serif;
+  --f-num:"Cormorant Garamond",Georgia,serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html.locked,html.locked body{overflow:hidden;height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* ---------------- intro ---------------- */
+.intro{position:fixed;inset:0;z-index:20;background:var(--night);overflow:hidden;cursor:default}
+.intro .backdrop{position:absolute;inset:-60px;background:url(video/poster.jpg) center/cover;filter:blur(30px) brightness(.42) saturate(1.2);transform:scale(1.15)}
+.frame{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;will-change:transform}
+.frame video{position:absolute;inset:0;width:1280px;height:720px;display:block}
+.portrait .frame{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%)}
+.inkclip{position:absolute;inset:0;width:1280px;height:720px;pointer-events:none;mix-blend-mode:multiply}
+.ink{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0}
+.ink canvas{position:absolute;height:220px;transform:rotate(-16deg);filter:blur(.25px);
+  -webkit-mask-image:linear-gradient(90deg,#000 45%,transparent 55%);mask-image:linear-gradient(90deg,#000 45%,transparent 55%);
+  -webkit-mask-size:320% 100%;mask-size:320% 100%;-webkit-mask-position:100% 0;mask-position:100% 0;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.ink canvas.write{animation:write 2.4s cubic-bezier(.45,.05,.4,1) forwards}
+.ink canvas.done{-webkit-mask-position:0 0;mask-position:0 0}
+@keyframes write{from{-webkit-mask-position:100% 0;mask-position:100% 0}to{-webkit-mask-position:0 0;mask-position:0 0}}
+.veil{position:absolute;inset:0;background:var(--night);transition:opacity 1.2s ease}
+.veil.off{opacity:0;pointer-events:none}
+
+/* ---------------- site ---------------- */
+.site{position:relative;opacity:0;transition:opacity 1.3s ease;isolation:isolate;margin-left:calc(-1*max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1*max(16px,env(safe-area-inset-right,0px)));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:radial-gradient(120% 60% at 50% 0%,#FBF8F1,transparent 60%),linear-gradient(180deg,#F6F1E7,#F2EBDD 60%,#F6F1E7)}
+.site.on{opacity:1}
+#petals{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;
+  margin-left:calc(-1*max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1*max(16px,env(safe-area-inset-right,0px)));
+  padding-block:10px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));
+  background:rgba(246,241,231,.86);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid rgba(184,149,88,.25)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.logo{font-family:var(--f-script);font-size:1.55rem;color:var(--gold);text-decoration:none;line-height:1;white-space:nowrap}
+.menu{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+.menu a{font-family:var(--f-caps);font-size:.74rem;letter-spacing:.16em;color:var(--ink);text-decoration:none;padding:6px 0;border-bottom:1px solid transparent}
+.menu a:hover,.menu a:focus-visible{color:var(--gold);border-bottom-color:var(--gold)}
+.top .cta{justify-self:end}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--f-caps);font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;
+  padding:12px 22px;border-radius:999px;border:1px solid rgba(140,105,50,.35);color:#fff;
+  background:linear-gradient(180deg,#D6B57A 0%,#B8924F 55%,#A07B3E 100%);box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 6px 16px -8px rgba(120,85,30,.55)}
+.btn:hover{filter:brightness(1.05)}
+.btn.ghost{background:transparent;color:var(--gold);border-color:rgba(184,149,88,.6);box-shadow:none}
+.btn:focus-visible,.menu a:focus-visible,.logo:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media (max-width:820px){.menu{display:none}.top{grid-template-columns:1fr auto}}
+@media (max-width:600px){.flor.a{width:40vw;transform:translate(-18%,-6%)}.flor.b{width:48vw;transform:translate(14%,8%)}.hero{padding-block:72px 64px}}
+
+.hero{position:relative;min-height:calc(100svh - 60px);display:grid;place-items:center;text-align:center;padding-block:56px 64px}
+.flor{position:absolute;pointer-events:none;mix-blend-mode:multiply;max-width:none}
+.flor.a{left:calc(-1*max(16px,env(safe-area-inset-left,0px)));top:0;width:min(46vw,520px)}
+.flor.b{right:calc(-1*max(16px,env(safe-area-inset-right,0px)));bottom:0;width:min(52vw,560px)}
+.hero-in{position:relative;max-width:62rem;display:flex;flex-direction:column;align-items:center}
+.kicker{font-family:var(--f-caps);font-size:.78rem;letter-spacing:.24em;color:var(--ink-soft);margin:0 0 6px;line-height:1.8}
+.names{font-family:var(--f-script);font-weight:400;font-size:clamp(3.2rem,9vw,6.2rem);line-height:1.05;margin:8px 0 0;color:var(--ink)}
+.names .amp{color:var(--gold);padding:0 .06em}
+.script{font-family:var(--f-script);font-size:clamp(2rem,6vw,3.1rem);margin:6px 0 0;color:var(--ink)}
+.flourish{width:150px;height:auto;margin:14px auto 6px;display:block}
+.dateline{margin:10px 0 0;padding-block:12px;border-top:1px solid var(--gold-2);border-bottom:1px solid var(--gold-2);
+  font-family:var(--f-caps);font-size:clamp(1rem,2.6vw,1.45rem);letter-spacing:.08em;color:var(--ink);width:min(100%,30rem)}
+.lead{margin:26px 0 0;font-size:1.12rem;max-width:34rem;text-wrap:balance}
+.guest{margin:18px 0 0;font-style:italic;color:var(--ink-soft)}
+.guest strong{font-style:normal;font-weight:500;color:var(--ink)}
+.count{display:flex;gap:clamp(10px,3vw,26px);margin-top:30px;align-items:flex-start;font-variant-numeric:tabular-nums}
+.count div{display:flex;flex-direction:column;align-items:center;min-width:2.6em}
+.count b{font-family:var(--f-num);font-weight:400;font-size:clamp(2.4rem,7vw,3.4rem);line-height:1;color:var(--ink)}
+.count span{font-family:var(--f-caps);font-size:.66rem;letter-spacing:.2em;color:var(--ink-soft);margin-top:8px}
+.count i{font-style:normal;font-family:var(--f-num);font-size:clamp(2rem,6vw,2.8rem);line-height:1;color:var(--gold)}
+
+.band{margin-left:calc(-1*max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1*max(16px,env(safe-area-inset-right,0px)));position:relative}
+.band img{display:block;width:100%;height:clamp(240px,46vw,520px);object-fit:cover}
+.band figcaption{position:absolute;right:max(20px,env(safe-area-inset-right,0px));bottom:16px;font-style:italic;font-size:.9rem;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+
+.sec{max-width:52rem;margin:0 auto;text-align:center;padding-block:clamp(56px,9vw,96px)}
+.sec h2{font-family:var(--f-caps);font-weight:400;font-size:clamp(1.5rem,4vw,2.1rem);letter-spacing:.08em;margin:0;color:var(--ink)}
+.orn{display:block;width:220px;max-width:70%;height:auto;margin:0 auto}
+.orn-t{margin-bottom:10px}.orn-b{margin-top:10px}
+.sec p{margin:18px auto 0;max-width:36rem}
+.note{font-style:italic;color:var(--ink-soft)}
+.place{display:flex;align-items:center;justify-content:center;gap:22px;margin-top:26px;flex-wrap:wrap}
+.place svg{width:150px;height:auto;flex:none}
+.place address{font-style:normal;text-align:left;font-size:1.12rem;line-height:1.5}
+.place address small{display:block;font-family:var(--f-caps);font-size:.7rem;letter-spacing:.2em;color:var(--ink-soft);margin-bottom:6px}
+.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+
+.swatches{display:flex;justify-content:center;gap:clamp(14px,4vw,30px);flex-wrap:wrap;margin-top:28px;list-style:none;padding:0}
+.swatches li{display:flex;flex-direction:column;align-items:center;gap:8px;width:6.5rem}
+.swatches .dot{width:64px;height:64px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px var(--paper),0 0 0 5px rgba(184,149,88,.5)}
+.swatches small{font-family:var(--f-caps);font-size:.66rem;letter-spacing:.14em;line-height:1.4}
+.avoid{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:26px;font-style:italic;color:var(--ink-soft)}
+.avoid .dot{width:28px;height:28px;border-radius:50%;background:#3A261C;position:relative;flex:none}
+.avoid .dot::after{content:"";position:absolute;left:-3px;right:-3px;top:50%;height:1.5px;background:var(--paper);transform:rotate(-45deg)}
+
+.rsvp-card{position:relative;max-width:30rem;margin:30px auto 0;background:#FFFDF8;border:1px solid var(--gold-2);box-shadow:6px 6px 0 -1px var(--paper),6px 6px 0 0 rgba(184,149,88,.45),0 18px 40px -24px rgba(90,60,30,.35);
+  padding:34px clamp(20px,5vw,40px) 30px;text-align:left}
+.rsvp-card .flor.c{right:-60px;bottom:-40px;width:260px;opacity:.95}
+form{display:grid;gap:18px}
+label{display:grid;gap:4px;font-family:var(--f-caps);font-size:.68rem;letter-spacing:.18em;color:var(--ink-soft)}
+input[type=text],select,textarea{font-family:var(--f-body);font-size:1.1rem;color:var(--ink);background:transparent;border:0;border-bottom:1px solid rgba(122,106,95,.45);border-radius:0;padding:6px 0;width:100%;min-width:0}
+textarea{resize:vertical;min-height:2.6em}
+input:focus,select:focus,textarea:focus{outline:none;border-bottom-color:var(--gold);box-shadow:0 1px 0 var(--gold)}
+fieldset{border:0;padding:0;margin:0;display:flex;gap:18px;flex-wrap:wrap}
+legend{font-family:var(--f-caps);font-size:.68rem;letter-spacing:.18em;color:var(--ink-soft);margin-bottom:8px;padding:0}
+.radio{display:flex;align-items:center;gap:8px;font-family:var(--f-body);font-size:1.05rem;letter-spacing:0;color:var(--ink)}
+.radio input{accent-color:var(--gold);width:18px;height:18px}
+form .btn{justify-self:center;margin-top:6px}
+.thanks{text-align:center}
+.thanks p{margin:8px 0 0}
+.thanks .script{font-size:2.4rem}
+
+footer{text-align:center;padding-block:40px 64px;color:var(--ink-soft)}
+footer .logo{font-size:2.4rem;display:block}
+footer p{margin:6px 0 0;font-family:var(--f-caps);font-size:.72rem;letter-spacing:.22em}
+@media (prefers-reduced-motion:reduce){.site{transition:none}.ink canvas.write{animation-duration:.01s}}
+</style>
+
+<div class="intro" id="intro" aria-label="Sobre de la invitación abriéndose" role="img">
+  <div class="backdrop"></div>
+  <div class="frame" id="frame">
+    <video id="vid" src="video/apertura.mp4" poster="video/poster.jpg" playsinline muted preload="auto"></video>
+    <div class="inkclip" id="inkclip"><div class="ink" id="ink"><canvas id="name"></canvas></div></div>
+  </div>
+  <div class="veil" id="veil"></div>
+</div>
+
+<div class="site" id="site" hidden>
+  <canvas id="petals" aria-hidden="true"></canvas>
+
+  <header class="top">
+    <a class="logo" href="#inicio">Valeria &amp; Andrés</a>
+    <nav aria-label="Secciones"><ul class="menu">
+      <li><a href="#inicio">Inicio</a></li><li><a href="#historia">Historia</a></li><li><a href="#ubicacion">Ubicación</a></li>
+      <li><a href="#vestimenta">Vestimenta</a></li><li><a href="#regalos">Regalos</a></li>
+    </ul></nav>
+    <a class="btn cta" href="#rsvp">RSVP</a>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <img class="flor a" src="sitio/flores-a.jpg" alt="" width="752" height="460">
+      <img class="flor b" src="sitio/flores-b.jpg" alt="" width="802" height="442">
+      <div class="hero-in">
+        <p class="kicker">Con la bendición de Dios<br>y de nuestras familias</p>
+        <h1 class="names">Valeria <span class="amp">&amp;</span> Andrés</h1>
+        <p class="script">¡Nos casamos!</p>
+        <svg class="flourish" viewBox="0 0 150 22" aria-hidden="true"><defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#C9A86C"/><stop offset=".5" stop-color="#E4CC98"/><stop offset="1" stop-color="#B08A4A"/></linearGradient></defs>
+          <path d="M4 12c18-10 34-10 46-2 9 6 18 8 25 1 6-6 1-12-5-9-5 3-2 9 4 9 10 0 16-9 28-10 14-1 26 6 44 3" fill="none" stroke="url(#gg)" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <p class="dateline" id="dateline">Sábado, 12 de junio de 2027</p>
+        <p class="lead">Los invitamos a celebrar el comienzo de nuestra vida juntos, entre árboles, luz y las personas que más queremos.</p>
+        <div class="count" id="count" aria-label="Cuenta regresiva">
+          <div><b id="cd-d">000</b><span>Días</span></div><i>:</i>
+          <div><b id="cd-h">00</b><span>Horas</span></div><i>:</i>
+          <div><b id="cd-m">00</b><span>Minutos</span></div><i>:</i>
+          <div><b id="cd-s">00</b><span>Segundos</span></div>
+        </div>
+        <p class="guest"><strong id="guest-hero">Familia Martínez</strong>, nos encantará verlos ahí.</p>
+      </div>
+    </section>
+
+    <figure class="band">
+      <img src="sitio/bosque.jpg" alt="El sobre de la invitación sobre un tronco en el bosque" loading="lazy" width="1280" height="720">
+      <figcaption>Aquí irá su foto</figcaption>
+    </figure>
+
+    <section class="sec" id="historia">
+      <svg class="orn orn-t" viewBox="0 0 220 24" aria-hidden="true"><path d="M10 12h70M140 12h70M110 4c-8 0-12 8-20 8 8 0 12 8 20 8 8 0 12-8 20-8-8 0-12-8-20-8z" fill="none" stroke="#C3A26A" stroke-width="1.2"/></svg>
+      <h2>Nuestra historia</h2>
+      <svg class="orn orn-b" viewBox="0 0 220 24" aria-hidden="true"><path d="M10 12h70M140 12h70M110 4c-8 0-12 8-20 8 8 0 12 8 20 8 8 0 12-8 20-8-8 0-12-8-20-8z" fill="none" stroke="#C3A26A" stroke-width="1.2"/></svg>
+      <p class="note">Aquí va su historia: cómo se conocieron, la primera cita, la propuesta. Me la cuentan y la escribimos juntos.</p>
+    </section>
+
+    <section class="sec" id="ubicacion">
+      <h2>Ubicación</h2>
+      <div class="place">
+        <svg viewBox="0 0 150 110" aria-hidden="true" fill="none" stroke="#B89558" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M10 46l40-10 40 10 40-10v62l-40 10-40-10-40 10z"/><path d="M50 36v62M90 46v62"/>
+          <path d="M18 70c14 6 22-10 34-2s24 14 34 4 22-6 30 2" stroke-dasharray="3 4"/>
+          <path d="M60 40V24l14-10 14 10v16M66 40v-9h8v9M88 24h10v16"/><path d="M28 40c-6-4-6-14 2-16 1-6 10-6 11 0 7 2 6 12 0 16z"/><path d="M34 40v-6"/>
+          <path d="M118 4c-8 0-13 6-13 12 0 9 13 20 13 20s13-11 13-20c0-6-5-12-13-12z" fill="#E7D3A6"/><circle cx="118" cy="16" r="4"/></svg>
+        <address><small>Ceremonia y recepción</small>Lugar por confirmar<br>En el bosque</address>
+      </div>
+      <div class="actions"><a class="btn ghost" href="https://maps.google.com" target="_blank" rel="noopener">Ver mapa</a><a class="btn" href="#rsvp">Confirmar asistencia</a></div>
+    </section>
+
+    <section class="sec" id="vestimenta">
+      <svg class="orn orn-t" viewBox="0 0 220 24" aria-hidden="true"><path d="M10 12h70M140 12h70M110 4c-8 0-12 8-20 8 8 0 12 8 20 8 8 0 12-8 20-8-8 0-12-8-20-8z" fill="none" stroke="#C3A26A" stroke-width="1.2"/></svg>
+      <h2>Código de vestimenta</h2>
+      <p>Nos encantaría que se vistan en estos tonos, para acompañar la celebración y la belleza natural del bosque.</p>
+      <ul class="swatches">
+        <li><span class="dot" style="--c:#DCC6AC"></span><small>Beige claro</small></li>
+        <li><span class="dot" style="--c:#545530"></span><small>Verde olivo</small></li>
+        <li><span class="dot" style="--c:#9C9A6A"></span><small>Olivo suave</small></li>
+        <li><span class="dot" style="--c:#621720"></span><small>Burdeos</small></li>
+      </ul>
+      <p class="avoid"><span class="dot" aria-hidden="true"></span>Por favor eviten el café espresso: es el color del cortejo.</p>
+    </section>
+
+    <section class="sec" id="regalos">
+      <h2>Mesa de regalos</h2>
+      <p>Su presencia es nuestro mejor regalo. Pronto compartiremos aquí los detalles.</p>
+    </section>
+
+    <section class="sec" id="rsvp">
+      <svg class="orn orn-t" viewBox="0 0 220 24" aria-hidden="true"><path d="M10 12h70M140 12h70M110 4c-8 0-12 8-20 8 8 0 12 8 20 8 8 0 12-8 20-8-8 0-12-8-20-8z" fill="none" stroke="#C3A26A" stroke-width="1.2"/></svg>
+      <h2>Confirma tu asistencia</h2>
+      <div class="rsvp-card">
+        <img class="flor c" src="sitio/flores-b.jpg" alt="">
+        <form id="rsvp-form" novalidate>
+          <label for="r-name">Nombre<input id="r-name" name="guest" type="text" autocomplete="name" required></label>
+          <fieldset><legend>¿Nos acompañan?</legend>
+            <label class="radio" for="r-yes"><input id="r-yes" type="radio" name="att" value="si" checked>Sí, ahí estaremos</label>
+            <label class="radio" for="r-no"><input id="r-no" type="radio" name="att" value="no">No podremos ir</label>
+          </fieldset>
+          <label for="r-count">Personas<select id="r-count" name="count"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+          <label for="r-msg">Un mensaje para los novios (opcional)<textarea id="r-msg" name="msg" rows="2"></textarea></label>
+          <button class="btn" type="submit">Confirmar asistencia</button>
+        </form>
+        <div class="thanks" id="thanks" hidden>
+          <p class="script">¡Gracias!</p>
+          <p id="thanks-msg">Recibimos su confirmación.</p>
+          <p class="note">En esta vista previa la respuesta no se guarda todavía: el registro de respuestas llega con el panel de administración.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span class="logo">Valeria &amp; Andrés</span>
+    <p id="footdate">12 · 06 · 2027</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const html=document.documentElement;html.classList.add('locked');
+const intro=$('intro'),frame=$('frame'),vid=$('vid'),ink=$('ink'),inkclip=$('inkclip'),nameC=$('name'),veil=$('veil'),site=$('site');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const WEDDING=new Date('2027-06-12T17:00:00');
+const NAME={cx:938,cy:480,size:87,maxW:440};
+
+/* guest name: #para-familia-lopez -> "Familia Lopez" (each guest gets their own link) */
+let guest='Familia Martínez';
+const m=/^#para-([a-z0-9-]{2,60})$/.exec(location.hash);
+if(m)guest=m[1].split('-').filter(Boolean).map(w=>w[0].toUpperCase()+w.slice(1)).join(' ');
+$('guest-hero').textContent=guest;$('r-name').value=guest;
+
+/* ---------------- intro ---------------- */
+let track=null,vw=1,vh=1,base={s:1,tx:0,ty:0},done=false,started=false,alive=true;
+function drawName(write){
+  const dpr=2,H=220,c=nameC.getContext('2d');
+  let size=NAME.size;c.font=`${size*dpr}px Waterfall, "Snell Roundhand", cursive`;
+  let w=c.measureText(guest).width/dpr;if(w>NAME.maxW){size*=NAME.maxW/w;w=NAME.maxW;}
+  const cw=Math.ceil(w+90);nameC.width=cw*dpr;nameC.height=H*dpr;nameC.style.width=cw+'px';
+  nameC.style.left=(NAME.cx-cw/2)+'px';nameC.style.top=(NAME.cy-H/2)+'px';
+  c.font=`${size*dpr}px Waterfall, "Snell Roundhand", cursive`;c.textAlign='center';c.fillStyle='rgba(52,40,32,.9)';
+  c.fillText(guest,cw*dpr/2,H*.64*dpr);
+  nameC.classList.remove('write','done');void nameC.offsetWidth;nameC.classList.add(write&&!reduce?'write':'done');
+}
+function layout(){
+  vw=innerWidth;vh=innerHeight;const portrait=vw/vh<1.05;intro.classList.toggle('portrait',portrait);
+  if(!portrait){const s=Math.max(vw/1280,vh/720)*1.02;base={s,tx:Math.min(0,Math.max(vw-1280*s,vw/2-640*s)),ty:Math.min(0,Math.max(vh-720*s,vh/2-360*s))};}
+  else{const s=vw/820;base={s,tx:vw/2-760*s,ty:vh*.5-360*s};}
+  frame.style.transform=`translate(${base.tx}px,${base.ty}px) scale(${base.s})`;
+}
+function setFrame(t){
+  if(!track)return;const fr=track.frames;const i=Math.min(fr.length-1,Math.max(0,Math.round(t*track.fps)));const f=fr[i],h=f.H;
+  ink.style.transform=`matrix3d(${h[0][0]},${h[1][0]},0,${h[2][0]},${h[0][1]},${h[1][1]},0,${h[2][1]},0,0,1,0,${h[0][2]},${h[1][2]},0,${h[2][2]})`;
+  inkclip.style.opacity=f.a;
+  const q=f.clip;const cp=q?`path(evenodd, "M-20 -20H1300V740H-20Z M${q[0][0]} ${q[0][1]}L${q[1][0]} ${q[1][1]}L${q[2][0]} ${q[2][1]}L${q[3][0]} ${q[3][1]}Z")`:'none';
+  inkclip.style.clipPath=cp;inkclip.style.webkitClipPath=cp;
+}
+const rvfc='requestVideoFrameCallback' in HTMLVideoElement.prototype;
+function onVF(now,meta){setFrame(meta.mediaTime);if(alive)vid.requestVideoFrameCallback(onVF);}
+function tick(){if(!alive)return;if(!rvfc||vid.ended)setFrame(vid.currentTime);if(started&&vid.currentTime>=3.5)toSite();requestAnimationFrame(tick);}
+function play(){
+  if(started)return;started=true;
+  const p=vid.play();if(rvfc)vid.requestVideoFrameCallback(onVF);
+  if(p&&p.catch)p.catch(()=>{started=false;});
+}
+intro.addEventListener('click',()=>{vid.muted=false;if(!started)play();});
+vid.addEventListener('ended',toSite);
+
+function toSite(){
+  if(done)return;done=true;
+  site.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>site.classList.add('on')));
+  startPetals();tickCount();
+  setTimeout(()=>{alive=false;intro.remove();html.classList.remove('locked');scrollTo(0,0);},reduce?0:1500);
+}
+
+addEventListener('resize',layout);layout();
+const fontsReady=document.fonts?Promise.race([Promise.all([document.fonts.load('87px Waterfall'),document.fonts.load('40px Parisienne'),document.fonts.load('16px Cinzel')]),new Promise(r=>setTimeout(r,2500))]).catch(()=>{}):Promise.resolve();
+const trackReady=fetch('video/track.json').then(r=>r.json()).then(j=>{track=j;}).catch(()=>{});
+const videoReady=new Promise(r=>{if(vid.readyState>=2)r();vid.addEventListener('loadeddata',r,{once:true});setTimeout(r,6000);});
+Promise.all([fontsReady,trackReady,videoReady]).then(()=>{
+  setFrame(0);veil.classList.add('off');
+  setTimeout(()=>{drawName(true);requestAnimationFrame(tick);
+    if(reduce){setTimeout(toSite,1600);return;}
+    setTimeout(play,2500);
+    setTimeout(()=>{if(!started)toSite();},9000);
+  },700);
+});
+
+/* ---------------- site ---------------- */
+function pad(n,l=2){return String(n).padStart(l,'0');}
+function tickCount(){
+  const d=Math.max(0,WEDDING-new Date()),s=Math.floor(d/1000);
+  $('cd-d').textContent=pad(Math.floor(s/86400),3);$('cd-h').textContent=pad(Math.floor(s%86400/3600));
+  $('cd-m').textContent=pad(Math.floor(s%3600/60));$('cd-s').textContent=pad(s%60);
+  setTimeout(tickCount,1000-Date.now()%1000);
+}
+
+/* falling petals and gold dust */
+function startPetals(){
+  const cv=$('petals'),c=cv.getContext('2d');let W,H,dpr;
+  const size=()=>{dpr=Math.min(2,devicePixelRatio||1);W=cv.width=innerWidth*dpr;H=cv.height=innerHeight*dpr;};size();addEventListener('resize',size);
+  const n=innerWidth<700?14:26;
+  const P=[...Array(n)].map(()=>({x:Math.random(),y:Math.random(),s:7+Math.random()*9,r:Math.random()*6.28,vr:(Math.random()-.5)*1.2,v:.018+Math.random()*.03,sw:Math.random()*6.28,a:.45+Math.random()*.4}));
+  const D=[...Array(n)].map(()=>({x:Math.random(),y:Math.random(),r:.6+Math.random()*1.4,v:.004+Math.random()*.01,p:Math.random()*6.28}));
+  let last=performance.now();
+  function petal(p){
+    const s=p.s*dpr;c.save();c.translate(p.x*W,p.y*H);c.rotate(p.r);c.scale(1,.55+.45*Math.abs(Math.sin(p.sw*1.3)));
+    const g=c.createLinearGradient(-s,0,s,0);g.addColorStop(0,'rgba(233,190,166,'+p.a+')');g.addColorStop(1,'rgba(246,222,205,'+p.a+')');
+    c.fillStyle=g;c.beginPath();c.moveTo(-s,0);c.bezierCurveTo(-s*.4,-s*.75,s*.6,-s*.6,s,0);c.bezierCurveTo(s*.5,s*.55,-s*.5,s*.6,-s,0);c.fill();c.restore();
+  }
+  function frameP(now){
+    const dt=Math.min(.05,(now-last)/1000);last=now;c.clearRect(0,0,W,H);
+    for(const p of P){if(!reduce){p.y+=p.v*dt;p.sw+=dt;p.x+=Math.sin(p.sw)*.0006;p.r+=p.vr*dt;if(p.y>1.05){p.y=-.05;p.x=Math.random();}}petal(p);}
+    for(const d of D){if(!reduce){d.y-=d.v*dt;if(d.y<-.02)d.y=1.02;}const a=.35+.3*Math.sin(now/700+d.p);c.fillStyle='rgba(201,164,106,'+a+')';c.beginPath();c.arc(d.x*W,d.y*H,d.r*dpr,0,6.283);c.fill();}
+    if(!document.hidden&&!reduce)requestAnimationFrame(frameP);
+  }
+  requestAnimationFrame(frameP);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!reduce){last=performance.now();requestAnimationFrame(frameP);}});
+}
+
+/* RSVP */
+$('rsvp-form').addEventListener('submit',e=>{
+  e.preventDefault();const f=e.target;const gi=f.elements.guest;const name=gi.value.trim();
+  if(!name){gi.focus();gi.setAttribute('aria-invalid','true');return;}
+  const yes=f.elements.att.value==='si';const cnt=f.elements.count.value;
+  $('thanks-msg').textContent=yes?`${name}, recibimos su confirmación para ${cnt} ${cnt==='1'?'persona':'personas'}. ¡Los esperamos!`:`${name}, gracias por avisarnos. Los vamos a extrañar.`;
+  f.hidden=true;$('thanks').hidden=false;
+});
+})();
+</script>
