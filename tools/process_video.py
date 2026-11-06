@@ -14,11 +14,11 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 ap = argparse.ArgumentParser()
 ap.add_argument("video"); ap.add_argument("out"); ap.add_argument("fonts")
 ap.add_argument("--last", type=int, default=94)
-ap.add_argument("--names", default="Valeria & Andrés")
+ap.add_argument("--names", default="", help="vacío = conservar los nombres del video")
 ap.add_argument("--top1", default="CON LA BENDICIÓN DE DIOS")
-ap.add_argument("--top2", default="Y DE NUESTRAS FAMILIAS")
-ap.add_argument("--para", default="Los invitamos a celebrar el comienzo de|nuestra vida juntos, entre árboles, luz|y las personas que más queremos.")
-ap.add_argument("--date", default="SÁBADO 12 DE JUNIO DE 2027")
+ap.add_argument("--top2", default="Y DE NUESTROS PADRES")
+ap.add_argument("--para", default="Con la bendición de Dios y el amor de nuestras familias,|tenemos el honor de invitarte a celebrar nuestro|matrimonio, rodeados de quienes más queremos.")
+ap.add_argument("--labels", default="DÍAS|HORAS|MINUTOS|SEGUNDOS")
 a = ap.parse_args()
 os.makedirs(a.out, exist_ok=True)
 
@@ -162,7 +162,8 @@ card_idx = [i for i in range(first_card, N)]
 cardH = smooth(cardH, card_idx, card_ref_corners)
 
 ref = F[REF].astype(np.float32); gref = G[REF].astype(np.float32)
-boxes = {"top": (468, 98, 832, 156), "names": (462, 288, 838, 368), "para": (438, 404, 852, 480), "count": (502, 490, 792, 548)}
+boxes = {"top": (468, 98, 832, 156), "para": (438, 404, 852, 480), "labels": (510, 531, 792, 547)}
+if a.names: boxes["names"] = (462, 288, 838, 368)
 tm = np.zeros((H0, W0), np.uint8); ink_c = np.zeros((H0, W0), np.uint8)
 bgr = cv2.medianBlur(G[REF], 25).astype(np.float32)
 for (x0, y0, x1, y1) in boxes.values():
@@ -189,11 +190,13 @@ def spaced(text, f, cx, base, track_px):
 CX = 648
 spaced(a.top1, font("Cinzel.ttf", 15.5), CX, 124, 1.6)
 spaced(a.top2, font("Cinzel.ttf", 15.5), CX, 147, 1.6)
-fn = font("Parisienne.ttf", 52)
-d.text((CX * SS, 347 * SS), a.names, font=fn, fill=255, anchor="ms", stroke_width=1, stroke_fill=255)
+if a.names:
+    fn = font("Parisienne.ttf", 52)
+    d.text((CX * SS, 347 * SS), a.names, font=fn, fill=255, anchor="ms", stroke_width=1, stroke_fill=255)
 for k, line in enumerate(a.para.split("|")):
     d.text((CX * SS, (426 + k * 19) * SS), line, font=font("EBGaramond.ttf", 14.5), fill=230, anchor="ms")
-spaced(a.date, font("Cinzel.ttf", 17), CX, 525, 1.2)
+for cx_, lab in zip((547, 613, 677, 744), a.labels.split("|")):
+    spaced(lab, font("Cinzel.ttf", 8.6), cx_, 538, 0.5)
 lay = lay.filter(ImageFilter.GaussianBlur(0.6 * SS)).resize((W0, H0), Image.LANCZOS)
 alpha = np.clip(np.asarray(lay).astype(np.float32)[..., None] / 255 * 1.0, 0, 1)
 card_baked = card_clean.astype(np.float32) * (1 - alpha) + ink_col[None, None, :] * alpha

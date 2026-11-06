@@ -16,6 +16,6 @@ Sitio de invitaciones para una boda en el bosque. Cada invitado recibe un enlace
 ## Proceso
 
 1. **El sobre**: `propuestas/01-sobres.html` (elegido: C, Papel de Bosque)
-2. **La apertura**: video de Gemini (sobre C) procesado con `tools/process_video.py`: sin el nombre impreso, con el texto real en la tarjeta y el nombre de cada invitado seguido cuadro por cuadro
-3. **El sitio web**: `propuestas/invitacion.html` — la tarjeta del video se funde con el sitio (estilo Gemini). Enlace por invitado: `#para-familia-lopez`
+2. **La apertura**: video de Gemini procesado con `tools/process_video.py` (borra el nombre impreso, corrige el texto ilegible de la tarjeta y guarda el seguimiento para escribir el nombre de cada invitado)
+3. **El sitio web**: `propuestas/invitacion.html` — réplica del sitio del video de Gemini (portada que se funde con la foto, Nuestra Historia, Ubicación, RSVP). Enlace por invitado: `#para-familia-lopez`
 4. Panel de administración, enlaces únicos y confirmaciones: pendiente
