@@ -2,17 +2,16 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Italiana&family=Jost:wght@300;400;500&family=La+Belle+Aurore&family=Monsieur+La+Doulaise&family=Mrs+Saint+Delafield&family=Pinyon+Script&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap">
 <style>
-/* Layout: ivory stationery sheet. Steps + palette header, a live name tester, then five envelope proposals.
-   Each proposal pairs a flat-lay "stage" (surface + dappled forest light) with a spec card; stages alternate sides on wide screens. */
+/* Layout: ivory stationery sheet. Steps + palette header, then four photographed envelope proposals,
+   each a large photo beside a spec card (alternating sides on wide screens). Tapping a photo opens it full-size. */
 :root{
   --espresso:#3A261C;
   --burgundy:#621720;
   --olive:#545530;
   --olive-soft:#9C9A6A;
   --beige:#DCC6AC;
-  --cream:#E9DECB;
   --ivory:#F5EFE5;
   --ink:#2F2119;
   --ink-soft:#6E5D51;
@@ -22,23 +21,10 @@
   color-scheme:light;
 }
 *,*::before,*::after{box-sizing:border-box}
-body{
-  margin:0;
-  background-color:var(--ivory);
-  background-image:var(--tex-grain-soft);
-  background-blend-mode:overlay;
-  color:var(--ink);
-  font-family:var(--f-body);
-  font-weight:300;
-  font-size:16px;
-  line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-  padding-left:max(16px,env(safe-area-inset-left,0px));
-  padding-right:max(16px,env(safe-area-inset-right,0px));
-}
-.wrap{max-width:1140px;margin:0 auto;padding-block:clamp(32px,6vw,72px) 88px}
+body{margin:0;background:var(--ivory);color:var(--ink);font-family:var(--f-body);font-weight:300;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1160px;margin:0 auto;padding-block:clamp(32px,6vw,72px) 88px}
 
-/* ---------- header ---------- */
 .steps{list-style:none;display:flex;flex-wrap:wrap;gap:10px 28px;padding:0;margin:0 0 clamp(36px,6vw,64px);font-size:.86rem;color:var(--ink-soft)}
 .steps li{display:flex;align-items:center;gap:10px}
 .steps li span{width:28px;height:28px;border-radius:50%;border:1px solid var(--rule);display:grid;place-items:center;font-family:var(--f-display);font-size:1rem;font-weight:500}
@@ -47,41 +33,33 @@ body{
 .kicker{font-family:var(--f-display);font-weight:500;text-transform:uppercase;letter-spacing:.3em;font-size:.78rem;color:var(--ink-soft);margin:0 0 14px}
 h1{font-family:var(--f-display);font-weight:400;font-size:clamp(2.5rem,6.2vw,4.8rem);line-height:1.02;letter-spacing:-.01em;margin:0;max-width:16ch;text-wrap:balance}
 h1 em{color:var(--burgundy)}
-.lede{max-width:60ch;font-size:1.06rem;color:var(--ink-soft);margin:22px 0 0}
+.lede{max-width:62ch;font-size:1.06rem;color:var(--ink-soft);margin:22px 0 0}
 
-/* ---------- palette ---------- */
-.palette{margin-top:clamp(40px,6vw,64px)}
+.palette{margin-top:clamp(36px,5vw,56px)}
 .chips{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
-.chip{min-height:128px;padding:14px 14px 16px;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;background-color:var(--c);background-image:var(--tex-leather),var(--tex-grain);background-blend-mode:overlay;color:var(--t);border-radius:2px}
-.chip b{font-family:var(--f-display);font-weight:500;text-transform:uppercase;letter-spacing:.2em;font-size:.84rem;line-height:1.25}
-.chip small{font-size:.74rem;letter-spacing:.03em;opacity:.82}
+.chip{min-height:96px;padding:12px 14px 14px;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;background:var(--c);color:var(--t);border-radius:2px}
+.chip b{font-family:var(--f-display);font-weight:500;text-transform:uppercase;letter-spacing:.2em;font-size:.8rem;line-height:1.25}
+.chip small{font-size:.72rem;letter-spacing:.03em;opacity:.85}
 .chip--espresso{--c:#3A261C;--t:#EADDC7;box-shadow:0 0 0 1px var(--ivory),0 0 0 2px var(--espresso)}
 .chip--burgundy{--c:#621720;--t:#EADDC7}
 .chip--olive{--c:#545530;--t:#EADDC7}
 .chip--soft{--c:#9C9A6A;--t:#2F2119}
 .chip--beige{--c:#DCC6AC;--t:#2F2119}
 .chip--cream{--c:#E6DAC6;--t:#2F2119}
-.note{margin:14px 0 0;font-size:.92rem;color:var(--ink-soft);max-width:68ch}
 @media (max-width:760px){.chips{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (max-width:420px){.chips{grid-template-columns:repeat(2,minmax(0,1fr))}.chip{min-height:104px}}
+@media (max-width:420px){.chips{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
-/* ---------- name tester ---------- */
-.try{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:20px 56px;align-items:end;margin-top:clamp(40px,6vw,64px);padding-block:28px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
-.try p{margin:0;color:var(--ink-soft);font-size:.95rem;max-width:44ch}
-.try .kicker{margin-bottom:8px}
-.try-form{display:grid;grid-template-columns:1fr 1fr;gap:20px 28px}
-.try-form label{display:flex;flex-direction:column;gap:2px}
-.try-form label span{font-family:var(--f-display);font-weight:500;text-transform:uppercase;letter-spacing:.26em;font-size:.7rem;color:var(--ink-soft)}
-.try-form input{font-family:var(--f-display);font-style:italic;font-size:1.45rem;color:var(--ink);background:transparent;border:0;border-bottom:1px solid rgba(58,38,28,.35);border-radius:0;padding:4px 0 6px;width:100%;min-width:0}
-.try-form input:focus{outline:none;border-bottom-color:var(--burgundy);box-shadow:0 1px 0 var(--burgundy)}
-@media (max-width:760px){.try{grid-template-columns:1fr}}
-@media (max-width:480px){.try-form{grid-template-columns:1fr}}
+.option{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:clamp(24px,4.5vw,64px);align-items:center;padding-block:clamp(36px,6vw,72px);border-bottom:1px solid var(--rule)}
+.option:first-of-type{margin-top:clamp(28px,5vw,48px);border-top:1px solid var(--rule)}
+.option--flip{grid-template-columns:minmax(0,1fr) minmax(0,1.75fr)}
+.option--flip .photo{order:2}
+@media (max-width:860px){.option,.option--flip{grid-template-columns:1fr}.option--flip .photo{order:0}}
 
-/* ---------- options ---------- */
-.option{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(24px,4.5vw,64px);align-items:center;padding-block:clamp(36px,6vw,72px);border-bottom:1px solid var(--rule)}
-.option--flip{grid-template-columns:minmax(0,1fr) minmax(0,1.6fr)}
-.option--flip .stage{order:2}
-@media (max-width:860px){.option,.option--flip{grid-template-columns:1fr}.option--flip .stage{order:0}}
+.photo{display:block;width:100%;padding:0;border:0;background:#2a1d16;cursor:zoom-in;border-radius:2px;overflow:hidden;aspect-ratio:1456/1088;
+  box-shadow:0 1px 2px rgba(30,18,10,.18),0 18px 40px -18px rgba(30,18,10,.45)}
+.photo img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.photo:hover img{transform:scale(1.035)}
+.photo:focus-visible{outline:2px solid var(--burgundy);outline-offset:4px}
 
 .spec{min-width:0}
 .spec-tag{display:flex;align-items:baseline;gap:.5em;margin:0;font-family:var(--f-display);font-weight:500;text-transform:uppercase;letter-spacing:.3em;font-size:.76rem;color:var(--ink-soft)}
@@ -93,110 +71,8 @@ h1 em{color:var(--burgundy)}
 .spec dt{font-family:var(--f-display);font-weight:500;text-transform:uppercase;letter-spacing:.22em;font-size:.72rem;color:var(--ink-soft);padding-top:.25em}
 .spec dd{margin:0;display:flex;align-items:center;gap:10px;font-size:.95rem;min-width:0}
 .sw{flex:none;width:14px;height:14px;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.spec-note{margin:16px 0 0;font-size:.86rem;color:var(--ink-soft);font-style:italic}
 
-/* ---------- stage (flat-lay surface) ---------- */
-.stage{position:relative;overflow:hidden;isolation:isolate;display:grid;place-items:center;perspective:1400px;border-radius:2px;touch-action:pan-y;
-  padding-block:clamp(40px,8vw,88px);padding-left:clamp(20px,6vw,64px);padding-right:clamp(20px,6vw,64px);
-  background-color:var(--surface);background-image:var(--surface-tex);background-blend-mode:overlay}
-.stage::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(70% 65% at 50% 46%,rgba(255,244,222,var(--glow,.16)),transparent 72%),radial-gradient(130% 120% at 50% 50%,transparent 55%,rgba(20,10,5,var(--vig,.16)))}
-.stage::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;mix-blend-mode:soft-light;
-  background:radial-gradient(45% 40% at 78% 16%,rgba(255,236,200,.4),transparent 70%)}
-.canopy{position:absolute;left:-12%;top:-12%;width:124%;height:124%;z-index:2;pointer-events:none;filter:blur(6px);opacity:var(--leaf,.16);mix-blend-mode:multiply;transform-origin:15% 0;will-change:transform;animation:sway 9s ease-in-out infinite alternate}
-.stage:nth-of-type(odd) .canopy{animation-duration:11s}
-@keyframes sway{from{transform:rotate(-1.4deg) translate3d(-1%,0,0)}to{transform:rotate(1.6deg) translate3d(1.2%,.8%,0)}}
-
-.stage--a{--surface:#E3D4BE;--surface-tex:var(--tex-linen-h),var(--tex-linen-v),var(--tex-grain),var(--tex-mottle);--leaf:.17}
-.stage--b{--surface:#D8C6AB;--surface-tex:var(--tex-grain),var(--tex-mottle);--leaf:.19}
-.stage--c{--surface:#46472A;--surface-tex:var(--tex-velvet),var(--tex-grain),var(--tex-mottle);--leaf:.42;--glow:.2}
-.stage--d{--surface:#8A885A;--surface-tex:var(--tex-grain),var(--tex-mottle);--leaf:.24}
-.stage--e{--surface:#2D1E16;--surface-tex:var(--tex-leather),var(--tex-grain),var(--tex-mottle);--leaf:.5;--glow:.13;--vig:.38}
-
-/* ---------- envelope ---------- */
-.env{position:relative;z-index:1;width:100%;max-width:540px;aspect-ratio:725/525;container-type:inline-size;user-select:none;-webkit-user-select:none;
-  transition:transform .55s cubic-bezier(.2,.7,.2,1);
-  filter:drop-shadow(0 1px 1px rgba(20,12,8,.28)) drop-shadow(0 14px 20px rgba(20,12,8,.3))}
-.env > *{position:absolute}
-.env-body,.flap-wrap,.flap,.seams,.glare{inset:0}
-.env-body,.flap{background-color:var(--paper);background-image:var(--paper-tex);background-blend-mode:overlay}
-.flap{position:absolute;clip-path:var(--flap-clip);background-position:37px 53px}
-.flap::after{content:"";position:absolute;inset:0;background:linear-gradient(172deg,rgba(255,255,255,.06),transparent 45%,rgba(0,0,0,.09))}
-.flap-wrap{filter:drop-shadow(0 1.5px 1.2px var(--flap-shadow)) drop-shadow(0 4px 7px rgba(0,0,0,.12))}
-.seams,.flap-edge,.foil,.twine{width:100%;height:100%;pointer-events:none;overflow:visible}
-.flap-edge{position:absolute;inset:0}
-.flap-edge polyline{fill:none;stroke:var(--seam-light);stroke-width:1.2px;vector-effect:non-scaling-stroke}
-.glare{pointer-events:none;mix-blend-mode:soft-light;opacity:.55;transition:opacity .5s;
-  background:radial-gradient(70% 60% at var(--gx,32%) var(--gy,22%),rgba(255,250,235,.32),transparent 62%)}
-.stage:hover .glare{opacity:1}
-
-.seal-wrap{aspect-ratio:1;transform:translate(-50%,-50%) translate(var(--px,0px),var(--py,0px));transition:transform .55s cubic-bezier(.2,.7,.2,1);
-  filter:drop-shadow(0 .5cqw .45cqw rgba(0,0,0,.38)) drop-shadow(0 .12cqw .12cqw rgba(0,0,0,.3))}
-.seal-wrap svg{display:block;width:100%;height:100%;overflow:visible}
-.deco{transform:translate(-50%,-50%) rotate(var(--r,0deg));filter:drop-shadow(0 .35cqw .3cqw rgba(0,0,0,.38));pointer-events:none}
-.deco svg{display:block;width:100%;height:auto;overflow:visible}
-
-.addr{left:8%;right:8%;display:flex;flex-direction:column;align-items:center;text-align:center;line-height:1.1;pointer-events:none}
-.addr-pre{font-family:var(--f-display);font-weight:500;text-transform:uppercase;letter-spacing:.42em;padding-left:.42em;font-size:1.55cqw;opacity:.82;margin-bottom:.5cqw}
-.addr-name{white-space:nowrap}
-
-/* A · Lacre Espresso */
-.env--a{--paper:#3B271D;--paper-tex:var(--tex-grain),var(--tex-mottle);--side-shade:rgba(0,0,0,.10);--bottom-tint:rgba(255,240,220,.025);--seam-shadow:rgba(0,0,0,.6);--seam-light:rgba(255,235,210,.11);--flap-shadow:rgba(0,0,0,.5)}
-.addr--a{color:#EADDC7}
-.addr--a .addr-name{font-family:"Pinyon Script","Snell Roundhand",cursive;text-shadow:0 .12cqw 0 rgba(0,0,0,.45)}
-
-/* B · Musgo y Listón */
-.env--b{--paper:#545530;--paper-tex:var(--tex-velvet),var(--tex-mottle),radial-gradient(120% 90% at 30% 18%,rgba(255,255,230,.16),transparent 60%);--side-shade:rgba(0,0,0,.08);--bottom-tint:rgba(255,255,240,.03);--seam-shadow:rgba(0,0,0,.5);--seam-light:rgba(255,250,220,.13);--flap-shadow:rgba(0,0,0,.42)}
-.ribbon{left:0;right:0;box-shadow:0 .25cqw .5cqw rgba(0,0,0,.35);
-  background:repeating-linear-gradient(90deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px),linear-gradient(180deg,#3d0b11 0%,#6e1a24 14%,#93323d 30%,#74212b 48%,#5a141d 68%,#7a2530 84%,#400c12 100%)}
-.tag-wrap{transform:rotate(-5deg);filter:drop-shadow(0 .35cqw .45cqw rgba(0,0,0,.38))}
-.tag{position:absolute;inset:0;background-color:#EEE3CF;background-image:var(--tex-grain),var(--tex-mottle);background-blend-mode:overlay;
-  clip-path:polygon(11% 0,100% 0,100% 100%,11% 100%,0 74%,0 26%);display:flex;flex-direction:column;justify-content:center;align-items:center;padding-left:12%;color:#3A261C;line-height:1}
-.tag-hole{position:absolute;left:7%;top:50%;width:2.4cqw;height:2.4cqw;border-radius:50%;transform:translate(-50%,-50%);background:#44452a;box-shadow:0 0 0 .45cqw #CDB590,inset 0 .2cqw .3cqw rgba(0,0,0,.6)}
-.tag-pre{font-family:var(--f-display);font-weight:500;text-transform:uppercase;letter-spacing:.4em;padding-left:.4em;font-size:1.3cqw;opacity:.75}
-.tag-name{font-family:"Mrs Saint Delafield","Snell Roundhand",cursive;margin-top:.6cqw;white-space:nowrap}
-.twine path{fill:none;stroke:#B79E7A;stroke-width:2.6;stroke-linecap:round}
-.twine .twist{stroke:#8A7253;stroke-dasharray:1.4 2.6}
-.twine{filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
-
-/* C · Papel de Bosque */
-.env--c{--paper:#DCC6AC;--paper-tex:var(--tex-specks),var(--tex-grain),var(--tex-mottle);--side-shade:rgba(80,50,20,.06);--bottom-tint:rgba(255,255,255,.07);--seam-shadow:rgba(60,40,20,.38);--seam-light:rgba(255,255,255,.45);--flap-shadow:rgba(60,40,20,.38)}
-.env--c .env-body,.env--c .flap-wrap{filter:url(#deckle)}
-.env--c .flap-wrap{filter:url(#deckle) drop-shadow(0 1.5px 1.2px var(--flap-shadow)) drop-shadow(0 4px 7px rgba(0,0,0,.1))}
-.botan{top:0;bottom:0;mix-blend-mode:multiply;opacity:.94}
-.botan svg{display:block;width:100%;height:100%}
-.vband{top:0;bottom:0;border-left:1px solid rgba(255,255,255,.6);border-right:1px solid rgba(255,255,255,.6);box-shadow:0 0 .7cqw rgba(60,40,20,.14);
-  background:linear-gradient(90deg,rgba(255,253,247,.52),rgba(255,253,247,.36) 18%,rgba(255,253,247,.36) 82%,rgba(255,253,247,.52));
-  -webkit-backdrop-filter:blur(1.1px) brightness(1.03);backdrop-filter:blur(1.1px) brightness(1.03)}
-.addr--c{color:#3A261C}
-.addr--c .addr-name{font-family:"La Belle Aurore","Bradley Hand",cursive;transform:rotate(-3deg);opacity:.9}
-
-/* D · Vellum y Helecho */
-.env--d{--paper:rgba(251,249,243,.24);--paper-tex:var(--tex-grain-soft);--side-shade:rgba(255,255,255,.10);--bottom-tint:rgba(255,255,255,.12);--seam-shadow:rgba(60,50,40,.16);--seam-light:rgba(255,255,255,.7);--flap-shadow:rgba(60,50,40,.12);
-  filter:drop-shadow(0 1px 1px rgba(20,12,8,.18)) drop-shadow(0 12px 18px rgba(20,12,8,.22))}
-.env--d .env-body{box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)}
-.card-in{inset:4.5% 4%;background-color:#F3EBDD;background-image:var(--tex-grain),var(--tex-mottle);background-blend-mode:overlay;filter:blur(.75px);overflow:hidden;
-  display:flex;flex-direction:column;align-items:center;padding-top:12%;color:#3A261C;text-align:center}
-.ci-pre{margin:0;font-family:var(--f-display);font-weight:500;text-transform:uppercase;letter-spacing:.45em;padding-left:.45em;font-size:1.5cqw}
-.ci-names{margin:1.3cqw 0 0;font-family:"Italiana",var(--f-display);font-size:5.6cqw;letter-spacing:.08em;text-transform:uppercase;line-height:1.05;white-space:nowrap}
-.ci-names i{font-family:"Pinyon Script",cursive;text-transform:none;font-style:normal;font-size:.95em;color:#7E202B;letter-spacing:0}
-.ci-sub{margin:1.2cqw 0 0;font-family:var(--f-display);font-style:italic;font-size:2cqw}
-.ci-fern{position:absolute;width:44cqw;opacity:.9}
-.ci-fern--1{left:-7%;bottom:-10%;transform:rotate(-30deg)}
-.ci-fern--2{right:-8%;top:-8%;transform:rotate(150deg)}
-.addr--d{color:#3A261C;flex-direction:row;justify-content:center;align-items:baseline;gap:1.4cqw}
-.addr--d .addr-pre{margin:0;font-size:1.45cqw}
-.addr--d .addr-name{font-family:"Italiana",var(--f-display);text-transform:uppercase;letter-spacing:.3em}
-
-/* E · Burdeos de Gala */
-.env--e{--paper:#5E1520;--paper-tex:var(--tex-leather),var(--tex-grain),var(--tex-mottle);--side-shade:rgba(0,0,0,.12);--bottom-tint:rgba(255,220,220,.03);--seam-shadow:rgba(0,0,0,.6);--seam-light:rgba(255,220,200,.12);--flap-shadow:rgba(0,0,0,.5)}
-.foil{position:absolute;inset:0}
-.foil rect,.foil polyline{fill:none}
-.addr--e .addr-pre{color:#D9C6A5}
-.addr--e .addr-name{font-family:"Monsieur La Doulaise","Snell Roundhand",cursive;padding:.15em .5em;color:transparent;
-  background:linear-gradient(100deg,#9E8160 0%,#E9DBC0 26%,#B39570 44%,#F5EBD6 60%,#A58763 80%,#D8C4A2 100%);background-size:240% 100%;background-position:var(--fx,40%) 50%;
-  -webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 .12cqw 0 rgba(0,0,0,.5));transition:background-position .55s}
-
-/* ---------- closing ---------- */
 .next{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:20px 56px;padding-block:clamp(40px,6vw,72px) 0}
 .next h2{font-family:var(--f-display);font-weight:400;font-size:clamp(2rem,4vw,3.2rem);line-height:1.05;margin:0}
 .next h2 em{color:var(--burgundy)}
@@ -204,21 +80,13 @@ h1 em{color:var(--burgundy)}
 .next .up{font-size:.92rem;color:var(--ink-soft)}
 @media (max-width:760px){.next{grid-template-columns:1fr}}
 
-@media (prefers-reduced-motion:reduce){
-  .canopy{animation:none}
-  .env,.seal-wrap,.glare,.addr--e .addr-name{transition:none}
-}
+.lightbox{position:fixed;inset:0;z-index:20;background:rgba(22,14,10,.92);display:grid;place-items:center;cursor:zoom-out;
+  padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lightbox img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lightbox button{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));border:1px solid rgba(234,221,199,.4);background:transparent;color:#EADDC7;
+  font-family:var(--f-display);text-transform:uppercase;letter-spacing:.25em;font-size:.75rem;padding:8px 14px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.photo img{transition:none}.photo:hover img{transform:none}}
 </style>
-
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <defs>
-    <filter id="soft1" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.1"/></filter>
-    <filter id="deckle" x="-3%" y="-3%" width="106%" height="106%" color-interpolation-filters="sRGB">
-      <feTurbulence type="fractalNoise" baseFrequency=".07" numOctaves="3" seed="8" result="n"/>
-      <feDisplacementMap in="SourceGraphic" in2="n" scale="8" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </defs>
-</svg>
 
 <main class="wrap">
   <header>
@@ -229,7 +97,7 @@ h1 em{color:var(--burgundy)}
     </ol>
     <p class="kicker">Invitación digital · Boda en el bosque</p>
     <h1>El sobre que <em>abrirá</em> cada invitación</h1>
-    <p class="lede">Cada invitado recibirá su propio enlace, y lo primero que verá será un sobre cerrado con su nombre. Aquí hay cinco propuestas hechas con su paleta. Pasen el cursor o el dedo por encima de cada sobre para ver cómo le cae la luz.</p>
+    <p class="lede">Ahora en fotografía realista. Cada invitado recibirá su propio enlace y lo primero que verá será uno de estos sobres, cerrado y con su nombre. Toquen cualquier foto para verla en grande y fijarse en el papel, el lacre y la luz.</p>
   </header>
 
   <section class="palette" aria-labelledby="pal-h">
@@ -242,363 +110,104 @@ h1 em{color:var(--burgundy)}
       <li class="chip chip--beige"><b>Beige Claro</b><small>Invitados</small></li>
       <li class="chip chip--cream"><b>Crema</b><small>Papelería</small></li>
     </ul>
-    <p class="note">El deep espresso es el color de las damas y el cortejo, y los invitados no lo usarán. Por eso en los sobres aparece como papel principal (A), como lacre (C) o como tinta del nombre (B, C y D).</p>
-  </section>
-
-  <section class="try" aria-labelledby="try-h">
-    <div>
-      <h2 id="try-h" class="kicker">Pruébenlo con sus nombres</h2>
-      <p>Los nombres que ven son de ejemplo. Escriban los suyos y los cinco sobres se actualizan al instante: el monograma del lacre sale de sus iniciales.</p>
-    </div>
-    <form class="try-form" id="try-form" autocomplete="off">
-      <label for="f-couple"><span>Ustedes</span><input id="f-couple" name="couple" type="text" value="Valeria &amp; Andrés" maxlength="40"></label>
-      <label for="f-guest"><span>Un invitado</span><input id="f-guest" name="guest" type="text" value="Familia Martínez" maxlength="40"></label>
-    </form>
   </section>
 
   <section class="option" aria-labelledby="t-a">
-    <div class="stage stage--a" role="img" aria-label="Sobre A: papel deep espresso con lacre burdeos y ramita de olivo">
-      <div class="env env--a" data-variant="a"></div>
-    </div>
+    <button class="photo" type="button" data-full="img/sobre-a.jpg" aria-label="Ver el sobre A en grande">
+      <img src="img/sobre-a.jpg" width="1456" height="1088" alt="Sobre color deep espresso cerrado con un lacre burdeos con las iniciales V y A, una ramita de olivo y el nombre Familia Martínez en caligrafía crema, sobre lino con sombras de hojas.">
+    </button>
     <div class="spec">
       <p class="spec-tag">Sobre <span class="spec-letter">A</span></p>
       <h2 id="t-a">Lacre Espresso</h2>
       <p class="spec-mood">Clásico y formal</p>
-      <p class="spec-desc">Papel de algodón liso en deep espresso, el color de las damas. Al centro, un lacre burdeos con sus iniciales y una ramita de olivo seca metida bajo el sello. El nombre del invitado va en caligrafía crema.</p>
+      <p class="spec-desc">Papel de algodón en deep espresso, el color de las damas. Lacre burdeos con sus iniciales y una ramita de olivo fresca bajo el sello. El nombre del invitado va en caligrafía crema.</p>
       <dl>
-        <dt>Papel</dt><dd><span class="sw" style="--c:#3A261C"></span>Deep espresso, algodón liso</dd>
-        <dt>Sello</dt><dd><span class="sw" style="--c:#7E202B"></span>Lacre burdeos con monograma</dd>
-        <dt>Detalle</dt><dd><span class="sw" style="--c:#9C9A6A"></span>Ramita de olivo seca</dd>
-        <dt>Letra</dt><dd>Caligrafía fina en crema</dd>
+        <dt>Papel</dt><dd><span class="sw" style="--c:#3A261C"></span>Deep espresso</dd>
+        <dt>Sello</dt><dd><span class="sw" style="--c:#6E1C25"></span>Lacre burdeos con monograma</dd>
+        <dt>Detalle</dt><dd><span class="sw" style="--c:#9C9A6A"></span>Ramita de olivo</dd>
+        <dt>Escena</dt><dd>Lino claro con sombra de hojas</dd>
       </dl>
     </div>
   </section>
 
   <section class="option option--flip" aria-labelledby="t-b">
-    <div class="stage stage--b" role="img" aria-label="Sobre B: verde olivo con listón burdeos, lacre crema con helecho y etiqueta con el nombre">
-      <div class="env env--b" data-variant="b"></div>
-    </div>
+    <button class="photo" type="button" data-full="img/sobre-b.jpg" aria-label="Ver el sobre B en grande">
+      <img src="img/sobre-b.jpg" width="1456" height="1088" loading="lazy" alt="Sobre verde olivo con solapa redonda, cruzado por un listón burdeos, con un lacre crema con un helecho y una etiqueta atada con cordel que dice Familia Martínez, sobre musgo.">
+    </button>
     <div class="spec">
       <p class="spec-tag">Sobre <span class="spec-letter">B</span></p>
       <h2 id="t-b">Musgo y Listón</h2>
       <p class="spec-mood">Romántico, de bosque</p>
-      <p class="spec-desc">Sobre verde olivo con acabado aterciopelado, cruzado por un listón de satén burdeos. El lacre es crema con un helecho grabado. El nombre del invitado va escrito a mano en una etiqueta atada con cordel.</p>
+      <p class="spec-desc">Sobre verde olivo con solapa redonda, cruzado por un listón burdeos. Lacre crema con un helecho grabado y una etiqueta atada con cordel con el nombre del invitado escrito a mano.</p>
       <dl>
-        <dt>Papel</dt><dd><span class="sw" style="--c:#545530"></span>Verde olivo aterciopelado</dd>
+        <dt>Papel</dt><dd><span class="sw" style="--c:#545530"></span>Verde olivo</dd>
         <dt>Sello</dt><dd><span class="sw" style="--c:#EADCC4"></span>Lacre crema con helecho</dd>
-        <dt>Detalle</dt><dd><span class="sw" style="--c:#621720"></span>Listón de satén y etiqueta</dd>
-        <dt>Letra</dt><dd>Caligrafía en tinta espresso</dd>
+        <dt>Detalle</dt><dd><span class="sw" style="--c:#621720"></span>Listón burdeos y etiqueta</dd>
+        <dt>Escena</dt><dd>Musgo sobre un tronco</dd>
       </dl>
     </div>
   </section>
 
   <section class="option" aria-labelledby="t-c">
-    <div class="stage stage--c" role="img" aria-label="Sobre C: papel beige hecho a mano con bordes rasgados, botánicos prensados y lacre espresso">
-      <div class="env env--c" data-variant="c"></div>
-    </div>
+    <button class="photo" type="button" data-full="img/sobre-c.jpg" aria-label="Ver el sobre C en grande">
+      <img src="img/sobre-c.jpg" width="1456" height="1088" loading="lazy" alt="Sobre de papel de algodón hecho a mano con bordes rasgados, con helecho, olivo y bayas prensados bajo una franja de vellum y un lacre café espresso, sobre un tronco rodeado de helechos.">
+    </button>
     <div class="spec">
       <p class="spec-tag">Sobre <span class="spec-letter">C</span></p>
       <h2 id="t-c">Papel de Bosque</h2>
       <p class="spec-mood">Artesanal y rústico</p>
-      <p class="spec-desc">Papel de algodón hecho a mano en beige claro, con los bordes rasgados. A un lado lleva hojas y bayas prensadas bajo una franja de vellum. El lacre es deep espresso. Parece recogido en el mismo bosque donde se casan.</p>
+      <p class="spec-desc">Papel de algodón hecho a mano con los bordes rasgados. A un lado, helecho, olivo y bayas prensadas bajo una franja de vellum. Lacre deep espresso y el nombre a pluma.</p>
       <dl>
-        <dt>Papel</dt><dd><span class="sw" style="--c:#DCC6AC"></span>Beige claro, borde rasgado</dd>
+        <dt>Papel</dt><dd><span class="sw" style="--c:#E9E1CF"></span>Algodón, borde rasgado</dd>
         <dt>Sello</dt><dd><span class="sw" style="--c:#3A261C"></span>Lacre deep espresso</dd>
         <dt>Detalle</dt><dd><span class="sw" style="--c:#6E1C25"></span>Botánicos prensados bajo vellum</dd>
-        <dt>Letra</dt><dd>Trazo de pluma en espresso</dd>
+        <dt>Escena</dt><dd>Tronco con helechos</dd>
       </dl>
     </div>
   </section>
 
   <section class="option option--flip" aria-labelledby="t-d">
-    <div class="stage stage--d" role="img" aria-label="Sobre D: vellum translúcido que deja ver la invitación crema con un helecho, lacre burdeos pequeño">
-      <div class="env env--d" data-variant="d"></div>
-    </div>
+    <button class="photo" type="button" data-full="img/sobre-d.jpg" aria-label="Ver el sobre D en grande">
+      <img src="img/sobre-d.jpg" width="1456" height="1088" loading="lazy" alt="Sobre de vellum translúcido que deja ver una invitación con helechos, cerrado con un lacre burdeos y una ramita de olivo, sobre lino verde olivo con sombras de hojas.">
+    </button>
     <div class="spec">
       <p class="spec-tag">Sobre <span class="spec-letter">D</span></p>
       <h2 id="t-d">Vellum y Helecho</h2>
       <p class="spec-mood">Etéreo y moderno</p>
-      <p class="spec-desc">Sobre de vellum translúcido. A través del papel se alcanza a ver la invitación crema con helechos en olivo suave y sus nombres. Lleva un lacre burdeos pequeño y el nombre del invitado en letras rectas y espaciadas.</p>
+      <p class="spec-desc">Sobre de vellum translúcido. A través del papel se ve la invitación con helechos y sus nombres. Lacre burdeos con una ramita de olivo.</p>
       <dl>
-        <dt>Papel</dt><dd><span class="sw" style="--c:#F3EBDD"></span>Vellum sobre tarjeta crema</dd>
-        <dt>Sello</dt><dd><span class="sw" style="--c:#7E202B"></span>Lacre burdeos pequeño</dd>
-        <dt>Detalle</dt><dd><span class="sw" style="--c:#9C9A6A"></span>Helechos vistos a través del papel</dd>
-        <dt>Letra</dt><dd>Mayúsculas finas en espresso</dd>
+        <dt>Papel</dt><dd><span class="sw" style="--c:#F1ECE2"></span>Vellum translúcido</dd>
+        <dt>Sello</dt><dd><span class="sw" style="--c:#6E1C25"></span>Lacre burdeos</dd>
+        <dt>Detalle</dt><dd><span class="sw" style="--c:#9C9A6A"></span>Helechos y ramita de olivo</dd>
+        <dt>Escena</dt><dd>Lino verde olivo con sombra de hojas</dd>
       </dl>
-    </div>
-  </section>
-
-  <section class="option" aria-labelledby="t-e">
-    <div class="stage stage--e" role="img" aria-label="Sobre E: burdeos texturizado con solapa curva, filete metalizado beige y lacre verde olivo">
-      <div class="env env--e" data-variant="e"></div>
-    </div>
-    <div class="spec">
-      <p class="spec-tag">Sobre <span class="spec-letter">E</span></p>
-      <h2 id="t-e">Burdeos de Gala</h2>
-      <p class="spec-mood">Nocturno, de gala</p>
-      <p class="spec-desc">Burdeos con textura de piel, como en su muestra de color. La solapa es curva y lleva un doble filete metalizado en tono beige. Lacre verde olivo y el nombre del invitado en caligrafía metalizada.</p>
-      <dl>
-        <dt>Papel</dt><dd><span class="sw" style="--c:#5E1520"></span>Burdeos texturizado</dd>
-        <dt>Sello</dt><dd><span class="sw" style="--c:#6A6B3A"></span>Lacre verde olivo</dd>
-        <dt>Detalle</dt><dd><span class="sw" style="--c:#D8C4A2"></span>Doble filete metalizado</dd>
-        <dt>Letra</dt><dd>Caligrafía ornamental metalizada</dd>
-      </dl>
+      <p class="spec-note">Los nombres que se ven en la invitación los inventó la IA. En la versión final irán los suyos.</p>
     </div>
   </section>
 
   <section class="next" aria-labelledby="next-h">
     <h2 id="next-h">¿Cuál <em>les gusta</em>?</h2>
     <div>
-      <p>Díganme la letra. También podemos combinar detalles, por ejemplo el papel rasgado de la C con el listón burdeos de la B, o el sobre espresso de la A con la caligrafía metalizada de la E.</p>
-      <p class="up">Con el sobre elegido pasamos al paso 2: la animación de apertura, cuando el invitado rompe el lacre y sale la invitación.</p>
+      <p>Díganme la letra, o qué combinar entre ellos (por ejemplo, el sobre espresso de la A con el listón burdeos de la B). Las iniciales y el nombre del invitado de las fotos son de ejemplo: en la versión final cada invitado verá el suyo.</p>
+      <p class="up">La quinta propuesta (burdeos con filete dorado) queda pendiente: se acabaron los créditos para generar imágenes en Canva. Con el sobre elegido pasamos al paso 2: la animación cuando el invitado rompe el lacre y abre el sobre.</p>
     </div>
   </section>
 </main>
 
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Foto en grande">
+  <button type="button" id="lb-close">Cerrar</button>
+  <img id="lb-img" alt="">
+</div>
+
 <script>
 (function(){
-'use strict';
-const $$=(s,r=document)=>[...r.querySelectorAll(s)];
-const f1=n=>(+n).toFixed(1);
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function rng(seed){let a=seed>>>0;return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
-
-/* ---------- paper & surface textures (generated SVG noise) ---------- */
-const svgURL=s=>`url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(s)}")`;
-const gray=a=>`1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 ${a}`;
-const noise=({size=240,freq='.8',oct=2,seed=1,m})=>svgURL(`<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}"><filter id="f" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="${freq}" numOctaves="${oct}" seed="${seed}" stitchTiles="stitch"/><feColorMatrix type="matrix" values="${m}"/></filter><rect width="100%" height="100%" filter="url(#f)"/></svg>`);
-const TEX={
-  'grain':noise({size:200,freq:'.9',oct:2,seed:3,m:gray(.34)}),
-  'grain-soft':noise({size:200,freq:'.9',oct:2,seed:5,m:gray(.14)}),
-  'mottle':noise({size:800,freq:'.006',oct:3,seed:9,m:gray(.42)}),
-  'velvet':noise({size:260,freq:'.32',oct:3,seed:12,m:gray(.3)}),
-  'linen-h':noise({size:300,freq:'.012 .9',oct:2,seed:14,m:gray(.22)}),
-  'linen-v':noise({size:300,freq:'.9 .012',oct:2,seed:15,m:gray(.22)}),
-  'specks':noise({size:320,freq:'.45',oct:1,seed:11,m:'0 0 0 0 .22  0 0 0 0 .15  0 0 0 0 .1  18 0 0 0 -13.6'}),
-  'leather':svgURL(`<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360"><filter id="f" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="5" seed="7" stitchTiles="stitch"/><feDiffuseLighting surfaceScale="2.4" diffuseConstant="1" lighting-color="#fff"><feDistantLight azimuth="225" elevation="55"/></feDiffuseLighting><feColorMatrix type="matrix" values="1.5 0 0 0 -.73  1.5 0 0 0 -.73  1.5 0 0 0 -.73  0 0 0 0 .45"/></filter><rect width="100%" height="100%" filter="url(#f)"/></svg>`)
-};
-Object.entries(TEX).forEach(([k,v])=>document.documentElement.style.setProperty('--tex-'+k,v));
-
-/* ---------- botanical drawing ---------- */
-function leaf(x,y,a,L,W,fill,rib){
-  const p=`M0 0C${f1(L*.25)} ${f1(-W)} ${f1(L*.7)} ${f1(-W*.92)} ${f1(L)} 0C${f1(L*.7)} ${f1(W*.92)} ${f1(L*.25)} ${f1(W)} 0 0Z`;
-  return `<g transform="translate(${f1(x)} ${f1(y)}) rotate(${f1(a)})"><path d="${p}" fill="${fill}"/>${rib?`<path d="M${f1(L*.06)} 0Q${f1(L*.5)} ${f1(-W*.12)} ${f1(L*.92)} 0" fill="none" stroke="${rib}" stroke-width=".6"/>`:''}</g>`;
-}
-function curve(len,bend){
-  const P1=[len*.5,-len*bend],P2=[len,0];
-  return{
-    P1,
-    at:t=>{const u=1-t;return[2*u*t*P1[0]+t*t*P2[0],2*u*t*P1[1]+t*t*P2[1]];},
-    ang:t=>Math.atan2(2*(1-t)*P1[1]+2*t*(P2[1]-P1[1]),2*(1-t)*P1[0]+2*t*(P2[0]-P1[0]))*180/Math.PI
-  };
-}
-function sprig(o){
-  const{len=140,bend=.16,n=8,L=26,W=6,palette=['#6b6b3c'],stem='#5b5a33',stemW=1.4,seed=1,rib='rgba(255,255,240,.32)',spread=44,shrink=.38,start=.12}=o;
-  const r=rng(seed),c=curve(len,bend);
-  let s=`<path d="M0 0Q${f1(c.P1[0])} ${f1(c.P1[1])} ${len} 0" fill="none" stroke="${stem}" stroke-width="${stemW}" stroke-linecap="round"/>`;
-  for(let i=0;i<n;i++){
-    const t=start+(.96-start)*i/Math.max(1,n-1),[x,y]=c.at(t),side=i%2?1:-1,k=1-shrink*t;
-    s+=leaf(x,y,c.ang(t)+side*(spread+r()*12-6),L*k*(.9+r()*.2),W*k*(.9+r()*.2),palette[Math.floor(r()*palette.length)],rib);
-  }
-  const[x,y]=c.at(1);
-  return s+leaf(x,y,c.ang(1)+(r()*10-5),L*(1-shrink)*.95,W*(1-shrink),palette[0],rib);
-}
-function fern(o){
-  const{len=120,bend=.06,n=12,L=24,W=4,color='#888',stemW=1.2,spread=56,seed=1}=o;
-  const r=rng(seed),c=curve(len,bend);
-  let s=`<path d="M0 0Q${f1(c.P1[0])} ${f1(c.P1[1])} ${len} 0" fill="none" stroke="${color}" stroke-width="${stemW}" stroke-linecap="round"/>`;
-  for(let i=0;i<n;i++){
-    const t=.05+.9*i/(n-1),[x,y]=c.at(t),a=c.ang(t),k=Math.min(1,.7+t*1.6)*(1-.8*t),l=L*k*(.92+r()*.16),w=W*Math.max(.55,k);
-    s+=leaf(x,y,a-spread,l,w,color,null)+leaf(x,y,a+spread,l*(.95+r()*.1),w,color,null);
-  }
-  const[x,y]=c.at(1);
-  return s+leaf(x,y,c.ang(1),L*.22,W*.6,color,null);
-}
-function berries(cx,cy,seed){
-  const r=rng(seed);let s='';
-  for(let i=0;i<6;i++){
-    const a=-Math.PI/2+(r()-.5)*2.4,d=7+r()*12,x=cx+Math.cos(a)*d,y=cy+Math.sin(a)*d,rr=3+r()*1.8;
-    s+=`<path d="M${cx} ${cy}L${f1(x)} ${f1(y)}" stroke="#6b5a3c" stroke-width=".7"/><circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(rr)}" fill="${r()<.3?'#4E1018':'#6E1C25'}"/><circle cx="${f1(x-rr*.35)}" cy="${f1(y-rr*.35)}" r="${f1(rr*.28)}" fill="#fff" opacity=".28"/>`;
-  }
-  return s;
-}
-function canopy(seed){
-  const r=rng(seed);
-  const branches=[[-30,-20,28,440],[150,-50,64,300],[-50,210,-10,270],[600,-30,128,300],[640,300,196,200]];
-  let g='';
-  for(const[x,y,a,len]of branches){
-    g+=`<g transform="translate(${x} ${y}) rotate(${a+(r()*10-5)})">${sprig({len,bend:.1+r()*.12,n:15,L:50,W:21,palette:['#000'],stem:'#000',stemW:5,seed:Math.floor(r()*1e6),rib:null,spread:48,shrink:.3})}</g>`;
-  }
-  return `<svg class="canopy" viewBox="0 0 600 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${g}</svg>`;
-}
-
-/* ---------- wax seal: a grayscale height map lit by SVG lighting filters ---------- */
-let uid=0;
-function closedPath(p){
-  const n=p.length;let d=`M${f1(p[0][0])} ${f1(p[0][1])}`;
-  for(let i=0;i<n;i++){
-    const p0=p[(i-1+n)%n],p1=p[i],p2=p[(i+1)%n],p3=p[(i+2)%n];
-    d+=`C${f1(p1[0]+(p2[0]-p0[0])/6)} ${f1(p1[1]+(p2[1]-p0[1])/6)} ${f1(p2[0]-(p3[0]-p1[0])/6)} ${f1(p2[1]-(p3[1]-p1[1])/6)} ${f1(p2[0])} ${f1(p2[1])}`;
-  }
-  return d+'Z';
-}
-function monogram(ini){
-  const f='font-family="Cormorant Garamond, Cormorant, Garamond, serif" font-style="italic" font-weight="500"';
-  if(ini.length<2)return `<text x="100" y="122" text-anchor="middle" ${f} font-size="70" fill="#d9d9d9">${esc(ini[0]||'')}</text>`;
-  return `<text x="100" y="117" text-anchor="middle" ${f} font-size="50" fill="#d9d9d9">${esc(ini[0])}<tspan font-size="28" dx="2" dy="-4">&amp;</tspan><tspan dx="2" dy="4">${esc(ini[1])}</tspan></text>`;
-}
-function seal({color,ini,motif='mono',seed=1}){
-  const id='wax'+(++uid),r=rng(seed);
-  const ph=[0,0,0,0].map(()=>r()*Math.PI*2),spills=[r()*Math.PI*2,r()*Math.PI*2],pts=[];
-  for(let i=0;i<64;i++){
-    const th=i/64*Math.PI*2;
-    let k=1+.03*Math.sin(3*th+ph[0])+.022*Math.sin(5*th+ph[1])+.014*Math.sin(9*th+ph[2])+.008*Math.sin(15*th+ph[3]);
-    for(const s of spills){const d=Math.atan2(Math.sin(th-s),Math.cos(th-s));k+=.06*Math.exp(-(d*d)/.03);}
-    pts.push([100+84*k*Math.cos(th),100+84*k*Math.sin(th)]);
-  }
-  const art=motif==='fern'?`<g transform="translate(100 150) rotate(-90)">${fern({len:96,n:9,L:25,W:4.4,color:'#d6d6d6',stemW:2.2,spread:52,seed:seed+3})}</g>`:monogram(ini);
-  return `<svg viewBox="0 0 200 200" aria-hidden="true"><defs><filter id="${id}" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
-<feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="hm"/>
-<feGaussianBlur in="hm" stdDeviation="1.3" result="h"/>
-<feComponentTransfer in="SourceAlpha" result="mask"><feFuncA type="linear" slope="3"/></feComponentTransfer>
-<feDiffuseLighting in="h" surfaceScale="6" diffuseConstant="1.18" lighting-color="#fff" result="diff"><feDistantLight azimuth="225" elevation="50"/></feDiffuseLighting>
-<feFlood flood-color="${color}" result="col"/>
-<feBlend in="diff" in2="col" mode="multiply" result="shade"/>
-<feSpecularLighting in="h" surfaceScale="6" specularConstant=".6" specularExponent="22" lighting-color="#fff" result="spec"><feDistantLight azimuth="225" elevation="42"/></feSpecularLighting>
-<feComposite in="shade" in2="spec" operator="arithmetic" k2="1" k3=".5" result="lit"/>
-<feComposite in="lit" in2="mask" operator="in"/>
-</filter></defs><g filter="url(#${id})">
-<path d="${closedPath(pts)}" fill="#c4c4c4"/>
-<circle cx="100" cy="100" r="64" fill="none" stroke="#f0f0f0" stroke-width="6"/>
-<circle cx="100" cy="100" r="60" fill="#8c8c8c"/>
-<circle cx="100" cy="100" r="53" fill="none" stroke="#adadad" stroke-width="1.8" stroke-dasharray=".1 4.6" stroke-linecap="round"/>
-${art}</g></svg>`;
-}
-const sealHTML=o=>`<div class="seal-wrap" style="left:${o.x}%;top:${o.y}%;width:${o.s}cqw">${seal(o)}</div>`;
-
-/* ---------- envelope geometry (viewBox 725 x 525, an A7 envelope) ---------- */
-const VW=725,VH=525;
-function bez(p0,p1,p2,p3,n){const o=[];for(let i=0;i<=n;i++){const t=i/n,u=1-t;o.push([u*u*u*p0[0]+3*u*u*t*p1[0]+3*u*t*t*p2[0]+t*t*t*p3[0],u*u*u*p0[1]+3*u*u*t*p1[1]+3*u*t*t*p2[1]+t*t*t*p3[1]]);}return o;}
-function flapShape(kind,depth){
-  const D=VH*depth,T=VW/2;let side;
-  if(kind==='pointed'){
-    const ax=T-16,ay=D-16*D/T,c=[T-7,D-.5];side=[[0,0],[ax,ay]];
-    for(let i=1;i<=6;i++){const t=i/6,u=1-t;side.push([u*u*ax+2*u*t*c[0]+t*t*T,u*u*ay+2*u*t*c[1]+t*t*D]);}
-  }else if(kind==='round'){side=bez([0,0],[VW*.17,D*.6],[VW*.31,D],[T,D],28);}
-  else{side=bez([0,0],[VW*.3,D*.05],[VW*.43,D*.8],[T,D],32);}
-  const pts=side.concat(side.slice(0,-1).reverse().map(([x,y])=>[VW-x,y]));
-  return{
-    pts,
-    clip:'polygon('+pts.map(([x,y])=>`${(x/VW*100).toFixed(2)}% ${(y/VH*100).toFixed(2)}%`).join(',')+')',
-    str:pts.map(([x,y])=>`${f1(x)},${f1(y)}`).join(' ')
-  };
-}
-function offsetPts(pts,k){
-  return pts.map((p,i)=>{const a=pts[Math.max(0,i-1)],b=pts[Math.min(pts.length-1,i+1)],dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy)||1;return`${f1(p[0]+k*dy/L)},${f1(p[1]-k*dx/L)}`;}).join(' ');
-}
-const FLAPS={a:flapShape('pointed',.6),b:flapShape('round',.56),c:flapShape('pointed',.6),d:flapShape('pointed',.64),e:flapShape('royal',.62)};
-const BOTTOM='M0 525C130 430 300 308 362.5 300C425 308 595 430 725 525';
-const seams=()=>`<svg class="seams" viewBox="0 0 725 525" preserveAspectRatio="none" aria-hidden="true">
-<path d="M0 0L332 270L0 525Z" style="fill:var(--side-shade)"/><path d="M725 0L393 270L725 525Z" style="fill:var(--side-shade)"/>
-<path d="${BOTTOM}Z" style="fill:var(--bottom-tint)"/>
-<path d="${BOTTOM}" fill="none" style="stroke:var(--seam-shadow)" stroke-width="2.4" vector-effect="non-scaling-stroke" filter="url(#soft1)"/>
-<path d="${BOTTOM}" fill="none" style="stroke:var(--seam-light)" stroke-width="1" vector-effect="non-scaling-stroke" transform="translate(0 1.6)"/></svg>`;
-const foilGrad=id=>`<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A88B65"/><stop offset=".28" stop-color="#EDE0C6"/><stop offset=".5" stop-color="#B89A72"/><stop offset=".72" stop-color="#F3E7D0"/><stop offset="1" stop-color="#9F8160"/></linearGradient>`;
-const frame=g=>`<rect x="22" y="22" width="681" height="481" stroke="url(#${g})" stroke-width="1.8"/><rect x="30" y="30" width="665" height="465" stroke="url(#${g})" stroke-width=".9"/>`;
-
-/* ---------- personalisation ---------- */
-const state={couple:'Valeria & Andrés',guest:'Familia Martínez'};
-function names(){
-  const p=state.couple.split(/\s*&\s*|\s*\+\s*|\s+y\s+|\s+and\s+/i).map(s=>s.trim()).filter(Boolean).slice(0,2);
-  return p.length?p:['Valeria','Andrés'];
-}
-const fit=(base,text,ref)=>`${(base*Math.min(1,ref/Math.max(1,[...text].length))).toFixed(2)}cqw`;
-
-function build(env){
-  const v=env.dataset.variant,F=FLAPS[v],nm=names(),ini=nm.map(s=>[...s][0].toLocaleUpperCase('es'));
-  const raw=state.guest.trim()||'Nombre del invitado',guest=esc(raw);
-  env.style.setProperty('--flap-clip',F.clip);
-  let h='';
-  if(v==='d'){
-    const ferns=`${fern({len:200,n:14,L:34,W:5.5,color:'#9C9A6A',stemW:1.6,spread:56,seed:31})}`;
-    h+=`<div class="card-in"><svg class="ci-fern ci-fern--1" viewBox="-10 -70 230 140" aria-hidden="true">${ferns}</svg><svg class="ci-fern ci-fern--2" viewBox="-10 -70 230 140" aria-hidden="true">${ferns}</svg>
-<p class="ci-pre">Nos casamos</p><p class="ci-names">${esc(nm[0])}${nm[1]?` <i>&amp;</i> ${esc(nm[1])}`:''}</p><p class="ci-sub">Una boda en el bosque</p></div>`;
-  }
-  h+=`<div class="env-body"></div>${seams()}`;
-  if(v==='e')h+=`<svg class="foil" viewBox="0 0 725 525" aria-hidden="true"><defs>${foilGrad('fgE1')}</defs>${frame('fgE1')}</svg>`;
-  h+=`<div class="flap-wrap"><div class="flap"></div><svg class="flap-edge" viewBox="0 0 725 525" aria-hidden="true"><polyline points="${F.str}"/></svg></div>`;
-
-  if(v==='a'){
-    h+=`<div class="deco" style="left:50%;top:59%;width:56cqw;--r:-12deg"><svg viewBox="-170 -85 340 170" aria-hidden="true">
-<g transform="translate(-4 4) rotate(-20)">${sprig({len:158,bend:.14,n:11,L:30,W:6.4,palette:['#9C9A6A','#86844F','#AFAA7C','#77763F'],stem:'#6d6a3f',stemW:1.5,seed:21,spread:40})}</g>
-<g transform="translate(4 -2) rotate(166)">${sprig({len:118,bend:-.12,n:8,L:27,W:6,palette:['#9C9A6A','#86844F','#AFAA7C'],stem:'#6d6a3f',stemW:1.4,seed:5,spread:42})}</g></svg></div>
-${sealHTML({x:50,y:59,s:19,color:'#7E202B',ini,seed:4})}
-<div class="addr addr--a" style="top:77%"><span class="addr-pre">Para</span><span class="addr-name" style="font-size:${fit(6.6,raw,15)}">${guest}</span></div>`;
-  }
-  if(v==='b'){
-    h+=`<div class="ribbon" style="top:51.6%;height:8.8%"></div>
-<div class="tag-wrap" style="left:57%;top:65%;width:33%;height:23%"><div class="tag"><span class="tag-hole"></span><span class="tag-pre">Para</span><span class="tag-name" style="font-size:${fit(5.6,raw,15)}">${guest}</span></div></div>
-<svg class="twine" viewBox="0 0 725 525" aria-hidden="true" style="inset:0"><path d="M431 410C410 392 425 345 398 302"/><path class="twist" d="M431 410C410 392 425 345 398 302"/><path d="M431 410c-10-9-20 2-10 10c6 5 14 0 10-10" stroke-width="2.2"/></svg>
-${sealHTML({x:50,y:56,s:17,color:'#F2E6D2',ini,seed:9,motif:'fern'})}`;
-  }
-  if(v==='c'){
-    h+=`<div class="botan" style="left:7%;width:19%"><svg viewBox="0 0 138 525" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-<g transform="translate(78 512) rotate(-96)">${fern({len:300,n:16,L:30,W:5.2,color:'#8C8A58',stemW:1.4,spread:56,seed:3})}</g>
-<g transform="translate(36 300) rotate(-74)">${sprig({len:230,bend:.1,n:12,L:30,W:6,palette:['#6E6D3D','#9C9A6A','#5C5B32'],stem:'#5a5832',stemW:1.3,seed:7,spread:38,rib:null})}</g>
-${berries(98,168,2)}${berries(46,420,8)}${berries(104,330,5)}</svg></div>
-<div class="vband" style="left:6%;width:21%"></div>
-${sealHTML({x:50,y:59,s:17,color:'#4B3227',ini,seed:13})}
-<div class="addr addr--c" style="top:76%;left:28%;right:5%"><span class="addr-pre">Para</span><span class="addr-name" style="font-size:${fit(5.6,raw,15)}">${guest}</span></div>`;
-  }
-  if(v==='d'){
-    h+=`<div class="deco" style="left:50%;top:63%;width:30cqw;--r:-26deg"><svg viewBox="-90 -45 180 90" aria-hidden="true">
-<g transform="translate(-6 2)">${sprig({len:84,bend:.12,n:7,L:20,W:4.6,palette:['#9C9A6A','#86844F'],stem:'#6d6a3f',stemW:1.1,seed:41,spread:40})}</g>
-<g transform="rotate(176)">${sprig({len:60,bend:-.1,n:5,L:18,W:4.2,palette:['#9C9A6A','#AFAA7C'],stem:'#6d6a3f',stemW:1,seed:43,spread:42})}</g></svg></div>
-${sealHTML({x:50,y:63,s:13,color:'#7E202B',ini,seed:17})}
-<div class="addr addr--d" style="top:84.5%"><span class="addr-pre">Para</span><span class="addr-name" style="font-size:${fit(2.3,raw,22)}">${guest}</span></div>`;
-  }
-  if(v==='e'){
-    h+=`<svg class="foil" viewBox="0 0 725 525" aria-hidden="true"><defs>${foilGrad('fgE2')}<clipPath id="fcE"><polygon points="${F.str}"/></clipPath><clipPath id="frE"><rect x="22" y="22" width="681" height="481"/></clipPath></defs>
-<g clip-path="url(#fcE)">${frame('fgE2')}<g clip-path="url(#frE)"><polyline points="${offsetPts(F.pts,14)}" stroke="url(#fgE2)" stroke-width="1.8"/><polyline points="${offsetPts(F.pts,22)}" stroke="url(#fgE2)" stroke-width=".9"/></g></g></svg>
-${sealHTML({x:50,y:61,s:18,color:'#6E6F3C',ini,seed:23})}
-<div class="addr addr--e" style="top:77.5%"><span class="addr-pre">Para</span><span class="addr-name" style="font-size:${fit(7.4,raw,15)}">${guest}</span></div>`;
-  }
-  h+='<div class="glare"></div>';
-  env.innerHTML=h;
-}
-const renderAll=()=>$$('.env').forEach(build);
-
-$$('.stage').forEach((st,i)=>st.insertAdjacentHTML('afterbegin',canopy(17+i*31)));
-renderAll();
-
-let raf=0;
-const form=document.getElementById('try-form');
-form.addEventListener('submit',e=>e.preventDefault());
-form.addEventListener('input',()=>{
-  state.couple=document.getElementById('f-couple').value;
-  state.guest=document.getElementById('f-guest').value;
-  cancelAnimationFrame(raf);raf=requestAnimationFrame(renderAll);
-});
-
-/* ---------- light & tilt ---------- */
-if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
-  $$('.stage').forEach(st=>{
-    const env=st.querySelector('.env');
-    st.addEventListener('pointermove',e=>{
-      const r=env.getBoundingClientRect();
-      const x=Math.max(-.6,Math.min(.6,(e.clientX-r.left)/r.width-.5)),y=Math.max(-.6,Math.min(.6,(e.clientY-r.top)/r.height-.5));
-      env.style.transform=`rotateX(${f1(-y*8)}deg) rotateY(${f1(x*10)}deg)`;
-      env.style.setProperty('--gx',`${f1((x+.5)*100)}%`);
-      env.style.setProperty('--gy',`${f1((y+.5)*100)}%`);
-      env.style.setProperty('--px',`${(-x*.8).toFixed(2)}cqw`);
-      env.style.setProperty('--py',`${(-y*.6).toFixed(2)}cqw`);
-      env.style.setProperty('--fx',`${f1((x+.5)*100)}%`);
-    });
-    st.addEventListener('pointerleave',()=>{
-      env.style.transform='';
-      ['--gx','--gy','--px','--py','--fx'].forEach(p=>env.style.removeProperty(p));
-    });
-  });
-}
+  const lb=document.getElementById('lightbox'),img=document.getElementById('lb-img'),close=document.getElementById('lb-close');
+  let last=null;
+  const shut=()=>{lb.hidden=true;img.removeAttribute('src');if(last)last.focus();};
+  document.querySelectorAll('.photo').forEach(b=>b.addEventListener('click',()=>{
+    last=b;const src=b.querySelector('img');img.src=b.dataset.full;img.alt=src.alt;lb.hidden=false;close.focus();
+  }));
+  lb.addEventListener('click',shut);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden)shut();});
 })();
 </script>
