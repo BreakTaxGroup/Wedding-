@@ -1,0 +1,222 @@
+<title>Apertura del Sobre</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400&family=Waterfall&display=swap">
+<style>
+/* Layout: full-screen stage. The opening clip (Gemini video, name painted out) sits in a 1280x720 frame that is
+   scaled to cover the screen; the guest's name is drawn on top and follows the envelope with a per-frame homography.
+   Thin overlay UI: hint, warm light transition, reveal card, name tester. Single dark immersive look. */
+:root{
+  --night:#130C08;
+  --cream:#F4ECDF;
+  --espresso:#3A261C;
+  --burgundy:#621720;
+  --ink-soft:#6E5D51;
+  --f-display:"Cormorant Garamond","Cormorant",Garamond,"Times New Roman",serif;
+  --f-body:"Jost","Avenir Next","Segoe UI",system-ui,sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{margin:0;background:var(--night);color:var(--cream);font-family:var(--f-body);font-weight:300;overflow:hidden;-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.stage{position:fixed;inset:0;overflow:hidden;cursor:pointer;touch-action:manipulation;background:var(--night)}
+.backdrop{position:absolute;inset:-60px;background:url(video/poster.jpg) center/cover;filter:blur(30px) brightness(.42) saturate(1.25);transform:scale(1.15)}
+.frame{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;will-change:transform,filter}
+.frame video{position:absolute;inset:0;width:1280px;height:720px;display:block}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 0 transparent}
+.portrait .frame{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent 100%)}
+.ink{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;pointer-events:none;mix-blend-mode:multiply}
+.ink canvas{position:absolute;height:220px;transform:rotate(-16deg);filter:blur(.25px);
+  -webkit-mask-image:linear-gradient(90deg,#000 45%,transparent 55%);mask-image:linear-gradient(90deg,#000 45%,transparent 55%);
+  -webkit-mask-size:320% 100%;mask-size:320% 100%;-webkit-mask-position:100% 0;mask-position:100% 0;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.ink canvas.write{animation:write 2.6s cubic-bezier(.45,.05,.4,1) forwards}
+.ink canvas.done{-webkit-mask-position:0 0;mask-position:0 0;animation:none}
+@keyframes write{from{-webkit-mask-position:100% 0;mask-position:100% 0}to{-webkit-mask-position:0 0;mask-position:0 0}}
+#motes{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen;transition:opacity 1s}
+.bloom{position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(circle at var(--gx,50%) var(--gy,40%),rgba(255,240,214,1) 0,rgba(255,226,180,.85) 22%,rgba(255,214,160,.25) 55%,transparent 75%);mix-blend-mode:screen}
+.wash{position:absolute;inset:0;pointer-events:none;opacity:0;background:var(--cream)}
+
+.veil{position:fixed;inset:0;background:var(--night);z-index:5;display:grid;place-items:center;transition:opacity 1.2s ease}
+.veil.off{opacity:0;pointer-events:none}
+.veil span{font-family:var(--f-display);font-style:italic;font-size:1.1rem;letter-spacing:.06em;color:rgba(244,236,223,.6)}
+.hint{position:fixed;left:0;right:0;bottom:calc(30px + env(safe-area-inset-bottom,0px));z-index:3;margin:0;text-align:center;pointer-events:none;
+  font-family:var(--f-display);font-style:italic;font-size:clamp(1.05rem,2.6vw,1.35rem);letter-spacing:.04em;color:var(--cream);
+  text-shadow:0 1px 14px rgba(0,0,0,.8),0 0 2px rgba(0,0,0,.6);opacity:0;transition:opacity 1.2s ease}
+.hint.on{opacity:1}
+.hint::after{content:"";display:block;width:44px;height:1px;margin:12px auto 0;background:rgba(244,236,223,.7);animation:breathe 2.8s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scaleX(.4);opacity:.4}50%{transform:scaleX(1);opacity:1}}
+.title{position:fixed;left:0;right:0;top:calc(72px + env(safe-area-inset-top,0px));z-index:3;margin:0;text-align:center;pointer-events:none;display:none;
+  font-family:var(--f-display);color:var(--cream);text-shadow:0 1px 14px rgba(0,0,0,.7);transition:opacity 1s}
+.title small{display:block;font-weight:500;text-transform:uppercase;letter-spacing:.42em;padding-left:.42em;font-size:.72rem;opacity:.75}
+.title span{display:block;font-size:2rem;font-weight:400;margin-top:6px}
+.portrait-ui .title{display:block}
+
+.reveal{position:fixed;inset:0;z-index:4;display:grid;place-items:center;text-align:center;pointer-events:none;opacity:0;transition:opacity 1.4s ease;color:var(--espresso)}
+.reveal.on{opacity:1;pointer-events:auto}
+.reveal-in{display:flex;flex-direction:column;align-items:center;gap:6px;padding-block:24px;max-width:34rem}
+.reveal .eyebrow{margin:0;font-family:var(--f-display);font-weight:500;text-transform:uppercase;letter-spacing:.42em;padding-left:.42em;font-size:.8rem;color:var(--ink-soft)}
+.reveal h1{margin:6px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(2.8rem,9vw,5.2rem);line-height:1;letter-spacing:-.01em;text-wrap:balance}
+.reveal h1 em{font-family:"Waterfall",var(--f-display);font-style:normal;font-weight:400;color:var(--burgundy);font-size:1.1em;padding:0 .08em}
+.reveal p.sub{margin:14px 0 0;font-size:.98rem;color:var(--ink-soft);max-width:30ch;line-height:1.6}
+.reveal button{margin-top:22px;font-family:var(--f-display);font-size:.8rem;font-weight:500;text-transform:uppercase;letter-spacing:.3em;
+  padding:12px 20px 12px calc(20px + .3em);border:1px solid rgba(58,38,28,.4);background:transparent;color:var(--espresso);cursor:pointer}
+.reveal button:hover{background:rgba(58,38,28,.06)}
+button:focus-visible{outline:2px solid var(--burgundy);outline-offset:3px}
+
+.namebtn{position:fixed;z-index:6;right:max(16px,env(safe-area-inset-right,0px));top:calc(14px + env(safe-area-inset-top,0px));
+  font-family:var(--f-body);font-size:.74rem;letter-spacing:.08em;color:rgba(244,236,223,.85);background:rgba(19,12,8,.4);border:1px solid rgba(244,236,223,.25);
+  padding:7px 12px;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.namepanel{position:fixed;z-index:6;right:max(16px,env(safe-area-inset-right,0px));top:calc(52px + env(safe-area-inset-top,0px));width:min(300px,calc(100vw - 32px));
+  background:rgba(19,12,8,.85);border:1px solid rgba(244,236,223,.2);padding:14px;display:grid;gap:10px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.namepanel label{display:grid;gap:4px;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,236,223,.7)}
+.namepanel input{font-family:var(--f-display);font-style:italic;font-size:1.25rem;color:var(--cream);background:transparent;border:0;border-bottom:1px solid rgba(244,236,223,.4);padding:4px 0;border-radius:0;width:100%}
+.namepanel input:focus{outline:none;border-bottom-color:var(--cream)}
+.namepanel .row{display:flex;gap:8px}
+.namepanel button{flex:1;font-family:var(--f-body);font-size:.78rem;letter-spacing:.08em;padding:9px 10px;cursor:pointer;border:1px solid rgba(244,236,223,.35);background:transparent;color:var(--cream)}
+.namepanel button.primary{background:var(--cream);color:var(--espresso);border-color:var(--cream)}
+@media (prefers-reduced-motion:reduce){.hint::after{animation:none}.ink canvas.write{animation-duration:.01s}}
+</style>
+
+<div class="stage" id="stage" role="button" tabindex="0" aria-label="Sobre de la invitación. Toca para abrirlo.">
+  <div class="backdrop" aria-hidden="true"></div>
+  <div class="frame" id="frame">
+    <video id="vid" src="video/apertura.mp4" poster="video/poster.jpg" playsinline preload="auto" aria-hidden="true"></video>
+    <div class="ink" id="ink"><canvas id="name"></canvas></div>
+  </div>
+  <canvas id="motes" aria-hidden="true"></canvas>
+  <div class="bloom" id="bloom"></div>
+  <div class="wash" id="wash"></div>
+</div>
+<p class="title" aria-hidden="true"><small>Nos casamos</small><span>Valeria &amp; Andrés</span></p>
+<div class="veil" id="veil"><span>Preparando su invitación…</span></div>
+<p class="hint" id="hint">Toca el sello para abrir</p>
+
+<section class="reveal" id="reveal" aria-live="polite">
+  <div class="reveal-in">
+    <p class="eyebrow">Nos casamos</p>
+    <h1>Valeria <em>&amp;</em> Andrés</h1>
+    <p class="sub">Aquí empieza el sitio con toda la información de la boda. Lo diseñamos en el paso 3.</p>
+    <button type="button" id="replay">Ver la apertura otra vez</button>
+  </div>
+</section>
+
+<button class="namebtn" id="namebtn" type="button" aria-expanded="false" aria-controls="namepanel">Probar otro nombre</button>
+<form class="namepanel" id="namepanel" hidden autocomplete="off">
+  <label for="f-guest">Nombre del invitado<input id="f-guest" type="text" maxlength="34" value="Familia Martínez"></label>
+  <div class="row"><button type="button" id="np-cancel">Cerrar</button><button type="submit" class="primary">Escribirlo</button></div>
+</form>
+
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const stage=$('stage'),frame=$('frame'),vid=$('vid'),ink=$('ink'),nameC=$('name'),bloom=$('bloom'),wash=$('wash'),veil=$('veil'),hint=$('hint'),reveal=$('reveal'),motes=$('motes');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NAME={cx:938,cy:480,size:87,maxW:440};          /* where the original name sat in frame 0 */
+const GLOW=[650,262];                                  /* light coming out of the envelope */
+const RATE=.85;
+let track=null,state={guest:'Familia Martínez',phase:'idle',revealed:false};
+
+/* ---------- guest name, drawn as ink ---------- */
+function drawName(write){
+  const dpr=2,H=220;const c=nameC.getContext('2d');
+  let size=NAME.size;c.font=`${size*dpr}px Waterfall, "Snell Roundhand", cursive`;
+  let w=c.measureText(state.guest).width/dpr;
+  if(w>NAME.maxW){size*=NAME.maxW/w;w=NAME.maxW;}
+  const cw=Math.ceil(w+90);
+  nameC.width=cw*dpr;nameC.height=H*dpr;nameC.style.width=cw+'px';
+  nameC.style.left=(NAME.cx-cw/2)+'px';nameC.style.top=(NAME.cy-H/2)+'px';
+  c.font=`${size*dpr}px Waterfall, "Snell Roundhand", cursive`;c.textAlign='center';c.textBaseline='alphabetic';
+  c.fillStyle='rgba(52,40,32,.9)';c.fillText(state.guest,cw*dpr/2,H*.64*dpr);
+  nameC.classList.remove('write','done');void nameC.offsetWidth;
+  nameC.classList.add(write&&!reduce?'write':'done');
+}
+
+/* ---------- framing ---------- */
+let base={s:1,tx:0,ty:0},portrait=false,vw=1,vh=1;
+function layout(){
+  vw=innerWidth;vh=innerHeight;portrait=vw/vh<1.05;
+  document.body.classList.toggle('portrait-ui',portrait);stage.classList.toggle('portrait',portrait);
+  if(!portrait){const s=Math.max(vw/1280,vh/720)*1.03;base={s,tx:vw/2-640*s,ty:vh/2-372*s};
+    base.tx=Math.min(0,Math.max(vw-1280*s,base.tx));base.ty=Math.min(0,Math.max(vh-720*s,base.ty));}
+  else{const s=vw/820;base={s,tx:vw/2-760*s,ty:vh*.5-360*s};}
+  motes.width=vw*Math.min(2,devicePixelRatio||1);motes.height=vh*Math.min(2,devicePixelRatio||1);
+  apply(state.phase==='idle'?0:vid.currentTime);
+}
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+function apply(t){
+  const z=reduce?0:ease(cl((t-1.4)/.95));
+  const breathe=state.phase==='idle'&&!reduce?Math.sin(performance.now()/4200)*.008:0;
+  const s=base.s*(1+breathe)*(1+z*.7);
+  const gx0=base.tx+GLOW[0]*base.s,gy0=base.ty+GLOW[1]*base.s;
+  const gx=gx0+(vw/2-gx0)*z*.6,gy=gy0+(vh*.45-gy0)*z*.6;
+  const tx=gx-GLOW[0]*s,ty=gy-GLOW[1]*s;
+  frame.style.transform=`translate(${tx}px,${ty}px) scale(${s})`;
+  frame.style.filter=z>0?`blur(${(z*5).toFixed(2)}px) brightness(${(1+z*.25).toFixed(3)})`:'';
+  bloom.style.setProperty('--gx',gx+'px');bloom.style.setProperty('--gy',gy+'px');
+  bloom.style.opacity=cl((t-1.3)/.8).toFixed(3);
+  wash.style.opacity=(cl((t-1.85)/.5)*.9).toFixed(3);
+  motes.style.opacity=state.phase==='idle'?1:Math.max(0,1-t*1.5);
+}
+
+/* ---------- per-frame tracking of the name ---------- */
+function setH(t){
+  if(!track)return;
+  const i=Math.min(track.H.length-1,Math.max(0,Math.round(t*track.fps)));
+  const h=track.H[i];
+  ink.style.transform=`matrix3d(${h[0][0]},${h[1][0]},0,${h[2][0]},${h[0][1]},${h[1][1]},0,${h[2][1]},0,0,1,0,${h[0][2]},${h[1][2]},0,${h[2][2]})`;
+}
+const rvfc='requestVideoFrameCallback' in HTMLVideoElement.prototype;
+function onFrame(now,meta){setH(meta.mediaTime);if(state.phase==='open')vid.requestVideoFrameCallback(onFrame);}
+function tick(){
+  if(state.phase==='open'){const t=vid.currentTime;if(!rvfc)setH(t);apply(t);
+    if(!state.revealed&&(t>2.3||vid.ended)){state.revealed=true;reveal.classList.add('on');}}
+  else apply(0);
+  drawMotes();
+  requestAnimationFrame(tick);
+}
+
+/* ---------- dust in the light ---------- */
+const M=[...Array(46)].map((_,i)=>({x:.45+Math.random()*.55,y:Math.random()*.7,r:.6+Math.random()*1.8,s:.3+Math.random()*.9,p:Math.random()*6.28}));
+function drawMotes(){
+  if(reduce)return;const c=motes.getContext('2d'),W=motes.width,H=motes.height,k=W/vw,t=performance.now()/1000;
+  c.clearRect(0,0,W,H);c.globalCompositeOperation='lighter';
+  for(const m of M){const x=((m.x+Math.sin(t*.13*m.s+m.p)*.03+t*.004*m.s)%1)*W,y=((m.y-t*.01*m.s+1)%1)*H;
+    const a=.25+.35*Math.abs(Math.sin(t*m.s+m.p));const sun=Math.max(0,1-Math.hypot(x/W-.95,y/H-.05)*1.3);
+    const g=c.createRadialGradient(x,y,0,x,y,m.r*3*k);g.addColorStop(0,`rgba(255,240,210,${a*sun})`);g.addColorStop(1,'rgba(255,240,210,0)');
+    c.fillStyle=g;c.beginPath();c.arc(x,y,m.r*3*k,0,6.283);c.fill();}
+}
+
+/* ---------- open / replay ---------- */
+function open(){
+  if(state.phase!=='idle')return;
+  state.phase='open';hint.classList.remove('on');
+  if(navigator.vibrate)try{navigator.vibrate(14);}catch(e){}
+  vid.muted=false;vid.playbackRate=RATE;vid.currentTime=0;
+  const p=vid.play();
+  if(p&&p.catch)p.catch(()=>{vid.muted=true;vid.play().catch(()=>{state.revealed=true;reveal.classList.add('on');});});
+  if(rvfc)vid.requestVideoFrameCallback(onFrame);
+}
+function reset(write){
+  vid.pause();vid.currentTime=0;state.phase='idle';state.revealed=false;reveal.classList.remove('on');
+  setH(0);drawName(write);setTimeout(()=>{if(state.phase==='idle')hint.classList.add('on');},write?2300:300);
+}
+stage.addEventListener('click',open);
+stage.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+$('replay').addEventListener('click',()=>reset(true));
+const panel=$('namepanel'),nb=$('namebtn');
+nb.addEventListener('click',()=>{panel.hidden=!panel.hidden;nb.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)$('f-guest').focus();});
+$('np-cancel').addEventListener('click',()=>{panel.hidden=true;nb.setAttribute('aria-expanded','false');});
+panel.addEventListener('submit',e=>{e.preventDefault();state.guest=$('f-guest').value.trim()||'Familia Martínez';panel.hidden=true;nb.setAttribute('aria-expanded','false');reset(true);});
+
+/* ---------- start ---------- */
+addEventListener('resize',layout);
+const fontsReady=document.fonts?Promise.race([document.fonts.load('87px Waterfall'),new Promise(r=>setTimeout(r,2500))]).catch(()=>{}):Promise.resolve();
+const trackReady=fetch('video/track.json').then(r=>r.json()).then(j=>{track=j;}).catch(()=>{});
+const videoReady=new Promise(r=>{if(vid.readyState>=2)r();vid.addEventListener('loadeddata',r,{once:true});setTimeout(r,6000);});
+layout();requestAnimationFrame(tick);
+Promise.all([fontsReady,trackReady,videoReady]).then(()=>{layout();setH(0);veil.classList.add('off');setTimeout(()=>reset(true),500);});
+})();
+</script>

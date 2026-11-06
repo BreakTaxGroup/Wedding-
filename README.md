@@ -15,7 +15,7 @@ Sitio de invitaciones para una boda en el bosque. Cada invitado recibe un enlace
 
 ## Proceso
 
-1. **El sobre**: `propuestas/01-sobres.html` (cinco propuestas, A a E)
-2. **La animación de apertura**: pendiente
+1. **El sobre**: `propuestas/01-sobres.html` (elegido: C, Papel de Bosque)
+2. **La animación de apertura**: `propuestas/02-apertura.html` (sobre C elegido; video de Gemini sin el nombre original, con el nombre de cada invitado seguido cuadro por cuadro — ver `tools/track_video.py`)
 3. **El sitio web**: pendiente
 4. Panel de administración, enlaces únicos y confirmaciones: pendiente
