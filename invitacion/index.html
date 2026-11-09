@@ -117,7 +117,7 @@ main{position:relative;z-index:2}
 
 .sheet{background:linear-gradient(180deg,rgba(33,19,12,.92),rgba(33,19,12,.97) 240px,var(--espresso-deep));border-top:1px solid var(--line)}
 .sec{max-width:880px;margin:0 auto;padding-block:clamp(64px,10vw,104px);text-align:center}
-.sec+.sec{border-top:1px solid var(--line)}
+.sec:not([hidden])~.sec{border-top:1px solid var(--line)}
 .kicker{margin:0;font-size:.74rem;letter-spacing:.4em;padding-left:.4em;text-transform:uppercase;font-weight:600;color:var(--beige)}
 .h2{margin:10px 0 0;font-family:var(--f-display);font-weight:400;font-style:italic;font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;letter-spacing:-.005em;text-wrap:balance}
 .lede{margin:16px auto 0;max-width:34rem;font-size:1.2rem;color:rgba(241,231,215,.86)}
@@ -186,6 +186,22 @@ fieldset{border:0;margin:0;padding:0}
 .thanks p{margin:8px 0 0;font-size:1.2rem}
 .linkish{background:none;border:0;padding:0;margin-top:14px;color:var(--beige);text-decoration:underline;text-underline-offset:4px;cursor:pointer;font-size:1rem}
 
+.letter{position:relative;max-width:560px;margin:0 auto;padding:46px clamp(24px,6vw,54px) 40px;text-align:left;color:#3A1D12;background:#F7F0E4;border-radius:4px;transform:rotate(-.8deg);
+  box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 30px 60px -28px rgba(0,0,0,.65)}
+.letter::before{content:"";position:absolute;inset:0;border-radius:inherit;background-image:var(--leather);background-size:160px;mix-blend-mode:multiply;opacity:.1;pointer-events:none}
+.letter .kicker{color:#8A5A3C}
+.letter-body{position:relative;margin:16px 0 0;font-style:italic;font-size:clamp(1.25rem,3.6vw,1.45rem);line-height:1.55;white-space:pre-line;color:#3A1D12}
+.letter-sign{position:relative;margin:24px 0 0;text-align:right;font-style:italic;font-size:1.05rem;color:#6B4630}
+.letter-sign .sig{display:block;font-family:var(--f-script);font-style:normal;font-size:2.4rem;line-height:1.1;color:#4A2416}
+.rfor{margin:0;text-align:center;font-family:var(--f-script);font-size:clamp(2.2rem,7vw,2.8rem);line-height:1.15;color:var(--beige)}
+.who{display:flex;flex-wrap:wrap;gap:10px}
+.who label{position:relative;display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:8px 18px 8px 14px;border:1px solid rgba(241,231,215,.4);border-radius:999px;cursor:pointer;font-size:1.12rem;line-height:1.2}
+.who input{position:absolute;opacity:0;pointer-events:none}
+.who label::before{content:"";width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(241,231,215,.6);flex:none}
+.who label:has(input:checked){background:var(--cream);color:var(--espresso-ink);border-color:var(--cream)}
+.who label:has(input:checked)::before{border-color:var(--espresso);background:var(--espresso) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.3l2.3 2.2 4.7-5' fill='none' stroke='%23F1E7D7' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
+.who label:has(input:focus-visible){outline:2px solid var(--beige);outline-offset:3px}
+
 footer.end{text-align:center;padding-block:56px calc(64px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
 footer.end .mono{font-family:var(--f-display);font-style:italic;font-size:2.2rem}
 footer.end p{margin:6px 0 0;font-size:.74rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(241,231,215,.7)}
@@ -239,6 +255,55 @@ td.num{font-variant-numeric:tabular-nums;text-align:center}
 .status{color:#7A6252;font-style:italic}
 .empty{color:#7A6252;font-style:italic;padding:12px 0}
 .locked-msg{max-width:30rem;margin:18vh auto 0;text-align:center}
+.seg{display:inline-flex;flex-wrap:wrap;border:1px solid #DCCDB8;border-radius:12px;overflow:hidden;background:#FBF8F3}
+.seg label{position:relative;display:flex;align-items:center;padding:9px 18px;cursor:pointer;font-weight:600;font-size:.95rem;color:#6D5646}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label:has(input:checked){background:#3A2218;color:#F1E7D7}
+.seg label:has(input:focus-visible){outline:2px solid #B08A6A;outline-offset:-3px}
+.tone{margin:8px 0 0;color:#7A6252;font-size:.92rem;font-style:italic}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 14px;margin-top:14px}
+.formgrid .full{grid-column:1/-1}
+@media (max-width:640px){.formgrid{grid-template-columns:1fr}}
+.checkline{display:flex;align-items:center;gap:10px;font-size:1rem;cursor:pointer;align-self:end;padding-bottom:9px}
+.checkline input{width:18px;height:18px;accent-color:#3A2218}
+.envprev{display:flex;align-items:center;justify-content:center;min-height:84px;padding:10px 16px;border-radius:12px;background:#EFE6D6;box-shadow:inset 0 0 0 1px #E0D2BE;
+  font-family:var(--f-ink);font-size:2.5rem;line-height:1.1;color:#3A2A20;text-align:center;overflow-wrap:anywhere}
+.envprev:empty::before{content:"Aquí verás el nombre como irá en el sobre";font-family:var(--f-body);font-style:italic;font-size:1rem;color:#9A8676}
+.formacts{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px}
+details.bulk>summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+details.bulk>summary::-webkit-details-marker{display:none}
+details.bulk>summary h2{margin:0}
+details.bulk>summary::after{content:"+";font-size:1.6rem;color:#B08A6A;line-height:1}
+details.bulk[open]>summary::after{content:"–"}
+.bulkhelp{margin:12px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:6px 18px;font-size:.92rem;color:#6D5646}
+.bulkhelp code{background:#F4EDE2;padding:1px 6px;border-radius:6px;font-size:.88rem;color:#2B1810}
+.bulkta{font:inherit;font-size:1rem;width:100%;min-height:9em;color:#2B1810;background:#FBF8F3;border:1px solid #DCCDB8;border-radius:10px;padding:10px 12px;resize:vertical}
+.bulkprev{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:6px;max-height:300px;overflow:auto}
+.bulkprev li{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:6px 12px;border-radius:10px;background:#FBF8F3}
+.chip{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.74rem;font-weight:600;letter-spacing:.04em;background:#EFE6D8;color:#6D5646}
+.chip.pareja{background:#E4E6CF;color:#3E3B14}.chip.familia{background:#F1D9D6;color:#5F1216}
+.listbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:6px 0 10px}
+.listbar .search{flex:1 1 220px;font:inherit;font-size:1rem;color:#2B1810;background:#FBF8F3;border:1px solid #DCCDB8;border-radius:10px;padding:9px 11px;min-width:0}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{border:1px solid #DCCDB8;background:#FBF8F3;border-radius:999px;padding:6px 12px;font-size:.85rem;cursor:pointer;color:#2B1810;font-variant-numeric:tabular-nums}
+.filters button[aria-pressed="true"]{background:#3A2218;color:#F1E7D7;border-color:#3A2218}
+.glist{list-style:none;margin:0;padding:0}
+.grow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 14px;padding:16px 0;border-bottom:1px solid #EEE5D8;align-items:center}
+.grow .rowacts{grid-column:1/-1}
+@media (min-width:980px){.grow{grid-template-columns:minmax(0,1.2fr) auto minmax(0,1.7fr)}.grow .rowacts{grid-column:auto;justify-content:flex-end}}
+.gwho{min-width:0;display:grid;gap:4px}
+.envname{font-family:var(--f-ink);font-size:1.9rem;line-height:1;color:#2B1810;overflow-wrap:anywhere}
+.bulkprev .envname{font-size:1.5rem}
+.gmeta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sub{font-size:.86rem;color:#7A6252}
+.sub.nota{font-style:italic}
+.gstate{justify-self:end}
+button.pill{border:0;cursor:pointer;font:inherit;font-size:.78rem;font-weight:600}
+.pill.sent{background:#E7DCCB;color:#4A2416}
+.mini.wa{background:#3A2218;color:#F1E7D7;border-color:#3A2218}
+.mini.wa:hover{background:#21130C}
+.copyfallback{display:block;width:100%;margin-top:6px;font:inherit;font-size:.85rem}
+.listhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 @media (prefers-reduced-motion:reduce){.hero>*{transition:none}.scrollcue,.seal-btn::after{animation:none}#ink.write{animation-duration:.01s}}
 </style>
 
@@ -270,6 +335,14 @@ td.num{font-variant-numeric:tabular-nums;text-align:center}
   </section>
 
   <div class="sheet">
+    <section class="sec gut" id="nota" hidden>
+      <div class="letter">
+        <p class="kicker" data-t="noteKicker">Para ti</p>
+        <p class="letter-body" id="nota-text"></p>
+        <p class="letter-sign"><span data-t="withLove">Con cariño,</span><span class="sig">Idanay &amp; Humberto</span></p>
+      </div>
+    </section>
+
     <section class="sec gut" id="celebracion">
       <p class="kicker" data-t="celebKicker">11 · 03 · 2027</p>
       <h2 class="h2" data-t="celebTitle">La celebración</h2>
@@ -333,14 +406,18 @@ td.num{font-variant-numeric:tabular-nums;text-align:center}
       <h2 class="h2" data-t="rsvpTitle">¿Nos acompañas?</h2>
       <p class="lede" id="rsvp-lede" data-t="rsvpLede">Confirma tu asistencia para preparar todo con cariño.</p>
       <form class="rsvp" id="rsvp-form" novalidate>
-        <label class="field" for="r-name"><span data-t="fName">Nombre</span><input id="r-name" name="nombre" type="text" autocomplete="name" required></label>
+        <p class="rfor" id="r-for" hidden></p>
+        <label class="field" for="r-name" id="name-field"><span data-t="fName">Nombre</span><input id="r-name" name="nombre" type="text" autocomplete="name"></label>
         <fieldset class="field"><legend data-t="fAttend">¿Asistirás?</legend>
           <div class="choice">
             <label for="r-yes"><input id="r-yes" type="radio" name="asiste" value="si" checked><span data-t="yes">Sí, ahí estaré</span></label>
             <label for="r-no"><input id="r-no" type="radio" name="asiste" value="no"><span data-t="no">No podré asistir</span></label>
           </div>
         </fieldset>
-        <label class="field" for="r-count" id="count-field"><span id="count-label" data-t="fCount">¿Cuántas personas?</span><select id="r-count" name="personas"></select></label>
+        <fieldset class="field" id="who-field" hidden><legend data-t="whoAttend">¿Quiénes asistirán?</legend><div class="who" id="who"></div></fieldset>
+        <label class="field" for="r-count" id="count-field"><span id="count-label">¿Cuántas personas?</span><select id="r-count" name="personas"></select></label>
+        <label class="field" for="r-comp" id="comp-field" hidden><span data-t="compName">Nombre de tu acompañante (opcional)</span><input id="r-comp" name="acompanante" type="text" autocomplete="off" maxlength="80"></label>
+        <label class="field" for="r-diet" id="diet-field"><span data-t="fDiet">Alergias o restricciones alimentarias (opcional)</span><input id="r-diet" name="alergias" type="text" maxlength="300"></label>
         <label class="field" for="r-msg"><span data-t="fMsg">Un mensaje para los novios (opcional)</span><textarea id="r-msg" name="mensaje" rows="2"></textarea></label>
         <p class="formmsg" id="formmsg" role="status"></p>
         <button class="btn solid" type="submit" data-t="send">Enviar respuesta</button>
@@ -410,6 +487,7 @@ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const html=document.documentElement;
 
 /* =============== texts =============== */
+/* {s,p}: singular (one person, "tú") / plural (a couple or family, "ustedes") */
 const T={
 es:{eyebrow:'Nos casamos',days:'Días',hours:'Horas',mins:'Minutos',secs:'Segundos',rsvpCta:'Confirmar asistencia',stdCta:'Ver save the date',
   celebKicker:'11 · 03 · 2027',celebTitle:'La celebración',when:'Cuándo',where:'Dónde',directions:'Cómo llegar',schedKicker:'El día',
@@ -418,15 +496,23 @@ es:{eyebrow:'Nos casamos',days:'Días',hours:'Horas',mins:'Minutos',secs:'Segund
   cBeige:'Beige claro',cOlive:'Verde olivo',cSoft:'Olivo suave',cBurg:'Burdeos',attireAvoid:'Por favor eviten los tonos deep espresso: están reservados para el cortejo.',
   stdTitle:'Nuestra historia, en un minuto',storyKicker:'Nosotros',storyTitle:'Nuestra historia',giftKicker:'Regalos',giftTitle:'Mesa de regalos',giftBtn:'Ver mesa de regalos',
   stayKicker:'Hospedaje',stayTitle:'Dónde quedarse',faqKicker:'Preguntas',faqTitle:'Lo que quizás te preguntes',
-  rsvpTitle:'¿Nos acompañas?',rsvpLede:'Confirma tu asistencia para preparar todo con cariño.',rsvpBy:d=>`Por favor confírmanos antes del ${d}.`,
-  fName:'Nombre',fAttend:'¿Asistirás?',yes:'Sí, ahí estaré',no:'No podré asistir',fCount:'¿Cuántas personas?',fCountOf:n=>`¿Cuántas personas? (tienes ${n} ${n==1?'lugar':'lugares'})`,
-  fMsg:'Un mensaje para los novios (opcional)',send:'Enviar respuesta',thanks:'¡Gracias!',change:'Cambiar mi respuesta',close:'Cerrar',
-  hint:'Toca el sello para abrir tu invitación',timeTBD:'La hora la compartimos muy pronto.',ceremony:'Ceremonia',reception:'Recepción',
-  forGuest:n=>`<strong></strong>, nos encantaría celebrarlo contigo.`,
-  okYes:(n,c)=>`${n}, recibimos tu confirmación para ${c} ${c==1?'persona':'personas'}. ¡Nos vemos en Orange Farm!`,okNo:n=>`${n}, gracias por avisarnos. Te vamos a extrañar.`,
+  noteKicker:{s:'Para ti',p:'Para ustedes'},withLove:'Con cariño,',
+  rsvpTitle:{s:'¿Nos acompañas?',p:'¿Nos acompañan?'},rsvpLede:{s:'Confirma tu asistencia para preparar todo con cariño.',p:'Confirmen su asistencia para preparar todo con cariño.'},
+  rsvpBy:(d,pl)=>pl?`Por favor confirmen antes del ${d}.`:`Por favor confirma antes del ${d}.`,
+  seats:g=>g.cupos===1?'Reservamos un lugar especialmente para ti.':g.tipo==='persona'?`Reservamos ${g.cupos} lugares: para ti y ${g.cupos===2?'tu acompañante':`${g.cupos-1} acompañantes`}.`:`Reservamos ${g.cupos} lugares para ustedes.`,
+  forFor:'Para ',fName:'Nombre',fAttend:{s:'¿Asistirás?',p:'¿Asistirán?'},yes:{s:'Sí, ahí estaré',p:'Sí, ahí estaremos'},no:{s:'No podré asistir',p:'No podremos asistir'},
+  whoAttend:'¿Quiénes asistirán?',needPick:'Marca quién asistirá, por favor.',
+  compQ:'¿Vienes con acompañante?',compOpt:n=>n===1?'Solo yo':`Yo y ${n-1} ${n===2?'acompañante':'acompañantes'}`,compName:'Nombre de tu acompañante (opcional)',
+  famCount:'¿Cuántos de ustedes asistirán?',fCount:'¿Cuántas personas?',fDiet:'Alergias o restricciones alimentarias (opcional)',
+  fMsg:'Un mensaje para los novios (opcional)',send:'Enviar respuesta',thanks:'¡Gracias!',change:{s:'Cambiar mi respuesta',p:'Cambiar nuestra respuesta'},close:'Cerrar',
+  hint:{s:'Toca el sello para abrir tu invitación',p:'Toquen el sello para abrir su invitación'},timeTBD:'La hora la compartimos muy pronto.',ceremony:'Ceremonia',reception:'Recepción',
+  forGuest:{s:', nos encantaría celebrarlo contigo.',p:', nos encantaría celebrarlo con ustedes.'},
+  okYes:(r,g)=>{const n=joinNames(r.asistentes||[],'es');
+    if(g&&isPl(g))return `¡Qué alegría! Recibimos la confirmación de ${n||g.sobre}. ¡Nos vemos en Orange Farm!`;
+    return `¡Qué alegría, ${g?greetName(g):firstName(r.nombre)}! Recibimos tu confirmación${r.personas>1?` para ${r.personas} personas`:''}. ¡Nos vemos en Orange Farm!`;},
+  okNo:(r,g)=>g&&isPl(g)?`Gracias por avisarnos, ${g.sobre}. Los vamos a extrañar.`:`Gracias por avisarnos, ${g?greetName(g):firstName(r.nombre)}. Te vamos a extrañar.`,
   needName:'Escribe tu nombre, por favor.',sending:'Enviando…',saveFail:'No pudimos guardar tu respuesta. Inténtalo de nuevo en un momento.',
-  noSave:'Esta vista previa todavía no guarda respuestas de invitados.',
-  person:'persona',people:'personas'},
+  noSave:'Esta vista previa todavía no guarda respuestas de invitados.'},
 en:{eyebrow:"We're getting married",days:'Days',hours:'Hours',mins:'Minutes',secs:'Seconds',rsvpCta:'RSVP',stdCta:'Watch the save the date',
   celebKicker:'03 · 11 · 2027',celebTitle:'The celebration',when:'When',where:'Where',directions:'Get directions',schedKicker:'The day',
   dressKicker:'Dress code',dressTitle:'Dress like the forest',attireCap:'Wedding',attireScr:'Guest Attire',
@@ -434,26 +520,55 @@ en:{eyebrow:"We're getting married",days:'Days',hours:'Hours',mins:'Minutes',sec
   cBeige:'Light beige',cOlive:'Olive green',cSoft:'Soft olive',cBurg:'Burgundy',attireAvoid:'Please avoid deep espresso tones, as they will be reserved for the wedding party.',
   stdTitle:'Our story, in one minute',storyKicker:'Us',storyTitle:'Our story',giftKicker:'Gifts',giftTitle:'Gift registry',giftBtn:'View registry',
   stayKicker:'Accommodation',stayTitle:'Where to stay',faqKicker:'Questions',faqTitle:'Things you might wonder',
+  noteKicker:'For you',withLove:'With love,',
   rsvpTitle:'Will you join us?',rsvpLede:'Please let us know so we can prepare everything with love.',rsvpBy:d=>`Kindly reply by ${d}.`,
-  fName:'Name',fAttend:'Will you attend?',yes:"Yes, I'll be there",no:"Sorry, I can't make it",fCount:'How many guests?',fCountOf:n=>`How many guests? (${n} ${n==1?'seat':'seats'} reserved for you)`,
-  fMsg:'A note for the couple (optional)',send:'Send reply',thanks:'Thank you!',change:'Change my reply',close:'Close',
+  seats:g=>g.cupos===1?"We've saved a seat just for you.":g.tipo==='persona'?`We've saved ${g.cupos} seats: for you and ${g.cupos===2?'your guest':`${g.cupos-1} guests`}.`:`We've saved ${g.cupos} seats for you.`,
+  forFor:'For ',fName:'Name',fAttend:'Will you attend?',yes:{s:"Yes, I'll be there",p:"Yes, we'll be there"},no:{s:"Sorry, I can't make it",p:"Sorry, we can't make it"},
+  whoAttend:'Who will attend?',needPick:'Please select who will attend.',
+  compQ:'Are you bringing a guest?',compOpt:n=>n===1?'Just me':`Me + ${n-1}`,compName:"Your guest's name (optional)",
+  famCount:'How many of you will attend?',fCount:'How many guests?',fDiet:'Allergies or dietary restrictions (optional)',
+  fMsg:'A note for the couple (optional)',send:'Send reply',thanks:'Thank you!',change:{s:'Change my reply',p:'Change our reply'},close:'Close',
   hint:'Tap the seal to open your invitation',timeTBD:"We'll share the time very soon.",ceremony:'Ceremony',reception:'Reception',
-  forGuest:n=>`<strong></strong>, we would love to celebrate with you.`,
-  okYes:(n,c)=>`${n}, we received your RSVP for ${c} ${c==1?'guest':'guests'}. See you at Orange Farm!`,okNo:n=>`${n}, thank you for letting us know. We'll miss you.`,
+  forGuest:', we would love to celebrate with you.',
+  okYes:(r,g)=>{const n=joinNames(r.asistentes||[],'en');
+    if(g&&isPl(g))return `We're so happy! We received the RSVP for ${n||g.sobre}. See you at Orange Farm!`;
+    return `We're so happy, ${g?greetName(g):firstName(r.nombre)}! We received your RSVP${r.personas>1?` for ${r.personas} guests`:''}. See you at Orange Farm!`;},
+  okNo:(r,g)=>`Thank you for letting us know, ${g?(isPl(g)?g.sobre:greetName(g)):firstName(r.nombre)}. We'll miss you.`,
   needName:'Please write your name.',sending:'Sending…',saveFail:"We couldn't save your reply. Please try again in a moment.",
-  noSave:"This preview doesn't save guest replies yet.",
-  person:'guest',people:'guests'}
+  noSave:"This preview doesn't save guest replies yet."}
 };
 let lang='es';
 const t=k=>T[lang][k];
+const tp=k=>{const v=T[lang][k];return v&&typeof v==='object'?v[isPl(state.guest)?'p':'s']:v;};
+
+/* =============== guests: shared model and link =============== */
+/* Each guest's link carries their envelope name, type, seats, language and note (base32 after #i-CODE-),
+   so the envelope shows their name even for visitors the database can't serve. */
+const TIPOS={p:'persona',c:'pareja',f:'familia'},TIPOS_V=Object.values(TIPOS);
+const B32='abcdefghijklmnopqrstuvwxyz234567';
+function b32e(bytes){let bits=0,val=0,out='';for(const b of bytes){val=((val<<8)|b)&0xffff;bits+=8;while(bits>=5){out+=B32[(val>>>(bits-5))&31];bits-=5;}}if(bits>0)out+=B32[(val<<(5-bits))&31];return out;}
+function b32d(str){let bits=0,val=0;const out=[];for(const ch of str){const i=B32.indexOf(ch);if(i<0)return null;val=((val<<5)|i)&0xffff;bits+=5;if(bits>=8){out.push((val>>>(bits-8))&255);bits-=8;}}return new Uint8Array(out);}
+function normGuest(g){if(!g)return null;const o={...g};if(!o.sobre&&o.nombre)o.sobre=o.nombre;o.sobre=String(o.sobre||'').trim();
+  o.personas=Array.isArray(o.personas)?o.personas.map(x=>String(x).trim()).filter(Boolean):[];o.cupos=Math.max(1,Math.min(20,+o.cupos||1));
+  if(!TIPOS_V.includes(o.tipo))o.tipo=o.personas.length===2?'pareja':o.cupos>2?'familia':'persona';o.idioma=o.idioma==='en'?'en':'es';o.nota=String(o.nota||'');return o;}
+function packGuest(g){const k=Object.keys(TIPOS).find(x=>TIPOS[x]===g.tipo)||'p';
+  return b32e(new TextEncoder().encode(['1',k,String(g.cupos||1),g.idioma||'es',g.sobre||'',(g.nota||'').slice(0,240),(g.personas||[]).join('\u001e')].join('\u001f')));}
+function unpackGuest(str){try{const b=b32d(str);if(!b)return null;const f=new TextDecoder('utf-8',{fatal:true}).decode(b).split('\u001f');if(f[0]!=='1'||f.length<7)return null;
+  return normGuest({tipo:TIPOS[f[1]],cupos:+f[2],idioma:f[3],sobre:f[4],nota:f[5],personas:f[6]?f[6].split('\u001e'):[]});}catch(e){return null;}}
+const isPl=g=>!!g&&(g.tipo!=='persona'||g.personas.length>1);
+const firstName=x=>String(x||'').trim().split(/\s+/)[0]||'';
+const greetName=g=>g.tipo==='persona'?firstName(g.personas[0]||g.sobre):g.sobre;
+function joinNames(a,l){a=a.filter(Boolean);if(a.length<2)return a[0]||'';const last=a[a.length-1];
+  const conj=l==='en'?' and ':(/^h?[ií](?![aeiouáéíóú])/i.test(last)?' e ':' y ');return a.slice(0,-1).join(', ')+conj+last;}
+const guestLink=(id,g)=>INVITE_URL+'#i-'+id+'-'+packGuest(g);
 
 /* =============== state =============== */
 const state={cfg:{},guest:null,code:null,db:null,user:null,canWrite:null,reply:null};
 const hash=location.hash.replace(/^#/,'');
 const ADMIN_HASH='adm-56ae82ed';          /* panel privado de los novios: enlace de la invitación + #adm-56ae82ed */
 const isAdmin=hash===ADMIN_HASH;
-const m=/^i-([a-z0-9]{4,12})$/.exec(hash);
-if(m)state.code=m[1];
+const m=/^i-([a-z0-9]{4,12})(?:-([a-z2-7]{2,}))?$/.exec(hash);
+if(m){state.code=m[1];if(m[2])state.guest=unpackGuest(m[2]);}
 
 /* =============== formatting =============== */
 const MES={es:['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],
@@ -468,7 +583,7 @@ function parseTime(s){const mm=/(\d{1,2})(?::(\d{2}))?\s*(am|pm|a\.m\.|p\.m\.)?/
 /* =============== render: language + data =============== */
 function applyText(){
   html.lang=lang;
-  document.querySelectorAll('[data-t]').forEach(el=>{const v=T[lang][el.dataset.t];if(typeof v==='string')el.textContent=v;});
+  document.querySelectorAll('[data-t]').forEach(el=>{const v=tp(el.dataset.t);if(typeof v==='string')el.textContent=v;});
   document.querySelectorAll('#lang button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===lang)));
   $('dateline').textContent=longDate(WEDDING.fecha);$('c-date').textContent=longDate(WEDDING.fecha);
   $('place').textContent=`${WEDDING.lugar} · ${WEDDING.ciudad}`;
@@ -491,19 +606,17 @@ function renderData(){
   $('preguntas').hidden=!qa.length;
   $('faq').replaceChildren(...qa.map(([q,...a])=>{const d=document.createElement('details');const s=document.createElement('summary');s.textContent=q.trim();const p=document.createElement('p');p.textContent=a.join('|').trim();d.append(s,p);return d;}));
   const hg=$('hashtag');hg.hidden=!c.hashtag;hg.textContent=c.hashtag||'';
-  $('rsvp-lede').textContent=c.fechaLimite?`${t('rsvpLede')} ${T[lang].rsvpBy(shortDate(c.fechaLimite))}`:t('rsvpLede');
-  // guest
-  const g=state.guest,fg=$('forguest');
-  if(g&&g.nombre){fg.hidden=false;fg.innerHTML=T[lang].forGuest();fg.querySelector('strong').textContent=g.nombre;}else fg.hidden=true;
-  const max=Math.max(1,Math.min(12,(g&&+g.cupos)||6));
-  const sel=$('r-count'),cur=sel.value;sel.replaceChildren(...Array.from({length:max},(_,i)=>{const o=document.createElement('option');o.value=String(i+1);o.textContent=String(i+1);return o;}));
-  sel.value=cur&&+cur<=max?cur:String(g&&g.cupos?max:Math.min(2,max));
-  $('count-label').textContent=g&&g.cupos?T[lang].fCountOf(max):t('fCount');
-  if(g&&g.nombre&&!$('r-name').value)$('r-name').value=g.nombre;
+  const g=state.guest;
+  $('rsvp-lede').textContent=[g?T[lang].seats(g):'',tp('rsvpLede'),c.fechaLimite?T[lang].rsvpBy(shortDate(c.fechaLimite),isPl(g)):''].filter(Boolean).join(' ');
+  const fg=$('forguest');
+  if(g&&g.sobre){const st=document.createElement('strong');st.textContent=g.sobre;fg.replaceChildren(st,document.createTextNode(tp('forGuest')));fg.hidden=false;}else fg.hidden=true;
+  $('nota').hidden=!(g&&g.nota);$('nota-text').textContent=g&&g.nota||'';
+  buildRsvp();
   if(state.reply)showThanks(state.reply);
 }
 document.querySelectorAll('#lang button').forEach(b=>b.addEventListener('click',()=>{lang=b.dataset.lang;try{localStorage.setItem('ih-lang',lang);}catch(e){}applyText();}));
 try{const s=localStorage.getItem('ih-lang');if(s==='es'||s==='en')lang=s;}catch(e){}
+if(state.guest){let pref=null;try{pref=localStorage.getItem('ih-lang');}catch(e){}if(!pref)lang=state.guest.idioma;}
 
 /* =============== countdown =============== */
 function tickCount(){
@@ -541,36 +654,76 @@ const dbReady=(async()=>{
   }catch(e){return null;}
 })();
 async function loadGuestData(){
-  const db=await dbReady;if(!db)return;
-  try{
+  const db=await dbReady;
+  if(db){try{
     const c=await db.doc('config/boda').get();if(c.exists)state.cfg=c.data()||{};
     if(state.code){
-      const g=await db.doc('invitados/'+state.code).get();if(g.exists){state.guest=g.data();if(state.guest.idioma==='en'||state.guest.idioma==='es'){try{if(!localStorage.getItem('ih-lang'))lang=state.guest.idioma;}catch(e){lang=state.guest.idioma;}}}
+      const gd=await db.doc('invitados/'+state.code).get();if(gd.exists)state.guest=normGuest(gd.data());   /* only the couple can read this; guests use their link */
       const r=await db.doc('respuestas/'+state.code).get();if(r.exists)state.reply=r.data();
     }
-  }catch(e){}
+  }catch(e){}}
+  if(!state.reply&&state.code){try{const x=localStorage.getItem('ih-reply-'+state.code);if(x)state.reply=JSON.parse(x);}catch(e){}}
   applyText();
 }
 
 /* =============== RSVP =============== */
 const form=$('rsvp-form');
-function syncAttend(){$('count-field').hidden=form.elements.asiste.value==='no';}
+let rsvpMode='generic',whoFor=null;
+/* generic: no guest · single: one seat · plus: one person with companions · who: each named person · count: a family without names */
+function buildRsvp(){
+  const g=state.guest;
+  const named=g&&g.tipo!=='persona'&&g.personas.length>=2&&g.personas.length>=g.cupos;
+  rsvpMode=!g?'generic':g.tipo==='persona'?(g.cupos>1?'plus':'single'):named?'who':'count';
+  $('name-field').hidden=!!g;
+  const rf=$('r-for');rf.hidden=!g;if(g)rf.textContent=t('forFor')+g.sobre;
+  if(rsvpMode==='who'&&whoFor!==g){whoFor=g;
+    $('who').replaceChildren(...g.personas.map((n,i)=>{const lb=document.createElement('label');lb.htmlFor='r-who-'+i;const inp=document.createElement('input');
+      inp.type='checkbox';inp.id='r-who-'+i;inp.name='quien';inp.value=n;inp.checked=true;const sp=document.createElement('span');sp.textContent=n;lb.append(inp,sp);return lb;}));}
+  const sel=$('r-count'),cur=sel.value,max=g?g.cupos:6;
+  sel.replaceChildren(...Array.from({length:max},(_,i)=>{const o=document.createElement('option');o.value=String(i+1);o.textContent=rsvpMode==='plus'?T[lang].compOpt(i+1):String(i+1);return o;}));
+  sel.value=cur&&+cur<=max?cur:String(g?max:2);
+  $('count-label').textContent=rsvpMode==='plus'?t('compQ'):rsvpMode==='count'?t('famCount'):t('fCount');
+  syncAttend();
+}
+function syncAttend(){
+  const yes=form.elements.asiste.value==='si';
+  $('who-field').hidden=!(yes&&rsvpMode==='who');
+  $('count-field').hidden=!(yes&&['generic','plus','count'].includes(rsvpMode));
+  $('comp-field').hidden=!(yes&&rsvpMode==='plus'&&+$('r-count').value>1);
+  $('diet-field').hidden=!yes;
+}
 form.querySelectorAll('input[name=asiste]').forEach(r=>r.addEventListener('change',syncAttend));
+$('r-count').addEventListener('change',syncAttend);
 function showThanks(r){
   form.hidden=true;$('thanks').hidden=false;
-  $('thanks-msg').textContent=r.asiste?T[lang].okYes(r.nombre,r.personas):T[lang].okNo(r.nombre);
+  $('thanks-msg').textContent=r.asiste?T[lang].okYes(r,state.guest):T[lang].okNo(r,state.guest);
 }
-$('change').addEventListener('click',()=>{$('thanks').hidden=true;form.hidden=false;state.reply=null;});
+$('change').addEventListener('click',()=>{
+  const r=state.reply;$('thanks').hidden=true;form.hidden=false;state.reply=null;
+  if(r){form.querySelector(`input[name=asiste][value=${r.asiste?'si':'no'}]`).checked=true;
+    if(rsvpMode==='who')form.querySelectorAll('input[name=quien]').forEach(i=>{i.checked=!r.asiste||(r.asistentes||[]).includes(i.value);});
+    if(r.personas)$('r-count').value=String(r.personas);$('r-comp').value=r.acompanante||'';$('r-diet').value=r.alergias||'';$('r-msg').value=r.mensaje||'';syncAttend();}
+});
 form.addEventListener('submit',async e=>{
-  e.preventDefault();const msg=$('formmsg');
-  const nombre=form.elements.nombre.value.trim();if(!nombre){msg.textContent=t('needName');form.elements.nombre.focus();return;}
+  e.preventDefault();const msg=$('formmsg'),g=state.guest;
+  const nombre=g?g.sobre:form.elements.nombre.value.trim();
+  if(!nombre){msg.textContent=t('needName');form.elements.nombre.focus();return;}
   const asiste=form.elements.asiste.value==='si';
-  const r={codigo:state.code||'',nombre,asiste,personas:asiste?+form.elements.personas.value:0,mensaje:form.elements.mensaje.value.trim().slice(0,1200),idioma:lang,fecha:new Date().toISOString()};
+  let personas=0,asistentes=[],acompanante='';
+  if(asiste){
+    if(rsvpMode==='who'){asistentes=[...form.querySelectorAll('input[name=quien]:checked')].map(i=>i.value);if(!asistentes.length){msg.textContent=t('needPick');return;}personas=asistentes.length;}
+    else if(rsvpMode==='single'){personas=1;asistentes=[g.personas[0]||g.sobre];}
+    else{personas=+form.elements.personas.value||1;
+      if(rsvpMode==='plus'){acompanante=personas>1?form.elements.acompanante.value.trim().slice(0,80):'';asistentes=[g.personas[0]||g.sobre].concat(acompanante?[acompanante]:[]);}}
+  }
+  const r={codigo:state.code||'',nombre,asiste,personas,asistentes,acompanante,alergias:asiste?form.elements.alergias.value.trim().slice(0,300):'',
+    mensaje:form.elements.mensaje.value.trim().slice(0,1200),idioma:lang,fecha:new Date().toISOString()};
   const db=await dbReady;
   if(!db||state.canWrite===false){msg.textContent=t('noSave');return;}
   msg.textContent=t('sending');
   try{
     if(state.code)await db.doc('respuestas/'+state.code).set(r);else await db.collection('respuestas').add(r);
+    if(state.code){try{localStorage.setItem('ih-reply-'+state.code,JSON.stringify(r));}catch(err){}}
     msg.textContent='';state.reply=r;showThanks(r);
   }catch(err){msg.textContent=err&&err.code==='invalid_argument'?t('noSave'):t('saveFail');}
 });
@@ -596,15 +749,27 @@ function layout(){
   btn.style.width=(VID.sealR*2/VID.w*100)+'%';
 }
 
-/* the guest's name, written by hand on the envelope */
+/* the guest's name, written by hand on the envelope (two lines when a long couple or family name needs it) */
 function writeName(name){
-  const x=ink.getContext('2d'),S=2,H=200;
-  let size=VID.name.size;x.font=`${size*S}px Waterfall, cursive`;let w=x.measureText(name).width/S;
-  if(w>VID.name.maxW){size*=VID.name.maxW/w;w=VID.name.maxW;}
-  const cw=Math.ceil(w+80);ink.width=cw*S;ink.height=H*S;
+  const x=ink.getContext('2d'),S=2,base=VID.name.size,maxW=VID.name.maxW;
+  x.font=`${base*S}px Waterfall, cursive`;const wAt=v=>x.measureText(v).width/S;
+  let lines=[name],size=base;const w0=wAt(name);
+  if(w0>maxW){
+    size=base*maxW/w0;
+    if(size<base*.66&&/\s/.test(name)){
+      let best=null;const conj=/^(&|y|e|and)\s/i;
+      for(let i=0;i<name.length;i++){if(name[i]!==' ')continue;const a=name.slice(0,i).trim(),b=name.slice(i+1).trim();if(!a||!b)continue;
+        const sc=Math.max(wAt(a),wAt(b))*(conj.test(b)?.92:1);if(!best||sc<best[0])best=[sc,a,b];}
+      if(best){lines=[best[1],best[2]];size=Math.min(base*.9,base*maxW/Math.max(wAt(best[1]),wAt(best[2])));}
+    }
+  }
+  const lh=size*.9,H=Math.ceil(200+(lines.length-1)*lh);
+  x.font=`${size*S}px Waterfall, cursive`;const cw=Math.ceil(Math.max(...lines.map(l=>x.measureText(l).width/S))+80);
+  ink.width=cw*S;ink.height=H*S;
   ink.style.left=((VID.name.cx-cw/2)/VID.w*100)+'%';ink.style.top=((VID.name.cy-H/2)/VID.h*100)+'%';
   ink.style.width=(cw/VID.w*100)+'%';ink.style.height=(H/VID.h*100)+'%';ink.style.transform='rotate(-1.5deg)';
-  x.font=`${size*S}px Waterfall, cursive`;x.textAlign='center';x.fillStyle='rgba(48,34,26,.88)';x.fillText(name,cw*S/2,H*.64*S);
+  x.font=`${size*S}px Waterfall, cursive`;x.textAlign='center';x.fillStyle='rgba(48,34,26,.88)';
+  const y0=H/2+size*.28-(lines.length-1)*lh/2;lines.forEach((l,i)=>x.fillText(l,cw*S/2,(y0+i*lh)*S));
   ink.classList.remove('write','done','gone');void ink.offsetWidth;ink.classList.add(reduce?'done':'write');
 }
 
@@ -674,8 +839,8 @@ function startGuest(){
   const data=Promise.race([loadGuestData(),new Promise(r=>setTimeout(r,2600))]);
   applyText();tickCount();
   Promise.all([fonts,data]).then(()=>{
-    const name=state.guest&&state.guest.nombre;
-    if(name)writeName(name);
+    const name=state.guest&&state.guest.sobre;
+    if(name){writeName(name);document.title=name+' · Idanay & Humberto';}
     setTimeout(()=>{btn.classList.add('ready');hint.classList.add('on');},name?1900:400);
   });
 }
@@ -688,68 +853,222 @@ function startAdmin(){
   $('site').hidden=true;$('bg').hidden=true;$('grain').hidden=true;$('admin').hidden=false;
   document.body.style.background='#F4EDE2';html.style.colorScheme='light';
   const body=$('admin-body'),status=$('admin-status');
-  $('preview-link').href=INVITE_URL||'#';
-  $('preview-link').addEventListener('click',e=>{if(!INVITE_URL){e.preventDefault();location.hash='';location.reload();}});
-  let G=[],R=[],C={},tab='invitados',db=null,user=null;
-  const esc=s=>String(s==null?'':s);
-  const linkFor=code=>(INVITE_URL||'')+'#i-'+code;
+  const pv=$('preview-link');pv.href=INVITE_URL;pv.target='_blank';pv.rel='noopener';
+  let G=[],R=[],C={},tab='invitados',db=null,query='',filter='todas',editing=null,detailsDirty=false,booted=false;
+  let statsHost,tabHost,listHost,filtersHost,gform=null;
+  const TIPO_LABEL={persona:'Persona',pareja:'Pareja',familia:'Familia'};
+  const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
   function el(tag,attrs={},...kids){const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='class')e.className=v;else if(k==='text')e.textContent=v;else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else if(v!==false&&v!=null)e.setAttribute(k,v===true?'':v);}e.append(...kids.filter(Boolean));return e;}
-  function code(){const a='abcdefghjkmnpqrstuvwxyz23456789';let s='';const r=crypto.getRandomValues(new Uint8Array(6));for(const b of r)s+=a[b%a.length];return s;}
-  async function copy(text,btnEl){try{await navigator.clipboard.writeText(text);btnEl.textContent='Copiado';}catch(e){const i=el('input',{value:text});btnEl.after(i);i.select();btnEl.textContent='Selecciónalo y cópialo';}setTimeout(()=>{btnEl.textContent='Copiar enlace';},2200);}
-  function waText(g){return `Hola ${g.nombre}, con mucha ilusión te compartimos la invitación a nuestra boda. Ábrela aquí: ${linkFor(g.id)}\n\nIdanay & Humberto · 11 de marzo de 2027`;}
+  function newCode(){const a='abcdefghjkmnpqrstuvwxyz23456789';let x='';for(const b of crypto.getRandomValues(new Uint8Array(6)))x+=a[b%a.length];return G.some(g=>g.id===x)?newCode():x;}
+  const byCode=()=>Object.fromEntries(R.filter(r=>r.codigo).map(r=>[r.codigo,r]));
+  const fmtDay=iso=>new Date(iso).toLocaleDateString('es',{day:'numeric',month:'short'});
+  const seatsTxt=n=>`${n} ${n===1?'lugar':'lugares'}`;
+  let toastT=0;function toast(msg){status.textContent=msg;clearTimeout(toastT);toastT=setTimeout(()=>{if(status.textContent===msg)status.textContent='';},4200);}
 
-  function render(){
-    document.querySelectorAll('.tabs [role=tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===tab)));
-    body.replaceChildren();status.textContent='';
-    const byCode=Object.fromEntries(R.filter(r=>r.codigo).map(r=>[r.codigo,r]));
-    const seats=G.reduce((a,g)=>a+(+g.cupos||0),0),yes=R.filter(r=>r.asiste),conf=yes.reduce((a,r)=>a+(+r.personas||0),0),no=R.filter(r=>!r.asiste).length,pend=G.filter(g=>!byCode[g.id]).length;
-    body.append(el('div',{class:'stats'},
-      el('div',{class:'stat'},el('b',{text:String(G.length)}),el('span',{text:'Invitaciones'})),
-      el('div',{class:'stat'},el('b',{text:String(seats)}),el('span',{text:'Lugares'})),
-      el('div',{class:'stat'},el('b',{text:String(conf)}),el('span',{text:'Personas confirmadas'})),
-      el('div',{class:'stat'},el('b',{text:String(no)}),el('span',{text:'No asistirán'})),
-      el('div',{class:'stat'},el('b',{text:String(pend)}),el('span',{text:'Sin responder'}))));
-    if(tab==='invitados')renderGuests(byCode);else if(tab==='respuestas')renderReplies();else renderDetails();
+  /* ---------- sending ---------- */
+  function waText(g){const link=guestLink(g.id,g),who=greetName(g);
+    if(g.idioma==='en')return `Hi ${who}! We're so happy to share the invitation to our wedding with you. Open it here:\n${link}\n\nWith love,\nIdanay & Humberto · March 11, 2027 · Orlando, FL`;
+    return isPl(g)?`¡Hola, ${who}! Con mucha ilusión les compartimos la invitación a nuestra boda. Ábranla aquí:\n${link}\n\nCon cariño,\nIdanay & Humberto · 11 de marzo de 2027 · Orlando, FL`
+                  :`¡Hola, ${who}! Con mucha ilusión te compartimos la invitación a nuestra boda. Ábrela aquí:\n${link}\n\nCon cariño,\nIdanay & Humberto · 11 de marzo de 2027 · Orlando, FL`;}
+  function waHref(g){const d=String(g.telefono||'').replace(/\D/g,'');return 'https://wa.me/'+(d.length===10?'1'+d:d)+'?text='+encodeURIComponent(waText(g));}
+  async function markSent(g){if(g.enviada)return;try{await db.doc('invitados/'+g.id).update({enviada:new Date().toISOString()});}catch(e){}}
+  async function copyText(text,b){try{await navigator.clipboard.writeText(text);return true;}
+    catch(e){const ta=el('textarea',{class:'copyfallback',readonly:true,rows:'3'});ta.value=text;b.closest('li,.panel').append(ta);ta.select();toast('Tu navegador no dejó copiar: selecciona el texto de abajo y cópialo.');return false;}}
+
+  /* ---------- stats ---------- */
+  function stats(){
+    const bc=byCode(),seats=G.reduce((a,g)=>a+g.cupos,0),sent=G.filter(g=>g.enviada||bc[g.id]).length;
+    const conf=R.filter(r=>r.asiste).reduce((a,r)=>a+(+r.personas||0),0),no=R.filter(r=>!r.asiste).length,pend=G.filter(g=>!bc[g.id]).length;
+    return el('div',{class:'stats'},...[[G.length,'Invitaciones'],[seats,'Personas invitadas'],[sent,'Enviadas'],[conf,'Personas confirmadas'],[no,'No asistirán'],[pend,'Sin responder']]
+      .map(([n,l])=>el('div',{class:'stat'},el('b',{text:String(n)}),el('span',{text:l}))));
   }
-  function renderGuests(byCode){
-    const f=el('form',{class:'addform',onsubmit:async e=>{e.preventDefault();const n=f.elements.n.value.trim();if(!n){f.elements.n.focus();return;}
-      const id=code();const btn=f.querySelector('button');btn.disabled=true;
-      try{await db.doc('invitados/'+id).set({nombre:n,cupos:Math.max(1,Math.min(12,+f.elements.c.value||1)),telefono:f.elements.p.value.trim(),idioma:f.elements.l.value,creado:new Date().toISOString()});f.reset();f.elements.n.focus();}
-      catch(err){alertMsg('No se pudo guardar el invitado. '+(err&&err.code==='quota_exceeded'?'Se llenó el espacio de datos.':'Inténtalo de nuevo.'));}
-      btn.disabled=false;}},
-      el('label',{class:'af'},el('span',{text:'Nombre en el sobre'}),el('input',{name:'n',placeholder:'Familia López',required:true,maxlength:'60'})),
-      el('label',{class:'af'},el('span',{text:'Lugares'}),el('input',{name:'c',type:'number',min:'1',max:'12',value:'2'})),
-      el('label',{class:'af'},el('span',{text:'Teléfono (opcional)'}),el('input',{name:'p',type:'tel',placeholder:'407 555 0123'})),
-      el('label',{class:'af'},el('span',{text:'Idioma'}),el('select',{name:'l'},el('option',{value:'es',text:'Español'}),el('option',{value:'en',text:'English'}))),
-      el('button',{class:'btn solid',type:'submit',text:'Agregar'}));
-    body.append(el('div',{class:'panel'},el('h2',{text:'Agregar invitado'}),el('p',{class:'help',text:'Cada invitado recibe su propio enlace: su nombre aparece escrito a mano en el sobre y en la invitación, y su confirmación queda registrada aquí.'}),f));
-    const rows=G.slice().sort((a,b)=>String(a.nombre).localeCompare(String(b.nombre),'es'));
-    const tbl=el('table',{},el('thead',{},el('tr',{},...['Invitado','Lugares','Estado','Enlace',''].map(h=>el('th',{text:h})))));
-    const tb=el('tbody');
-    rows.forEach(g=>{
-      const r=byCode[g.id];const st=r?(r.asiste?el('span',{class:'pill yes',text:`Asistirán · ${r.personas}`}):el('span',{class:'pill no',text:'No asistirán'})):el('span',{class:'pill wait',text:'Sin responder'});
-      const copyBtn=el('button',{class:'mini',type:'button',text:'Copiar enlace'});copyBtn.addEventListener('click',()=>copy(linkFor(g.id),copyBtn));
-      const wa=el('a',{class:'mini',href:(g.telefono?`https://wa.me/${g.telefono.replace(/\D/g,'').replace(/^(?=\d{10}$)/,'1')}`:'https://wa.me/')+'?text='+encodeURIComponent(waText(g)),target:'_blank',rel:'noopener',text:'WhatsApp'});
-      const del=el('button',{class:'mini danger',type:'button',text:'Eliminar'});
-      del.addEventListener('click',async()=>{if(del.dataset.armed){del.disabled=true;try{await db.doc('invitados/'+g.id).delete();}catch(e){del.disabled=false;}}else{del.dataset.armed='1';del.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{if(del.isConnected){del.dataset.armed='';del.textContent='Eliminar';}},3500);}});
-      tb.append(el('tr',{},el('td',{},el('strong',{text:esc(g.nombre)}),g.telefono?el('div',{class:'status',text:g.telefono}):null),el('td',{class:'num',text:String(g.cupos||1)}),el('td',{},st),
-        el('td',{},el('code',{text:'#i-'+g.id})),el('td',{},el('div',{class:'rowacts'},copyBtn,wa,del))));
+
+  /* ---------- one invitation: add / edit ---------- */
+  function deriveSobre(f){const v=n=>f.elements[n].value.trim(),tipo=f.elements.tipo.value;
+    if(tipo==='persona')return v('n1');
+    if(tipo==='pareja')return [firstName(v('n1')),firstName(v('n2'))].filter(Boolean).join(' & ');
+    const fam=v('fam');return !fam?'':/^familia\b/i.test(fam)?fam:'Familia '+fam;}
+  function collect(f){const v=n=>f.elements[n].value.trim(),tipo=f.elements.tipo.value;let personas=[],cupos=1;
+    if(tipo==='persona'){if(!v('n1'))return[null,'Escribe el nombre.','n1'];personas=[v('n1')];cupos=f.elements.plus.checked?2:1;}
+    else if(tipo==='pareja'){if(!v('n1'))return[null,'Escribe el nombre de la primera persona.','n1'];if(!v('n2'))return[null,'Escribe el nombre de la segunda persona.','n2'];personas=[v('n1'),v('n2')];cupos=2;}
+    else{if(!v('fam'))return[null,'Escribe el nombre de la familia.','fam'];personas=v('members').split(/[\n,]+/).map(x=>x.trim()).filter(Boolean).slice(0,20);
+      cupos=Math.max(personas.length,Math.min(20,Math.max(1,+v('seats')||1)));}
+    const sobre=v('sobre')||deriveSobre(f);if(!sobre)return[null,'Escribe cómo irá el nombre en el sobre.','sobre'];
+    return[normGuest({tipo,personas,sobre,cupos,nota:v('nota').slice(0,240),telefono:v('tel'),idioma:f.elements.lang.value}),null];}
+
+  function guestFormPanel(){
+    const f=el('form',{novalidate:true});
+    const seg=el('div',{class:'seg',role:'radiogroup','aria-label':'Tipo de invitación'},...TIPOS_V.map(v=>el('label',{},el('input',{type:'radio',name:'tipo',value:v,checked:v==='persona'}),el('span',{text:TIPO_LABEL[v]}))));
+    const tone=el('p',{class:'tone'});
+    const box=(label,ctrl,show,full)=>el('label',{class:'af'+(full?' full':''),'data-show':show},el('span',{text:label}),ctrl);
+    const n1=el('input',{name:'n1',maxlength:'60',autocomplete:'off',placeholder:'Carlos Pérez'});
+    const n2=el('input',{name:'n2',maxlength:'60',autocomplete:'off',placeholder:'María Gómez'});
+    const fam=el('input',{name:'fam',maxlength:'60',autocomplete:'off',placeholder:'Familia Pérez'});
+    const seats=el('input',{name:'seats',type:'number',min:'1',max:'20',value:'4'});
+    const members=el('textarea',{name:'members',rows:'3',placeholder:'Carlos\nMaría\nSofía'});
+    const plus=el('input',{type:'checkbox',name:'plus'});
+    const sobre=el('input',{name:'sobre',maxlength:'60',autocomplete:'off'});
+    const prev=el('div',{class:'envprev','aria-live':'polite'});
+    const nota=el('textarea',{name:'nota',rows:'3',maxlength:'240',placeholder:'Tía Marta, no sería lo mismo sin ti. Gracias por estar siempre.'});
+    const tel=el('input',{name:'tel',type:'tel',autocomplete:'off',placeholder:'407 555 0123'});
+    const lng=el('select',{name:'lang'},el('option',{value:'es',text:'Español'}),el('option',{value:'en',text:'English'}));
+    const n1label=el('span',{text:'Nombre completo'});
+    const grid=el('div',{class:'formgrid'},
+      el('label',{class:'af','data-show':'persona pareja'},n1label,n1),
+      box('Nombre de la segunda persona',n2,'pareja'),
+      el('label',{class:'checkline','data-show':'persona'},plus,el('span',{text:'Puede venir con acompañante'})),
+      box('Familia',fam,'familia'),box('Lugares reservados',seats,'familia'),
+      box('Nombres de cada uno (opcional, uno por línea)',members,'familia',true),
+      box('Así irá el nombre en el sobre',sobre,'persona pareja familia',true),
+      el('div',{class:'full','data-show':'persona pareja familia'},prev),
+      box('Mensaje personal (opcional · aparece como una carta en su invitación)',nota,'persona pareja familia',true),
+      box('WhatsApp (opcional)',tel,'persona pareja familia'),box('Idioma de su invitación',lng,'persona pareja familia'));
+    const title=el('h2',{text:'Agregar invitación'});
+    const save=el('button',{class:'btn solid',type:'submit',text:'Agregar invitación'});
+    const cancel=el('button',{class:'btn',type:'button',text:'Cancelar',hidden:true});
+    const fst=el('span',{class:'status',role:'status'});
+    f.append(seg,tone,grid,el('div',{class:'formacts'},save,cancel,fst));
+    function sync(){
+      const tipo=f.elements.tipo.value;
+      grid.querySelectorAll('[data-show]').forEach(x=>{x.hidden=!x.dataset.show.split(' ').includes(tipo);});
+      n1label.textContent=tipo==='pareja'?'Nombre de la primera persona':'Nombre completo';
+      tone.textContent=tipo==='persona'?'La invitación le hablará de tú y su nombre irá escrito a mano en el sobre.':'La invitación les hablará de ustedes y sus nombres irán escritos a mano en el sobre.';
+      if(!sobre.dataset.touched)sobre.value=deriveSobre(f);
+      sobre.placeholder=deriveSobre(f)||(tipo==='pareja'?'Carlos & María':tipo==='familia'?'Familia Pérez':'Carlos Pérez');
+      prev.textContent=sobre.value.trim();
+    }
+    f.addEventListener('input',e=>{if(e.target===sobre)sobre.dataset.touched=sobre.value.trim()?'1':'';sync();});
+    f.addEventListener('change',sync);
+    function reset(){f.reset();delete sobre.dataset.touched;editing=null;title.textContent='Agregar invitación';save.textContent='Agregar invitación';cancel.hidden=true;sync();}
+    cancel.addEventListener('click',()=>{reset();fst.textContent='';});
+    f.addEventListener('submit',async e=>{
+      e.preventDefault();const[d,err,focusOn]=collect(f);if(err){fst.textContent=err;f.elements[focusOn].focus();return;}
+      save.disabled=true;fst.textContent='Guardando…';
+      try{
+        if(editing){const old=G.find(x=>x.id===editing);const changed=!old||packGuest(old)!==packGuest(d);
+          await db.doc('invitados/'+editing).set({...d,creado:old&&old.creado||new Date().toISOString(),enviada:changed?null:(old&&old.enviada||null),actualizado:new Date().toISOString()});
+          fst.textContent=changed&&old&&old.enviada?`Guardado. ${d.sobre} ya tenía su enlace: envíaselo de nuevo para que vea el cambio.`:'Cambios guardados.';reset();}
+        else{await db.doc('invitados/'+newCode()).set({...d,creado:new Date().toISOString(),enviada:null});fst.textContent=`Listo: la invitación de ${d.sobre} está en la lista, lista para enviar.`;reset();f.elements.n1.focus();}
+      }catch(e2){fst.textContent=e2&&e2.code==='quota_exceeded'?'Se llenó el espacio de datos de la invitación.':'No se pudo guardar. Inténtalo de nuevo.';}
+      save.disabled=false;
     });
-    tbl.append(tb);
-    body.append(el('div',{class:'panel'},el('h2',{text:`Lista de invitados (${G.length})`}),G.length?el('div',{class:'tablewrap'},tbl):el('p',{class:'empty',text:'Todavía no hay invitados. Agrega el primero arriba: en cuanto lo guardes aparece su enlace.'})));
+    gform={load(g){reset();editing=g.id;f.elements.tipo.value=g.tipo;
+      if(g.tipo==='familia'){fam.value=g.sobre;seats.value=String(g.cupos);members.value=g.personas.join('\n');}
+      else{n1.value=g.personas[0]||g.sobre;n2.value=g.personas[1]||'';plus.checked=g.tipo==='persona'&&g.cupos>1;}
+      sobre.value=g.sobre;sobre.dataset.touched='1';nota.value=g.nota||'';tel.value=g.telefono||'';lng.value=g.idioma||'es';
+      title.textContent='Editar la invitación de '+g.sobre;save.textContent='Guardar cambios';cancel.hidden=false;fst.textContent='';sync();
+      panel.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>sobre.focus({preventScroll:true}),400);}};
+    sync();
+    const panel=el('div',{class:'panel'},title,el('p',{class:'help',text:'Cada invitación tiene su propio enlace. Al abrirlo, su nombre aparece escrito a mano en el sobre, la invitación les habla directamente y su confirmación llega aquí.'}),f);
+    return panel;
+  }
+
+  /* ---------- many at once ---------- */
+  function parseLine(line){
+    const[main,...extra]=line.split('|').map(x=>x.trim());if(!main)return null;
+    let name=main,seats=0,plus=0;
+    const pm=/\s*\+\s*(\d{1,2})\s*$/.exec(name);if(pm){plus=+pm[1];name=name.slice(0,pm.index).trim();}
+    const sm=/\s*,\s*(\d{1,2})\s*$/.exec(name);if(sm){seats=+sm[1];name=name.slice(0,sm.index).trim();}
+    let telefono='',idioma='es';
+    extra.forEach(x=>{if(/^(es|en)$/i.test(x))idioma=x.toLowerCase();else if(x.replace(/\D/g,'').length>=7)telefono=x;});
+    if(!name)return null;
+    if(/^familia\b/i.test(name))return normGuest({tipo:'familia',personas:[],sobre:name,cupos:Math.max(1,seats||2),telefono,idioma});
+    const parts=plus?[name]:name.split(/\s*,\s*|\s+(?:&|y|e|and)\s+/i).map(x=>x.trim()).filter(Boolean);
+    if(parts.length===2)return normGuest({tipo:'pareja',personas:parts,sobre:firstName(parts[0])+' & '+firstName(parts[1]),cupos:Math.max(2,seats||2),telefono,idioma});
+    if(parts.length>2)return normGuest({tipo:'familia',personas:parts,sobre:joinNames(parts.map(firstName),idioma),cupos:Math.max(parts.length,seats||0),telefono,idioma});
+    return normGuest({tipo:'persona',personas:[name],sobre:name,cupos:Math.max(1,(seats||1)+plus),telefono,idioma});
+  }
+  function bulkPanel(){
+    const ta=el('textarea',{class:'bulkta',rows:'7','aria-label':'Lista de invitados, una invitación por línea',placeholder:'Carlos Pérez\nAna López + 1\nCarlos y María\nFamilia Pérez, 4 | 407 555 0123\nJohn & Emily | en'});
+    const prev=el('ul',{class:'bulkprev'}),go=el('button',{class:'btn solid',type:'button',text:'Agregar',disabled:true}),st=el('span',{class:'status',role:'status'});
+    let items=[];
+    function upd(){items=ta.value.split('\n').map(x=>x.trim()).filter(Boolean).map(parseLine).filter(Boolean).slice(0,400);
+      prev.replaceChildren(...items.map(g=>el('li',{},el('span',{class:'envname',text:g.sobre}),el('span',{class:'chip '+g.tipo,text:TIPO_LABEL[g.tipo]}),
+        el('span',{class:'sub',text:seatsTxt(g.cupos)+(g.telefono?' · '+g.telefono:'')+(g.idioma==='en'?' · English':'')}))));
+      go.textContent=items.length?`Agregar ${items.length} ${items.length===1?'invitación':'invitaciones'}`:'Agregar';go.disabled=!items.length;}
+    ta.addEventListener('input',upd);
+    go.addEventListener('click',async()=>{
+      go.disabled=true;ta.disabled=true;let ok=0;const total=items.length,lines=ta.value.split('\n').map(x=>x.trim()).filter(Boolean);
+      for(const g of items){st.textContent=`Agregando ${ok+1} de ${items.length}…`;
+        let done=false;for(let k=0;k<3&&!done;k++){try{await db.doc('invitados/'+newCode()).set({...g,creado:new Date().toISOString(),enviada:null});done=true;}
+          catch(e){if(e&&e.code==='quota_exceeded')break;await new Promise(r=>setTimeout(r,800*(k+1)));}}
+        if(!done)break;ok++;await new Promise(r=>setTimeout(r,60));}
+      ta.value=lines.slice(ok).join('\n');ta.disabled=false;upd();
+      st.textContent=ok===total?`Listo: se ${ok===1?'agregó 1 invitación':`agregaron ${ok} invitaciones`}. Ya están en la lista.`:`Se agregaron ${ok} de ${total}. Las que faltan siguen en el cuadro: vuelve a tocar Agregar.`;
+    });
+    const help=el('div',{class:'bulkhelp'},
+      el('div',{},el('code',{text:'Carlos Pérez'}),' una persona'),el('div',{},el('code',{text:'Ana López + 1'}),' persona con acompañante'),
+      el('div',{},el('code',{text:'Carlos y María'}),' una pareja'),el('div',{},el('code',{text:'Familia Pérez, 4'}),' familia con 4 lugares'),
+      el('div',{},el('code',{text:'… | 407 555 0123'}),' su WhatsApp'),el('div',{},el('code',{text:'… | en'}),' invitación en inglés'));
+    return el('details',{class:'panel bulk'},el('summary',{},el('h2',{text:'Agregar varias a la vez'})),
+      el('p',{class:'help',text:'Pega tu lista: una invitación por línea. Antes de guardar verás cómo quedó cada una.'}),help,ta,prev,el('div',{class:'formacts'},go,st));
+  }
+
+  /* ---------- list ---------- */
+  const FILTERS=[['todas','Todas'],['sinenviar','Sin enviar'],['enviada','Enviadas sin respuesta'],['si','Asistirán'],['no','No asistirán']];
+  const stateOf=(g,bc)=>{const r=bc[g.id];return r?(r.asiste?'si':'no'):g.enviada?'enviada':'sinenviar';};
+  function listPanel(){
+    const search=el('input',{type:'search',class:'search',placeholder:'Buscar por nombre','aria-label':'Buscar invitación'});search.value=query;
+    search.addEventListener('input',()=>{query=search.value;renderList();});
+    filtersHost=el('div',{class:'filters',role:'group','aria-label':'Filtrar invitaciones'});listHost=el('div');
+    return el('div',{class:'panel'},el('h2',{text:'Invitaciones'}),el('p',{class:'help',text:'Envía cada una por WhatsApp o copia su mensaje. Al hacerlo queda marcada como enviada; toca el estado para cambiarlo a mano.'}),
+      el('div',{class:'listbar'},search,filtersHost),listHost);
+  }
+  function renderList(){
+    if(!listHost)return;const bc=byCode(),counts={todas:G.length};G.forEach(g=>{const k=stateOf(g,bc);counts[k]=(counts[k]||0)+1;});
+    filtersHost.replaceChildren(...FILTERS.map(([k,l])=>el('button',{type:'button','aria-pressed':String(filter===k),text:`${l} · ${counts[k]||0}`,onclick:()=>{filter=k;renderList();}})));
+    if(!G.length){listHost.replaceChildren(el('p',{class:'empty',text:'Todavía no hay invitaciones. Agrega la primera arriba o pega tu lista completa en “Agregar varias a la vez”.'}));return;}
+    const q=norm(query.trim());
+    const rows=G.filter(g=>(filter==='todas'||stateOf(g,bc)===filter)&&(!q||norm(g.sobre+' '+g.personas.join(' ')).includes(q))).sort((a,b)=>norm(a.sobre).localeCompare(norm(b.sobre)));
+    listHost.replaceChildren(rows.length?el('ul',{class:'glist'},...rows.map(g=>guestRow(g,bc[g.id]))):el('p',{class:'empty',text:'Ninguna invitación coincide.'}));
+  }
+  function guestRow(g,r){
+    const link=guestLink(g.id,g);
+    const others=g.personas.length&&!(g.tipo==='persona'&&g.personas[0]===g.sobre)?g.personas.join(' · '):'';
+    const who=el('div',{class:'gwho'},el('div',{class:'envname',text:g.sobre}),
+      el('div',{class:'gmeta'},el('span',{class:'chip '+g.tipo,text:TIPO_LABEL[g.tipo]}),el('span',{class:'sub',text:seatsTxt(g.cupos)+(g.idioma==='en'?' · English':'')+(g.telefono?' · '+g.telefono:'')})),
+      others?el('div',{class:'sub',text:others}):null,g.nota?el('div',{class:'sub nota',text:'“'+g.nota+'”'}):null);
+    let st;
+    if(r)st=el('span',{class:'pill '+(r.asiste?'yes':'no'),text:r.asiste?`Asistirán · ${r.personas}`:'No asistirán'});
+    else{st=el('button',{type:'button',class:'pill '+(g.enviada?'sent':'wait'),title:g.enviada?'Toca para marcarla como no enviada':'Toca para marcarla como enviada',text:g.enviada?'Enviada · '+fmtDay(g.enviada):'Sin enviar'});
+      st.addEventListener('click',async()=>{st.disabled=true;try{await db.doc('invitados/'+g.id).update({enviada:g.enviada?null:new Date().toISOString()});}catch(e){st.disabled=false;}});}
+    const wa=el('a',{class:'mini wa',href:waHref(g),target:'_blank',rel:'noopener',text:'Enviar por WhatsApp'});wa.addEventListener('click',()=>{markSent(g);toast(`Se abrió WhatsApp con la invitación de ${g.sobre}.`);});
+    const cm=el('button',{class:'mini',type:'button',text:'Copiar mensaje'});cm.addEventListener('click',async()=>{if(await copyText(waText(g),cm)){toast(`Mensaje para ${g.sobre} copiado: pégalo donde quieras enviarlo.`);markSent(g);}});
+    const cl=el('button',{class:'mini',type:'button',text:'Copiar enlace'});cl.addEventListener('click',async()=>{if(await copyText(link,cl)){toast(`Enlace de ${g.sobre} copiado.`);markSent(g);}});
+    const vw=el('a',{class:'mini',href:link,target:'_blank',rel:'noopener',text:'Ver su sobre'});
+    const ed=el('button',{class:'mini',type:'button',text:'Editar',onclick:()=>gform&&gform.load(g)});
+    const del=el('button',{class:'mini danger',type:'button',text:'Eliminar'});
+    del.addEventListener('click',async()=>{if(del.dataset.armed){del.disabled=true;try{await db.doc('invitados/'+g.id).delete();toast(`Se eliminó la invitación de ${g.sobre}.`);}catch(e){del.disabled=false;}}
+      else{del.dataset.armed='1';del.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{if(del.isConnected){del.dataset.armed='';del.textContent='Eliminar';}},3500);}});
+    return el('li',{class:'grow'},who,el('div',{class:'gstate'},st),el('div',{class:'rowacts'},wa,cm,cl,vw,ed,del));
+  }
+
+  /* ---------- replies ---------- */
+  function sheetText(){
+    const bc=byCode(),clean=v=>String(v==null?'':v).replace(/[\t\r\n]+/g,' ');
+    const rows=[['Invitación','Tipo','Lugares','Estado','Personas que asisten','Quiénes','Alergias','Mensaje','WhatsApp']];
+    G.slice().sort((a,b)=>norm(a.sobre).localeCompare(norm(b.sobre))).forEach(g=>{const r=bc[g.id],k=stateOf(g,bc);
+      rows.push([g.sobre,TIPO_LABEL[g.tipo],g.cupos,{si:'Asistirán',no:'No asistirán',enviada:'Enviada sin respuesta',sinenviar:'Sin enviar'}[k],r&&r.asiste?r.personas:'',r&&(r.asistentes||[]).join(', '),r&&r.alergias,r&&r.mensaje,g.telefono]);});
+    R.filter(r=>!r.codigo||!G.some(g=>g.id===r.codigo)).forEach(r=>rows.push([r.nombre,'Sin invitación','',r.asiste?'Asistirán':'No asistirán',r.asiste?r.personas:'',(r.asistentes||[]).join(', '),r.alergias,r.mensaje,'']));
+    return rows.map(x=>x.map(clean).join('\t')).join('\n');
   }
   function renderReplies(){
-    const gname=Object.fromEntries(G.map(g=>[g.id,g.nombre]));
-    const rows=R.slice().sort((a,b)=>String(b.fecha).localeCompare(String(a.fecha)));
-    const tbl=el('table',{},el('thead',{},el('tr',{},...['Fecha','Invitado','Respuesta','Personas','Mensaje'].map(h=>el('th',{text:h})))));
+    const gmap=Object.fromEntries(G.map(g=>[g.id,g])),rows=R.slice().sort((a,b)=>String(b.fecha).localeCompare(String(a.fecha)));
+    const tbl=el('table',{},el('thead',{},el('tr',{},...['Fecha','Invitación','Respuesta','Quiénes','Alergias','Mensaje'].map(h=>el('th',{text:h})))));
     const tb=el('tbody');
-    rows.forEach(r=>{const d=r.fecha?new Date(r.fecha):null;
+    rows.forEach(r=>{const d=r.fecha?new Date(r.fecha):null,g=gmap[r.codigo];
       tb.append(el('tr',{},el('td',{text:d?d.toLocaleDateString('es',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'}):''}),
-        el('td',{},el('strong',{text:esc(r.nombre)}),r.codigo&&gname[r.codigo]&&gname[r.codigo]!==r.nombre?el('div',{class:'status',text:'Invitación: '+gname[r.codigo]}):null),
-        el('td',{},el('span',{class:'pill '+(r.asiste?'yes':'no'),text:r.asiste?'Asistirán':'No asistirán'})),el('td',{class:'num',text:r.asiste?String(r.personas):'—'}),el('td',{text:esc(r.mensaje)})));});
+        el('td',{},el('strong',{text:g?g.sobre:r.nombre||''}),g?null:el('div',{class:'sub',text:'Sin invitación personal'})),
+        el('td',{},el('span',{class:'pill '+(r.asiste?'yes':'no'),text:r.asiste?`Asistirán · ${r.personas}`:'No asistirán'})),
+        el('td',{text:r.asiste?((r.asistentes||[]).join(', ')||String(r.personas)):'—'}),el('td',{text:r.alergias||''}),el('td',{text:r.mensaje||''})));});
     tbl.append(tb);
-    body.append(el('div',{class:'panel'},el('h2',{text:`Respuestas (${R.length})`}),R.length?el('div',{class:'tablewrap'},tbl):el('p',{class:'empty',text:'Aún no llegan respuestas. Aparecerán aquí en cuanto un invitado confirme.'})));
+    const cp=el('button',{class:'btn',type:'button',text:'Copiar lista para Excel o Sheets'});
+    cp.addEventListener('click',async()=>{if(await copyText(sheetText(),cp))toast('Lista copiada: pégala en una hoja de Excel o Google Sheets.');});
+    tabHost.replaceChildren(el('div',{class:'panel'},el('div',{class:'listhead'},el('h2',{text:`Respuestas (${R.length})`}),cp),
+      R.length?el('div',{class:'tablewrap'},tbl):el('p',{class:'empty',text:'Aún no llegan respuestas. Aparecerán aquí en cuanto un invitado confirme.'})));
   }
+
+  /* ---------- wedding details ---------- */
   function renderDetails(){
     const F=[['horaCeremonia','Hora de la ceremonia','text','5:00 PM'],['horaRecepcion','Hora de la recepción','text','6:30 PM'],['direccion','Dirección de Orange Farm','text','Dirección completa'],['mapa','Enlace de Google Maps (opcional)','url','https://maps.google.com/…'],
       ['fechaLimite','Confirmar antes del','date',''],['hashtag','Hashtag (opcional)','text','#IdanayYHumberto'],
@@ -757,27 +1076,37 @@ function startAdmin(){
       ['itinerario','Itinerario (una línea por momento: hora | qué pasa)','textarea','5:00 PM | Ceremonia\n6:00 PM | Cóctel\n7:00 PM | Cena y fiesta'],
       ['historia','Nuestra historia (opcional)','textarea','Cómo se conocieron…'],['regalos','Mesa de regalos (texto)','textarea','Su presencia es nuestro mejor regalo…'],['regalosLink','Enlace de la mesa de regalos','url','https://…'],
       ['hospedaje','Hospedaje (opcional)','textarea','Hoteles cercanos y códigos de descuento…'],['preguntas','Preguntas frecuentes (una por línea: pregunta | respuesta)','textarea','¿Puedo llevar niños? | Celebraremos solo con adultos.']];
-    const f=el('form',{onsubmit:async e=>{e.preventDefault();const d={};F.forEach(([k])=>{d[k]=f.elements[k].value.trim();});d.actualizado=new Date().toISOString();
-      st.textContent='Guardando…';sv.disabled=true;try{await db.doc('config/boda').set(d);st.textContent='Guardado. La invitación ya muestra los cambios.';}catch(err){st.textContent='No se pudo guardar. Inténtalo de nuevo.';}sv.disabled=false;}});
+    const st=el('span',{class:'status'}),sv=el('button',{class:'btn solid',type:'submit',text:'Guardar detalles'});
+    const f=el('form',{oninput:()=>{detailsDirty=true;},onsubmit:async e=>{e.preventDefault();const d={};F.forEach(([k])=>{d[k]=f.elements[k].value.trim();});d.actualizado=new Date().toISOString();
+      st.textContent='Guardando…';sv.disabled=true;try{await db.doc('config/boda').set(d);detailsDirty=false;st.textContent='Guardado. La invitación ya muestra los cambios.';}catch(err){st.textContent='No se pudo guardar. Inténtalo de nuevo.';}sv.disabled=false;}});
     const g2=el('div',{class:'grid2'});
     F.forEach(([k,lab,type,ph])=>{const inp=type==='textarea'?el('textarea',{name:k,placeholder:ph}):el('input',{name:k,type,placeholder:ph});inp.value=C[k]||'';const L=el('label',{class:'af'},el('span',{text:lab}),inp);if(type==='textarea')L.style.gridColumn='1/-1';g2.append(L);});
-    const st=el('span',{class:'status'}),sv=el('button',{class:'btn solid',type:'submit',text:'Guardar detalles'});
     f.append(el('div',{class:'panel'},el('h2',{text:'Detalles de la boda'}),el('p',{class:'help',text:'Los novios, la fecha (11 de marzo de 2027), el lugar (Orange Farm, Orlando) y el código de vestimenta ya están en la invitación. Lo que llenes aquí se agrega solo; lo que dejes vacío no aparece.'}),g2),el('div',{class:'savebar'},st,sv));
-    body.append(f);
+    tabHost.replaceChildren(f);
   }
-  function alertMsg(s){status.textContent=s;}
-  document.querySelectorAll('.tabs [role=tab]').forEach(b=>b.addEventListener('click',()=>{tab=b.dataset.tab;render();}));
+
+  /* ---------- tabs ---------- */
+  function render(){
+    document.querySelectorAll('.tabs [role=tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===tab)));
+    statsHost.replaceChildren(stats());listHost=null;gform=null;
+    if(tab==='invitados'){tabHost.replaceChildren(guestFormPanel(),bulkPanel(),listPanel());renderList();}
+    else if(tab==='respuestas')renderReplies();else{detailsDirty=false;renderDetails();}
+  }
+  function refresh(){statsHost.replaceChildren(stats());if(tab==='invitados')renderList();else if(tab==='respuestas')renderReplies();else if(!detailsDirty)renderDetails();}
+  document.querySelectorAll('.tabs [role=tab]').forEach(b=>b.addEventListener('click',()=>{tab=b.dataset.tab;status.textContent='';render();}));
 
   (async()=>{
     if(!window.claude||!window.claude.use){status.textContent='El panel funciona dentro de la vista de la invitación.';return;}
-    [db,user]=await Promise.all([window.claude.use('db'),window.claude.use('user')]);
+    let user;[db,user]=await Promise.all([window.claude.use('db'),window.claude.use('user')]);
     const allowed=user?(await user.isOwner())||(await user.canEdit()):false;
-    if(!db||!allowed){body.replaceChildren(el('div',{class:'locked-msg'},el('h2',{class:'h2',style:'color:#2B1810',text:'Solo para los novios'}),el('p',{text:'Esta página administra la invitación. Si eres invitado, abre el enlace que te enviaron.'})));return;}
+    if(!db||!allowed){status.textContent='';body.replaceChildren(el('div',{class:'locked-msg'},el('h2',{class:'h2',style:'color:#2B1810',text:'Solo para los novios'}),el('p',{text:'Esta página administra la invitación. Si eres invitado, abre el enlace que te enviaron.'})));return;}
+    statsHost=el('div');tabHost=el('div');body.replaceChildren(statsHost,tabHost);
     const timer=setTimeout(()=>{status.textContent='Los datos tardan en llegar. Revisa tu conexión; la página seguirá intentando.';},10000);
-    let got=0;const ready=()=>{if(++got>=3){clearTimeout(timer);}render();};
-    db.collection('invitados').onSnapshot(s=>{G=s.docs.map(d=>({id:d.id,...d.data()}));ready();},()=>{status.textContent='No se pudo leer la lista de invitados.';});
-    db.collection('respuestas').onSnapshot(s=>{R=s.docs.map(d=>({id:d.id,...d.data()}));ready();},()=>{});
-    db.doc('config/boda').onSnapshot(s=>{const was=tab==='detalles'&&got>=3;C=s.exists?s.data():{};if(!was)ready();else got++;},()=>{});
+    const ready={g:false,r:false,c:false};
+    const go=()=>{if(!(ready.g&&ready.r&&ready.c))return;clearTimeout(timer);if(!booted){booted=true;status.textContent='';render();}else refresh();};
+    db.collection('invitados').onSnapshot(x=>{G=x.docs.map(d=>({...normGuest(d.data()),id:d.id}));ready.g=true;go();},()=>{status.textContent='No se pudo leer la lista de invitados.';});
+    db.collection('respuestas').onSnapshot(x=>{R=x.docs.map(d=>({id:d.id,...d.data()}));ready.r=true;go();},()=>{ready.r=true;go();});
+    db.doc('config/boda').onSnapshot(x=>{C=x.exists?x.data():{};ready.c=true;go();},()=>{ready.c=true;go();});
   })();
 }
 

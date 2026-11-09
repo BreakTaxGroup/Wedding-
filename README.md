@@ -27,6 +27,12 @@ Invitación digital hiperrealista: un sobre de papel artesanal con sello de cera
 
 ## Panel de administración (privado)
 
-- **Invitados:** nombre que aparece en el sobre, lugares, teléfono e idioma. Cada uno tiene su enlace y botón de WhatsApp.
-- **Respuestas:** quién confirma, cuántas personas y su mensaje.
-- **Detalles:** horarios, dirección, itinerario, fecha límite, regalos, hospedaje, historia y preguntas. Lo que se llena aparece en la invitación; lo vacío no se muestra.
+- **Agregar invitación:** persona, pareja o familia. El nombre se escribe a mano en el sobre ("Carlos & María", "Familia Pérez"), la invitación les habla de tú o de ustedes según el tipo, y pueden llevar un mensaje personal que aparece como una carta.
+- **Agregar varias a la vez:** pegar la lista, una invitación por línea (`Carlos Pérez`, `Ana López + 1`, `Carlos y María`, `Familia Pérez, 4`, `… | 407 555 0123`, `… | en`).
+- **Enviar:** cada invitación tiene su enlace único, botón de WhatsApp con un mensaje personalizado, copiar mensaje y copiar enlace. Al enviarla queda marcada como enviada.
+- **Respuestas:** quiénes asisten (por nombre), alergias y mensaje. "Copiar lista para Excel o Sheets" exporta todo.
+- **Detalles:** horarios, dirección, itinerario, fecha límite, regalos, hospedaje, historia y preguntas.
+
+### Enlaces de invitado
+
+`…#i-CODIGO-DATOS`: el código identifica la respuesta y los datos (base32) llevan el nombre del sobre, tipo, lugares, idioma y mensaje personal, para que el sobre muestre el nombre aunque el invitado no tenga sesión. La lista completa de invitados solo la pueden leer los novios.
