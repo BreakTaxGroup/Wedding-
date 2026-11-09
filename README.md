@@ -2,17 +2,17 @@
 
 **11 de marzo de 2027 · Orange Farm, Orlando, FL**
 
-Invitación digital hiperrealista: un sobre de papel artesanal con sello de cera en el bosque. El invitado toca el sello, la cera se rompe y de él se abre la invitación interactiva con el video de los novios de fondo.
+Invitación digital hiperrealista: un sobre de papel artesanal con sello de cera sobre un tronco en el bosque. El invitado toca el sello y un video generado en Higgsfield lo abre: la cera se rompe, la solapa se levanta y la tarjeta deep espresso sube hasta llenar la pantalla y se convierte en la invitación, con el video de los novios de fondo y su música.
 
 ## Estructura
 
 | Archivo | Qué es |
 | --- | --- |
-| `invitacion/index.html` | Invitación completa. `#i-CODIGO` = enlace de cada invitado; `#admin` = panel de los novios |
-| `invitacion/media/` | Video de fondo, save the date, sobre y sello (capas) |
-| `invitacion/HIGGSFIELD.md` | Prompts para generar el sobre y la ruptura del sello en Higgsfield |
+| `invitacion/index.html` | Invitación completa. `#i-CODIGO` = enlace de cada invitado. El panel de los novios está en una dirección privada (ver `ADMIN_HASH` en el código) |
+| `invitacion/media/` | Apertura (Higgsfield), loop de espera, tarjeta, música, video de fondo y save the date |
+| `invitacion/HIGGSFIELD.md` | Cómo se generó la apertura en Higgsfield (modelo, prompt, IDs) |
 | `tools/prep_video.sh` | Endereza y recorta el video original de los novios |
-| `tools/prep_sobre.py` | Borra el nombre impreso del sobre, cambia el monograma del sello y lo parte en dos |
+| `tools/prep_apertura.sh` | Corta el video de Higgsfield en loop de espera + apertura, saca la tarjeta y la música |
 
 ## Paleta
 
@@ -25,7 +25,7 @@ Invitación digital hiperrealista: un sobre de papel artesanal con sello de cera
 | Burdeos `#5F1216` | Invitados |
 | Crema `#D4C2A8` | Papelería |
 
-## Panel de administración (`#admin`)
+## Panel de administración (privado)
 
 - **Invitados:** nombre que aparece en el sobre, lugares, teléfono e idioma. Cada uno tiene su enlace y botón de WhatsApp.
 - **Respuestas:** quién confirma, cuántas personas y su mensaje.

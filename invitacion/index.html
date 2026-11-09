@@ -35,37 +35,48 @@ button{font:inherit;color:inherit}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--beige);outline-offset:3px}
 
-/* ================= 1. envelope ================= */
-.intro{position:fixed;inset:0;z-index:50;overflow:hidden;background:#1b120c}
-.intro::after{content:"";position:absolute;inset:auto 0 0;height:34%;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(18,10,6,.62))}
-.intro .blur{position:absolute;inset:-80px;background:url(media/sobre.jpg) center/cover;filter:blur(34px) brightness(.5) saturate(1.15);transform:scale(1.1)}
-.frame,.sframe{position:absolute;left:0;top:0;width:1456px;height:1088px;transform-origin:0 0;will-change:transform}
-.frame>img,.sframe>img,.frame>canvas,.sframe>canvas{position:absolute;display:block;max-width:none}
-.frame .paper{left:0;top:0;width:1456px;height:1088px}
-.inkwrap{position:absolute;left:0;top:0;width:1456px;height:1088px;mix-blend-mode:multiply;pointer-events:none}
-#ink{position:absolute;height:210px;transform:rotate(-15.5deg);filter:blur(.3px);
+/* ================= 1. envelope (Higgsfield video) ================= */
+.intro{position:fixed;inset:0;z-index:50;overflow:hidden;background:#140d08;transition:opacity .5s ease}
+.intro.fade{opacity:0;pointer-events:none}
+.intro .blur{position:absolute;inset:-80px;background:url(media/apertura-poster.jpg) center/cover;filter:blur(38px) brightness(.42) saturate(1.1);transform:scale(1.1)}
+.intro::after{content:"";position:absolute;inset:auto 0 0;height:30%;pointer-events:none;z-index:3;background:linear-gradient(180deg,transparent,rgba(16,9,5,.55));transition:opacity .6s}
+.intro.playing::after{opacity:0}
+.stage{position:absolute;left:50%;top:50%;width:var(--sw,100vw);height:var(--sh,100vh);transform:translate(-50%,-50%) scale(var(--zoom,1));transform-origin:50% 50%;will-change:transform}
+.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:#140d08}
+#v-main{opacity:0}
+.intro.playing #v-main{opacity:1}
+.intro.playing #v-idle{opacity:0}
+.ink{position:absolute;pointer-events:none;mix-blend-mode:multiply;filter:blur(.35px);transition:opacity .5s ease;
   -webkit-mask-image:linear-gradient(90deg,#000 45%,transparent 55%);mask-image:linear-gradient(90deg,#000 45%,transparent 55%);
   -webkit-mask-size:320% 100%;mask-size:320% 100%;-webkit-mask-position:100% 0;mask-position:100% 0;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
-#ink.write{animation:write 2.4s cubic-bezier(.45,.05,.4,1) forwards}
-#ink.done{-webkit-mask-position:0 0;mask-position:0 0}
+.ink.write{animation:write 2.4s cubic-bezier(.45,.05,.4,1) forwards}
+.ink.done{-webkit-mask-position:0 0;mask-position:0 0}
+.ink.gone{opacity:0}
 @keyframes write{to{-webkit-mask-position:0 0;mask-position:0 0}}
-.shadow{mix-blend-mode:multiply;opacity:.55}
-.motes{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen}
-.shards{position:fixed;inset:0;z-index:52;pointer-events:none;overflow:hidden}
-.portal-glow{position:fixed;inset:0;z-index:51;pointer-events:none;opacity:0;mix-blend-mode:screen}
-.seal-btn{position:fixed;z-index:53;border:0;padding:0;border-radius:50%;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.seal-btn::after{content:"";position:absolute;inset:-10%;border-radius:50%;box-shadow:0 0 0 1.5px rgba(255,236,205,.55),0 0 26px 4px rgba(255,214,160,.35);
-  animation:pulse 2.6s ease-in-out infinite;opacity:0;transition:opacity .8s}
-.seal-btn.ready::after{opacity:1}
-@keyframes pulse{0%,100%{transform:scale(.96);opacity:.25}50%{transform:scale(1.06);opacity:.9}}
-.hint{position:fixed;z-index:53;left:0;right:0;margin:0;text-align:center;pointer-events:none;font-family:var(--f-body);font-style:italic;font-size:1.22rem;letter-spacing:.03em;
+.cardcover{position:absolute;inset:0;z-index:4;background:url(media/tarjeta.jpg) center/cover;opacity:0;pointer-events:none}
+.seal-btn{position:absolute;z-index:5;border:0;padding:0;border-radius:50%;aspect-ratio:1;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent;transform:translate(-50%,-50%)}
+.seal-btn::after{content:"";position:absolute;inset:-6%;border-radius:50%;box-shadow:0 0 0 1.5px rgba(255,236,205,.5),0 0 28px 4px rgba(255,214,160,.32);opacity:0}
+.seal-btn.ready::after{animation:pulse 2.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(.95);opacity:.2}50%{transform:scale(1.05);opacity:.85}}
+.hint{position:absolute;z-index:6;left:0;right:0;bottom:calc(30px + env(safe-area-inset-bottom,0px));margin:0;text-align:center;pointer-events:none;font-family:var(--f-body);font-style:italic;font-size:1.22rem;letter-spacing:.03em;
   color:#FBF3E6;text-shadow:0 1px 14px rgba(0,0,0,.85),0 0 3px rgba(0,0,0,.6);opacity:0;transition:opacity 1s}
 .hint.on{opacity:1}
-.hint small{display:block;font-style:normal;font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;margin-top:6px;opacity:.75}
+.hint small{display:block;font-style:normal;font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;margin-top:6px;opacity:.8}
 .lang{position:fixed;z-index:60;top:calc(12px + env(safe-area-inset-top,0px));right:max(14px,env(safe-area-inset-right,0px));display:flex;gap:2px;
   background:rgba(33,19,12,.45);border:1px solid var(--line);border-radius:999px;padding:3px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .lang button{border:0;background:transparent;border-radius:999px;padding:5px 10px;font-size:.72rem;letter-spacing:.14em;cursor:pointer;color:rgba(241,231,215,.75)}
 .lang button[aria-pressed="true"]{background:var(--cream);color:var(--espresso-ink)}
+.sound{position:fixed;z-index:60;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));width:44px;height:44px;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer;color:var(--cream);background:rgba(33,19,12,.55);border:1px solid var(--line);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;transition:opacity .8s}
+.sound.on{opacity:1}
+.sound svg{width:20px;height:20px}
+.sound .bars{display:flex;gap:2px;align-items:flex-end;height:14px}
+.sound .bars i{width:2px;background:currentColor;border-radius:1px;animation:eq 1s ease-in-out infinite}
+.sound .bars i:nth-child(2){animation-delay:.2s}.sound .bars i:nth-child(3){animation-delay:.4s}.sound .bars i:nth-child(4){animation-delay:.1s}
+.sound[aria-pressed="false"] .bars i{animation:none;height:2px!important}
+@keyframes eq{0%,100%{height:3px}50%{height:14px}}
+.cardface{position:fixed;inset:0;z-index:1;background:url(media/tarjeta.jpg) center/cover;pointer-events:none;transition:opacity 2.4s ease}
+.cardface.away{opacity:0}
 
 /* ================= 3. invitation ================= */
 .bg{position:fixed;inset:0;z-index:0;background:var(--espresso-deep)}
@@ -235,6 +246,7 @@ td.num{font-variant-numeric:tabular-nums;text-align:center}
 <div class="bg" id="bg" aria-hidden="true">
   <video id="bgv" src="media/novios-fondo.mp4" poster="media/novios-poster.jpg" muted loop playsinline preload="auto"></video>
 </div>
+<div class="cardface" id="cardface" aria-hidden="true"></div>
 <div class="grain" id="grain" aria-hidden="true"></div>
 
 <main id="site">
@@ -344,33 +356,25 @@ td.num{font-variant-numeric:tabular-nums;text-align:center}
       <div class="mono">I <span style="font-family:var(--f-script);font-style:normal">&amp;</span> H</div>
       <p>11 · 03 · 2027 · Orlando, FL</p>
       <p id="hashtag" hidden></p>
-      <a href="#admin" id="adminlink" hidden>Administrar invitación</a>
     </footer>
   </div>
 </main>
 
-<!-- ============ envelope ============ -->
+<!-- ============ envelope (Higgsfield video) ============ -->
 <div class="intro" id="intro">
   <div class="blur" aria-hidden="true"></div>
-  <div class="frame" id="frame" aria-hidden="true">
-    <img class="paper" src="media/sobre.jpg" alt="" width="1456" height="1088">
-    <img class="shadow" id="seal-shadow" src="media/sello-sombra.png" alt="">
-    <img id="seal-full" src="media/sello.png" alt="">
-    <div class="inkwrap"><canvas id="ink"></canvas></div>
+  <div class="stage" id="stage">
+    <video id="v-idle" src="media/espera.mp4" poster="media/apertura-poster.jpg" muted loop playsinline autoplay preload="auto" aria-hidden="true"></video>
+    <video id="v-main" src="media/apertura.mp4" poster="media/apertura-poster.jpg" playsinline preload="auto" aria-hidden="true"></video>
+    <canvas class="ink" id="ink" aria-hidden="true"></canvas>
+    <button class="seal-btn" id="sealbtn" type="button" aria-label="Romper el sello y abrir la invitación"></button>
   </div>
-  <canvas class="motes" id="motes" aria-hidden="true"></canvas>
+  <div class="cardcover" id="cardcover" aria-hidden="true"></div>
+  <p class="hint" id="hint"><span data-t="hint">Toca el sello para abrir tu invitación</span><small>Idanay &amp; Humberto</small></p>
 </div>
-<div class="portal-glow" id="pglow" aria-hidden="true"></div>
-<div class="shards" id="shards" aria-hidden="true">
-  <div class="sframe" id="sframe">
-    <img id="seal-a" src="media/sello-a.png" alt="" style="visibility:hidden">
-    <img id="seal-b" src="media/sello-b.png" alt="" style="visibility:hidden">
-    <canvas id="crackfx"></canvas>
-  </div>
-</div>
-<button class="seal-btn" id="sealbtn" type="button" aria-label="Romper el sello y abrir la invitación"></button>
-<p class="hint" id="hint"><span data-t="hint">Toca el sello para abrir tu invitación</span><small>Idanay &amp; Humberto</small></p>
 <div class="lang" id="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="es" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+<button class="sound" id="sound" type="button" aria-pressed="true" aria-label="Música"><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
+<audio id="music" src="media/musica.mp3" loop preload="auto"></audio>
 
 <div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-label="Save the date">
   <video id="stdv" src="media/save-the-date.mp4" poster="media/save-the-date-poster.jpg" controls playsinline preload="none"></video>
@@ -401,8 +405,6 @@ td.num{font-variant-numeric:tabular-nums;text-align:center}
 /* =============== constants =============== */
 const INVITE_URL='https://claude.ai/artifact/A6jvNSD1eanNCF6NicG7HN';                 /* enlace público de la invitación; los enlaces de invitado terminan en #i-CODIGO */
 const WEDDING={fecha:'2027-03-11',lugar:'Orange Farm',ciudad:'Orlando, Florida'};
-const SEAL={box:[679,412,902,633],c:[793,518.9]};
-const NAME={cx:1070,cy:712,maxW:440,size:96};
 const $=id=>document.getElementById(id);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const html=document.documentElement;
@@ -448,7 +450,8 @@ const t=k=>T[lang][k];
 /* =============== state =============== */
 const state={cfg:{},guest:null,code:null,db:null,user:null,canWrite:null,reply:null};
 const hash=location.hash.replace(/^#/,'');
-const isAdmin=hash==='admin';
+const ADMIN_HASH='adm-56ae82ed';          /* panel privado de los novios: enlace de la invitación + #adm-56ae82ed */
+const isAdmin=hash===ADMIN_HASH;
 const m=/^i-([a-z0-9]{4,12})$/.exec(hash);
 if(m)state.code=m[1];
 
@@ -533,7 +536,7 @@ const dbReady=(async()=>{
   try{
     const [db,user]=await Promise.all([window.claude.use('db'),window.claude.use('user')]);
     state.db=db;state.user=user;
-    if(user){user.can('data.write').then(v=>{state.canWrite=v;});user.isOwner().then(o=>{if(o)$('adminlink').hidden=false;});}
+    if(user){user.can('data.write').then(v=>{state.canWrite=v;});}
     return db;
   }catch(e){return null;}
 })();
@@ -573,162 +576,107 @@ form.addEventListener('submit',async e=>{
 });
 
 /* ================================================================
-   ENVELOPE + PORTAL
+   ENVELOPE: a hyperrealistic video made in Higgsfield from the envelope photo.
+   Idle: a silent loop of the first second (light moving through the leaves) and the guest's name written in ink.
+   Tap the seal: the full video plays with its sound (the wax cracks, the vellum band slides off carrying the two halves,
+   the flap opens and the deep espresso card rises until it fills the frame). That card becomes the invitation.
    ================================================================ */
-const intro=$('intro'),frame=$('frame'),sframe=$('sframe'),shards=$('shards'),pglow=$('pglow'),btn=$('sealbtn'),hint=$('hint');
-const sealA=$('seal-a'),sealB=$('seal-b'),sealFull=$('seal-full'),crackfx=$('crackfx');
-let crack=[],geo={s:1,tx:0,ty:0},introDone=false,opened=false;
-function place(el,box){el.style.left=box[0]+'px';el.style.top=box[1]+'px';el.style.width=(box[2]-box[0])+'px';el.style.height=(box[3]-box[1])+'px';}
-[sealFull,sealA,sealB,crackfx].forEach(el=>place(el,SEAL.box));
-place($('seal-shadow'),[SEAL.box[0]+4,SEAL.box[1]+7,SEAL.box[2]+4,SEAL.box[3]+7]);
-crackfx.width=(SEAL.box[2]-SEAL.box[0])*2;crackfx.height=(SEAL.box[3]-SEAL.box[1])*2;
+const VID={w:1080,h:1920,seal:[537,1000],sealR:120,name:{cx:575,cy:1172,maxW:540,size:104},nameOut:4.1,expand:.9};
+const intro=$('intro'),stage=$('stage'),vIdle=$('v-idle'),vMain=$('v-main'),ink=$('ink'),btn=$('sealbtn'),hint=$('hint'),cardcover=$('cardcover');
+const music=$('music'),soundBtn=$('sound');
+let opened=false,introDone=false,stageGeo={w:0,h:0,landscape:false};
 
-function baseGeo(){
-  const vw=innerWidth,vh=innerHeight;
-  if(vw/vh>=1.1){const s=Math.max(vw/1456,vh/1088)*1.04;let tx=vw/2-760*s,ty=vh/2-560*s;tx=Math.min(0,Math.max(vw-1456*s,tx));ty=Math.min(0,Math.max(vh-1088*s,ty));return{s,tx,ty};}
-  const s=vw/940;return{s,tx:vw/2-840*s,ty:vh*.47-560*s};
+function layout(){
+  const vw=innerWidth,vh=innerHeight;let s;
+  const landscape=vw/vh>0.75;
+  s=landscape?vh/VID.h:Math.max(vw/VID.w,vh/VID.h);
+  stageGeo={w:VID.w*s,h:VID.h*s,landscape,s};
+  stage.style.setProperty('--sw',stageGeo.w+'px');stage.style.setProperty('--sh',stageGeo.h+'px');
+  btn.style.left=(VID.seal[0]/VID.w*100)+'%';btn.style.top=(VID.seal[1]/VID.h*100)+'%';
+  btn.style.width=(VID.sealR*2/VID.w*100)+'%';
 }
-function applyGeo(g){
-  const tr=`translate(${g.tx}px,${g.ty}px) scale(${g.s})`;frame.style.transform=tr;sframe.style.transform=tr;
-  const cx=g.tx+SEAL.c[0]*g.s,cy=g.ty+SEAL.c[1]*g.s,r=Math.max(40,(SEAL.box[2]-SEAL.box[0])*g.s*.62);
-  btn.style.left=(cx-r)+'px';btn.style.top=(cy-r)+'px';btn.style.width=btn.style.height=(2*r)+'px';
-  const vh=innerHeight,bottom=g.ty+1088*g.s;
-  hint.style.top='';hint.style.bottom='';
-  if(innerWidth/vh<1.1&&bottom<vh-90)hint.style.top=(bottom+26)+'px';else hint.style.bottom='calc(34px + env(safe-area-inset-bottom,0px))';
-}
-function layout(){if(opened)return;geo=baseGeo();applyGeo(geo);sizeMotes();}
 
-/* ink: the guest's name written on the envelope */
+/* the guest's name, written by hand on the envelope */
 function writeName(name){
-  const c=$('ink'),x=c.getContext('2d'),dpr=2,H=210;
-  let size=NAME.size;x.font=`${size*dpr}px Waterfall, cursive`;let w=x.measureText(name).width/dpr;
-  if(w>NAME.maxW){size*=NAME.maxW/w;w=NAME.maxW;}
-  const cw=Math.ceil(w+80);c.width=cw*dpr;c.height=H*dpr;c.style.width=cw+'px';c.style.left=(NAME.cx-cw/2)+'px';c.style.top=(NAME.cy-H/2)+'px';
-  x.font=`${size*dpr}px Waterfall, cursive`;x.textAlign='center';x.fillStyle='rgba(50,38,30,.9)';x.fillText(name,cw*dpr/2,H*.64*dpr);
-  c.classList.remove('write','done');void c.offsetWidth;c.classList.add(reduce?'done':'write');
+  const x=ink.getContext('2d'),S=2,H=200;
+  let size=VID.name.size;x.font=`${size*S}px Waterfall, cursive`;let w=x.measureText(name).width/S;
+  if(w>VID.name.maxW){size*=VID.name.maxW/w;w=VID.name.maxW;}
+  const cw=Math.ceil(w+80);ink.width=cw*S;ink.height=H*S;
+  ink.style.left=((VID.name.cx-cw/2)/VID.w*100)+'%';ink.style.top=((VID.name.cy-H/2)/VID.h*100)+'%';
+  ink.style.width=(cw/VID.w*100)+'%';ink.style.height=(H/VID.h*100)+'%';ink.style.transform='rotate(-1.5deg)';
+  x.font=`${size*S}px Waterfall, cursive`;x.textAlign='center';x.fillStyle='rgba(48,34,26,.88)';x.fillText(name,cw*S/2,H*.64*S);
+  ink.classList.remove('write','done','gone');void ink.offsetWidth;ink.classList.add(reduce?'done':'write');
 }
 
-/* dust motes drifting in the light */
-const motes=$('motes');let MS=[];
-function sizeMotes(){const d=Math.min(2,devicePixelRatio||1);motes.width=innerWidth*d;motes.height=innerHeight*d;}
-MS=Array.from({length:40},()=>({x:Math.random(),y:Math.random(),r:.6+Math.random()*1.7,v:.2+Math.random()*.8,p:Math.random()*6.28}));
-function drawMotes(now){
-  if(introDone)return;
-  const c=motes.getContext('2d'),W=motes.width,H=motes.height,k=W/innerWidth,tt=now/1000;c.clearRect(0,0,W,H);
-  if(!reduce)for(const q of MS){const x=((q.x+Math.sin(tt*.12*q.v+q.p)*.03+tt*.003*q.v)%1)*W,y=((q.y-tt*.008*q.v+1)%1)*H;
-    const a=(.18+.32*Math.abs(Math.sin(tt*q.v+q.p)))*Math.max(.15,1-Math.hypot(x/W-.85,y/H-.05));
-    const g=c.createRadialGradient(x,y,0,x,y,q.r*3*k);g.addColorStop(0,`rgba(255,240,212,${a})`);g.addColorStop(1,'rgba(255,240,212,0)');c.fillStyle=g;c.beginPath();c.arc(x,y,q.r*3*k,0,6.283);c.fill();}
-  requestAnimationFrame(drawMotes);
-}
-
-/* sound: a dry wax crack and a soft swell of air, synthesized */
-let actx=null;
-function crackSound(){
+/* music: their save-the-date song, faded in through Web Audio (iOS ignores element volume) */
+let actx=null,gain=null,musicOn=true;
+try{const s=localStorage.getItem('ih-music');if(s==='off')musicOn=false;}catch(e){}
+function setupAudio(){
   try{
-    actx=actx||new (window.AudioContext||window.webkitAudioContext)();const a=actx,now=a.currentTime;
-    const len=Math.floor(a.sampleRate*.35),buf=a.createBuffer(1,len,a.sampleRate),d=buf.getChannelData(0);
-    for(let i=0;i<len;i++){const e=Math.exp(-i/(a.sampleRate*.018))+.35*Math.exp(-Math.max(0,i-a.sampleRate*.045)/(a.sampleRate*.01))*(i>a.sampleRate*.045?1:0);d[i]=(Math.random()*2-1)*e;}
-    const src=a.createBufferSource();src.buffer=buf;const bp=a.createBiquadFilter();bp.type='bandpass';bp.frequency.value=2600;bp.Q.value=.9;
-    const g=a.createGain();g.gain.value=.9;src.connect(bp).connect(g).connect(a.destination);src.start(now);
-    const o=a.createOscillator(),og=a.createGain();o.frequency.setValueAtTime(150,now);o.frequency.exponentialRampToValueAtTime(60,now+.08);og.gain.setValueAtTime(.35,now);og.gain.exponentialRampToValueAtTime(.001,now+.12);o.connect(og).connect(a.destination);o.start(now);o.stop(now+.15);
-    const nl=Math.floor(a.sampleRate*2.2),nb=a.createBuffer(1,nl,a.sampleRate),nd=nb.getChannelData(0);for(let i=0;i<nl;i++)nd[i]=Math.random()*2-1;
-    const ns=a.createBufferSource();ns.buffer=nb;const lp=a.createBiquadFilter();lp.type='lowpass';lp.frequency.setValueAtTime(300,now+.6);lp.frequency.exponentialRampToValueAtTime(2400,now+2.1);
-    const ng=a.createGain();ng.gain.setValueAtTime(.0001,now+.6);ng.gain.exponentialRampToValueAtTime(.12,now+1.7);ng.gain.exponentialRampToValueAtTime(.0001,now+2.7);
-    ns.connect(lp).connect(ng).connect(a.destination);ns.start(now+.6);
-  }catch(e){}
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    if(!gain){const src=actx.createMediaElementSource(music);gain=actx.createGain();gain.gain.value=0;src.connect(gain).connect(actx.destination);}
+    if(actx.state==='suspended')actx.resume();
+  }catch(e){gain=null;}
+  music.play().catch(()=>{});
 }
-
-/* timeline helpers */
-const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
-const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
-const ein=x=>x*x*x;
-const spring=x=>x<=0?0:1-Math.exp(-7*x)*Math.cos(10*x);
-const crumbs=Array.from({length:10},(_,i)=>({k:Math.random(),side:i%2?1:-1,d:8+Math.random()*22,r:1.4+Math.random()*2.4,a:Math.random()*6.28}));
-
-function drawCrackFx(p,sep){
-  const c=crackfx,x=c.getContext('2d'),s=2;x.clearRect(0,0,c.width,c.height);if(!crack.length)return;
-  const ox=SEAL.box[0],oy=SEAL.box[1];
-  // warm light leaking through the crack
-  x.save();x.globalCompositeOperation='lighter';x.lineCap='round';x.lineJoin='round';
-  for(const [wd,al,bl] of [[18,.22*p,26],[7,.55*p,10],[2.2,.95*p,2]]){
-    x.strokeStyle=`rgba(255,222,170,${al})`;x.lineWidth=(wd+sep*1.2)*s;x.shadowColor='rgba(255,200,130,.9)';x.shadowBlur=bl*s;
-    x.beginPath();crack.forEach(([px,py],i)=>{const X=(px-ox)*s,Y=(py-oy)*s;i?x.lineTo(X,Y):x.moveTo(X,Y);});x.stroke();}
-  x.restore();
-  // a few wax crumbs pushed out along the crack
-  for(const q of crumbs){const i=Math.floor(q.k*(crack.length-1)),pt=crack[i];const out=sep>0?Math.min(1,sep/6):0;
-    const X=(pt[0]-ox+Math.cos(q.a)*q.d*out)*s,Y=(pt[1]-oy+q.side*q.d*.8*out)*s;if(out<=0)continue;
-    x.fillStyle='rgba(48,26,17,.95)';x.beginPath();x.ellipse(X,Y,q.r*s,q.r*.8*s,q.a,0,6.283);x.fill();
-    x.fillStyle='rgba(255,230,200,.25)';x.beginPath();x.arc(X-q.r*.3*s,Y-q.r*.3*s,q.r*.35*s,0,6.283);x.fill();}
+function fadeMusic(to,sec){
+  if(gain&&actx){const t=actx.currentTime;gain.gain.cancelScheduledValues(t);gain.gain.setValueAtTime(gain.gain.value,t);gain.gain.linearRampToValueAtTime(to,t+sec);}
+  else music.volume=Math.max(0,Math.min(1,to));
 }
+function syncSoundBtn(){soundBtn.setAttribute('aria-pressed',String(musicOn));soundBtn.setAttribute('aria-label',musicOn?'Silenciar música':'Activar música');}
+soundBtn.addEventListener('click',()=>{musicOn=!musicOn;try{localStorage.setItem('ih-music',musicOn?'on':'off');}catch(e){}
+  if(musicOn){setupAudio();fadeMusic(.55,1.2);}else fadeMusic(0,.6);syncSoundBtn();});
+syncSoundBtn();
 
 function open(){
   if(opened)return;opened=true;btn.disabled=true;btn.style.display='none';hint.classList.remove('on');
-  if(navigator.vibrate)try{navigator.vibrate([12,40,18]);}catch(e){}
+  if(navigator.vibrate)try{navigator.vibrate(12);}catch(e){}
+  setupAudio();
   const bgv=$('bgv');try{bgv.currentTime=1.4;}catch(e){}bgv.play().catch(()=>{});
-  if(reduce){intro.style.transition='opacity .5s';intro.style.opacity='0';shards.style.display='none';finish();return;}
-  crackSound();
-  const g0={...geo},vw=innerWidth,vh=innerHeight,t0=performance.now();
-  const mid=crack[Math.floor(crack.length/2)]||SEAL.c;
-  const dir=(()=>{const a=crack[0]||[0,0],b=crack[crack.length-1]||[1,0];const dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy)||1;return[-dy/L,dx/L];})(); // normal pointing to the lower half
-  const Rmax=Math.hypot(vw,vh)+80;
-  function step(now){
-    const T=(now-t0)/1000/(window.__timeScale||1);
-    // press
-    const press=Math.sin(Math.PI*clamp(T/.12));
-    sealFull.style.transform=`scale(${1-press*.025})`;
-    // crack
-    if(T>.11&&sealFull.style.visibility!=='hidden'){sealFull.style.visibility='hidden';sealA.style.visibility='visible';sealB.style.visibility='visible';}
-    const sp=spring(clamp((T-.11)/.9));
-    const fly=ein(clamp((T-1.15)/1.05));
-    const sepA=4+sp*3,sepB=3+sp*2.5;
-    const flyPx=fly*420/Math.max(.3,geo.s);
-    sealA.style.transform=`translate(${(-dir[0]*(sepA*sp)-dir[0]*flyPx)-flyPx*.25}px,${(-dir[1]*(sepA*sp)-dir[1]*flyPx)}px) rotate(${-4*sp-28*fly}deg) scale(${1+fly*1.6})`;
-    sealB.style.transform=`translate(${(dir[0]*(sepB*sp)+dir[0]*flyPx)+flyPx*.2}px,${(dir[1]*(sepB*sp)+dir[1]*flyPx)}px) rotate(${3*sp+24*fly}deg) scale(${1+fly*1.6})`;
-    sealA.style.transformOrigin=sealB.style.transformOrigin=`${SEAL.c[0]-SEAL.box[0]}px ${SEAL.c[1]-SEAL.box[1]}px`;
-    $('seal-shadow').style.opacity=String(.55*(1-clamp((T-.9)/.4)));
-    const glow=clamp((T-.12)/.25)*(1-clamp((T-1.6)/.4));
-    drawCrackFx(glow,sp*6);
-    // camera push toward the seal
-    const push=eio(clamp((T-.55)/1.6));
-    const s=g0.s*(1+push*1.35);
-    const scx=g0.tx+SEAL.c[0]*g0.s,scy=g0.ty+SEAL.c[1]*g0.s;
-    const tcx=scx+(vw/2-scx)*push,tcy=scy+(vh/2-scy)*push;
-    geo={s,tx:tcx-SEAL.c[0]*s,ty:tcy-SEAL.c[1]*s};
-    const tr=`translate(${geo.tx}px,${geo.ty}px) scale(${s})`;frame.style.transform=tr;sframe.style.transform=tr;
-    // portal: the invitation opens out of the seal
-    const pc=clamp((T-1.05)/1.25),r=ein(pc)*Rmax,px=geo.tx+mid[0]*s,py=geo.ty+mid[1]*s;
-    if(pc>0){
-      const fe=Math.max(24,r*.18);
-      const mk=`radial-gradient(circle at ${px}px ${py}px, transparent ${r}px, #000 ${r+fe}px)`;
-      intro.style.webkitMaskImage=mk;intro.style.maskImage=mk;
-      pglow.style.opacity=String(Math.min(1,pc*4)*(1-clamp((pc-.45)/.4)));
-      pglow.style.background=`radial-gradient(circle at ${px}px ${py}px, rgba(255,236,200,0) ${Math.max(0,r-8)}px, rgba(255,226,175,.85) ${r+fe*.35}px, rgba(255,214,160,0) ${r+fe*1.6+60}px)`;
-    }
-    if(pc>.32&&!document.body.classList.contains('revealed'))document.body.classList.add('revealed');
-    shards.style.opacity=String(1-clamp((T-1.9)/.35));
-    if(T<2.4)requestAnimationFrame(step);else finish();
-  }
-  requestAnimationFrame(step);
+  if(reduce||vMain.error){finish(true);return;}
+  vMain.muted=false;vMain.currentTime=0;
+  const p=vMain.play();
+  if(p&&p.catch)p.catch(()=>{vMain.muted=true;vMain.play().catch(()=>finish(true));});
+  intro.classList.add('playing');
+  requestAnimationFrame(watch);
 }
-function finish(){
-  document.body.classList.add('revealed');introDone=true;
-  setTimeout(()=>{intro.remove();shards.remove();pglow.remove();btn.remove();hint.remove();html.classList.remove('locked');scrollTo(0,0);},reduce?520:60);
+function watch(){
+  if(introDone)return;
+  const t=vMain.currentTime,d=vMain.duration||6.46;
+  if(t>VID.nameOut)ink.classList.add('gone');
+  // the card fills the frame: push in so its edges leave the screen, and on wide screens grow to cover
+  const k=Math.min(1,Math.max(0,(t-(d-VID.expand))/VID.expand)),e=k*k*(3-2*k);
+  const cover=stageGeo.landscape?Math.max(innerWidth/stageGeo.w,innerHeight/stageGeo.h)*1.06:1.1;
+  stage.style.setProperty('--zoom',String(1+(cover-1)*e));
+  cardcover.style.opacity=String(Math.min(1,Math.max(0,(t-(d-.42))/.32)));
+  if(t>=d-.08||vMain.ended){finish(false);return;}
+  requestAnimationFrame(watch);
 }
-btn.addEventListener('click',open);
+vMain.addEventListener('ended',()=>finish(false));
+function finish(quick){
+  if(introDone)return;introDone=true;
+  document.body.classList.add('revealed');
+  intro.classList.add('fade');
+  setTimeout(()=>{intro.remove();html.classList.remove('locked');scrollTo(0,0);},quick?520:560);
+  if(musicOn){fadeMusic(.55,2.6);}
+  soundBtn.classList.add('on');
+  setTimeout(()=>$('cardface').classList.add('away'),quick?300:1900);
+}
+btn.addEventListener('click',e=>{e.stopPropagation();open();});
 intro.addEventListener('click',()=>{if(!opened){btn.classList.remove('ready');void btn.offsetWidth;btn.classList.add('ready');}});
 
 /* =============== start =============== */
 function startGuest(){
   html.classList.add('locked');
-  layout();addEventListener('resize',layout);requestAnimationFrame(drawMotes);
-  const fonts=document.fonts?Promise.race([Promise.all(['96px Waterfall','40px Fraunces','20px "Cormorant Garamond"','40px "Great Vibes"'].map(f=>document.fonts.load(f))),new Promise(r=>setTimeout(r,2500))]).catch(()=>{}):Promise.resolve();
-  const sobre=fetch('media/sobre.json').then(r=>r.json()).then(j=>{crack=j.crack||[];}).catch(()=>{crack=[[SEAL.box[0]+14,SEAL.c[1]+6],[SEAL.box[2]-14,SEAL.c[1]-44]];});
+  layout();addEventListener('resize',layout);
+  vIdle.play().catch(()=>{});
+  const fonts=document.fonts?Promise.race([Promise.all(['104px Waterfall','40px Fraunces','20px "Cormorant Garamond"','40px "Great Vibes"'].map(f=>document.fonts.load(f))),new Promise(r=>setTimeout(r,2500))]).catch(()=>{}):Promise.resolve();
   const data=Promise.race([loadGuestData(),new Promise(r=>setTimeout(r,2600))]);
   applyText();tickCount();
-  Promise.all([fonts,sobre,data]).then(()=>{
+  Promise.all([fonts,data]).then(()=>{
     const name=state.guest&&state.guest.nombre;
     if(name)writeName(name);
-    setTimeout(()=>{btn.classList.add('ready');hint.classList.add('on');},name?1900:500);
+    setTimeout(()=>{btn.classList.add('ready');hint.classList.add('on');},name?1900:400);
   });
 }
 
@@ -736,7 +684,7 @@ function startGuest(){
    ADMIN
    ================================================================ */
 function startAdmin(){
-  $('intro').remove();$('shards').remove();$('pglow').remove();$('sealbtn').remove();$('hint').remove();$('lang').remove();
+  $('intro').remove();$('lang').remove();$('sound').remove();$('music').remove();$('cardface').remove();
   $('site').hidden=true;$('bg').hidden=true;$('grain').hidden=true;$('admin').hidden=false;
   document.body.style.background='#F4EDE2';html.style.colorScheme='light';
   const body=$('admin-body'),status=$('admin-status');
@@ -834,6 +782,6 @@ function startAdmin(){
 }
 
 if(isAdmin)startAdmin();else startGuest();
-addEventListener('hashchange',()=>{const h=location.hash.replace(/^#/,'');if((h==='admin')!==isAdmin)location.reload();});
+addEventListener('hashchange',()=>{const h=location.hash.replace(/^#/,'');if((h===ADMIN_HASH)!==isAdmin)location.reload();});
 })();
 </script>
