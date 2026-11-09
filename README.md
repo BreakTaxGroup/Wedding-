@@ -2,15 +2,28 @@
 
 **11 de marzo de 2027 · Orange Farm, Orlando, FL**
 
+**En línea:** https://idanay-y-humberto.vercel.app
+
 Invitación digital hiperrealista: un sobre de papel artesanal con sello de cera sobre un tronco en el bosque. El invitado toca el sello y un video generado en Higgsfield lo abre: la cera se rompe, la solapa se levanta y la tarjeta deep espresso sube hasta llenar la pantalla y se convierte en la invitación, con el video de los novios de fondo y su música.
+
+## Dónde vive
+
+| Pieza | Dónde | Cuenta |
+| --- | --- | --- |
+| Sitio | Vercel, proyecto `idanay-y-humberto` (plan Hobby, gratis) | humbertovilliva@gmail.com |
+| Base de datos | Supabase, proyecto `boda-idanay-humberto` (us-east-1, plan Free) | humbertovilliva@gmail.com |
+| Visita diaria | Cron de Vercel → `/api/keepalive`, para que Supabase no se pause | — |
 
 ## Estructura
 
 | Archivo | Qué es |
 | --- | --- |
-| `invitacion/index.html` | Invitación completa. `#i-CODIGO` = enlace de cada invitado. El panel de los novios está en una dirección privada (ver `ADMIN_HASH` en el código) |
-| `invitacion/media/` | Apertura (Higgsfield), loop de espera, tarjeta, música, video de fondo y save the date |
+| `invitacion/index.html` | Invitación completa. `/#i-CODIGO` = enlace de cada invitado. `/#admin` = panel de los novios (pide la clave) |
+| `invitacion/media/` | Apertura (Higgsfield), loop de espera, tarjeta, música, video de fondo, save the date, imagen para WhatsApp e íconos |
+| `invitacion/api/keepalive.js`, `invitacion/vercel.json` | Visita diaria a la base de datos y cabeceras del sitio |
+| `supabase/schema.sql` | Tablas y funciones de la base de datos (sin la clave) |
 | `invitacion/HIGGSFIELD.md` | Cómo se generó la apertura en Higgsfield (modelo, prompt, IDs) |
+| `tools/deploy_vercel.sh` | Publica `invitacion/` en Vercel |
 | `tools/prep_video.sh` | Endereza y recorta el video original de los novios |
 | `tools/prep_apertura.sh` | Corta el video de Higgsfield en loop de espera + apertura, saca la tarjeta y la música |
 
@@ -35,4 +48,4 @@ Invitación digital hiperrealista: un sobre de papel artesanal con sello de cera
 
 ### Enlaces de invitado
 
-`…#i-CODIGO-DATOS`: el código identifica la respuesta y los datos (base32) llevan el nombre del sobre, tipo, lugares, idioma y mensaje personal, para que el sobre muestre el nombre aunque el invitado no tenga sesión. La lista completa de invitados solo la pueden leer los novios.
+`https://idanay-y-humberto.vercel.app/#i-CODIGO` (8 caracteres). La invitación lee de la base de datos solo lo de ese invitado (nombre del sobre, tipo, lugares, idioma y mensaje), así que si los novios lo editan después de enviarlo, el invitado ve el cambio sin reenviar el enlace. La lista completa (con teléfonos) solo se lee con la clave de los novios.

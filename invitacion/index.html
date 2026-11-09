@@ -1,9 +1,28 @@
-<title>Idanay &amp; Humberto</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Idanay &amp; Humberto · 11 de marzo de 2027</title>
+<meta name="description" content="Tienes una invitación esperándote. Toca el sello para abrir tu sobre.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#21130C">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://idanay-y-humberto.vercel.app/">
+<meta property="og:title" content="Idanay &amp; Humberto · 11.03.2027">
+<meta property="og:description" content="Tienes una invitación esperándote. Toca el sello para abrir tu sobre.">
+<meta property="og:image" content="https://idanay-y-humberto.vercel.app/media/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="/media/icon-32.png">
+<link rel="apple-touch-icon" href="/media/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,500;1,9..144,600&family=Great+Vibes&family=Waterfall&display=swap">
 <style>
+[hidden]{display:none!important}
+img{max-width:100%}
 /* Layout: one page, three moments.
    1) Envelope: the photographed handmade envelope in the forest; the guest's name is written live in ink; tap the wax seal.
    2) Portal: the seal cracks, the camera pushes in and the invitation opens out of the seal like a window.
@@ -306,6 +325,8 @@ button.pill{border:0;cursor:pointer;font:inherit;font-size:.78rem;font-weight:60
 .listhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 @media (prefers-reduced-motion:reduce){.hero>*{transition:none}.scrollcue,.seal-btn::after{animation:none}#ink.write{animation-duration:.01s}}
 </style>
+</head>
+<body>
 
 <!-- ============ invitation (under the envelope) ============ -->
 <div class="bg" id="bg" aria-hidden="true">
@@ -468,6 +489,7 @@ button.pill{border:0;cursor:pointer;font:inherit;font-size:.78rem;font-weight:60
       <button role="tab" aria-selected="false" data-tab="respuestas">Respuestas</button>
       <button role="tab" aria-selected="false" data-tab="detalles">Detalles de la boda</button>
       <a class="tabs-link mini" href="#" id="preview-link" style="margin:8px 0 0 auto;align-self:center">Ver invitación</a>
+      <button class="mini" type="button" id="logout" style="margin:8px 0 0 8px;align-self:center">Salir</button>
     </div>
   </div></header>
   <div class="wrap gut">
@@ -480,7 +502,15 @@ button.pill{border:0;cursor:pointer;font:inherit;font-size:.78rem;font-weight:60
 (function(){
 'use strict';
 /* =============== constants =============== */
-const INVITE_URL='https://claude.ai/artifact/A6jvNSD1eanNCF6NicG7HN';                 /* enlace público de la invitación; los enlaces de invitado terminan en #i-CODIGO */
+const SITE_URL='https://idanay-y-humberto.vercel.app/';   /* dirección pública de la invitación */
+const INVITE_URL=SITE_URL;
+const SUPA={url:'https://jvfopaaktgftvwnftcde.supabase.co',key:'sb_publishable_q4XVge1Ds5Ej4UZux80WCQ_D1q7IJNx'};   /* clave pública: solo llama funciones protegidas */
+async function rpc(fn,args){
+  const r=await fetch(SUPA.url+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:SUPA.key,'Content-Type':'application/json'},body:JSON.stringify(args||{})});
+  const txt=await r.text();let data=null;try{data=txt?JSON.parse(txt):null;}catch(e){}
+  if(!r.ok){const err=new Error(data&&data.message||('HTTP '+r.status));err.status=r.status;throw err;}
+  return data;
+}
 const WEDDING={fecha:'2027-03-11',lugar:'Orange Farm',ciudad:'Orlando, Florida'};
 const $=id=>document.getElementById(id);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -560,13 +590,12 @@ const firstName=x=>String(x||'').trim().split(/\s+/)[0]||'';
 const greetName=g=>g.tipo==='persona'?firstName(g.personas[0]||g.sobre):g.sobre;
 function joinNames(a,l){a=a.filter(Boolean);if(a.length<2)return a[0]||'';const last=a[a.length-1];
   const conj=l==='en'?' and ':(/^h?[ií](?![aeiouáéíóú])/i.test(last)?' e ':' y ');return a.slice(0,-1).join(', ')+conj+last;}
-const guestLink=(id,g)=>INVITE_URL+'#i-'+id+'-'+packGuest(g);
+const guestLink=id=>SITE_URL+'#i-'+id;   /* enlace corto: los datos del invitado se leen de la base de datos */
 
 /* =============== state =============== */
-const state={cfg:{},guest:null,code:null,db:null,user:null,canWrite:null,reply:null};
+const state={cfg:{},guest:null,code:null,reply:null};
 const hash=location.hash.replace(/^#/,'');
-const ADMIN_HASH='adm-56ae82ed';          /* panel privado de los novios: enlace de la invitación + #adm-56ae82ed */
-const isAdmin=hash===ADMIN_HASH;
+const isAdmin=/^admin(=|$)/.test(hash);   /* panel de los novios: #admin (pide la clave) o el enlace privado #admin=CLAVE */
 const m=/^i-([a-z0-9]{4,12})(?:-([a-z2-7]{2,}))?$/.exec(hash);
 if(m){state.code=m[1];if(m[2])state.guest=unpackGuest(m[2]);}
 
@@ -643,26 +672,16 @@ $('modal-close').addEventListener('click',closeModal);
 modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)closeModal();});
 
-/* =============== data (artifact db) =============== */
-const dbReady=(async()=>{
-  if(!window.claude||!window.claude.use)return null;
-  try{
-    const [db,user]=await Promise.all([window.claude.use('db'),window.claude.use('user')]);
-    state.db=db;state.user=user;
-    if(user){user.can('data.write').then(v=>{state.canWrite=v;});}
-    return db;
-  }catch(e){return null;}
-})();
+/* =============== data (Supabase) =============== */
 async function loadGuestData(){
-  const db=await dbReady;
-  if(db){try{
-    const c=await db.doc('config/boda').get();if(c.exists)state.cfg=c.data()||{};
-    if(state.code){
-      const gd=await db.doc('invitados/'+state.code).get();if(gd.exists)state.guest=normGuest(gd.data());   /* only the couple can read this; guests use their link */
-      const r=await db.doc('respuestas/'+state.code).get();if(r.exists)state.reply=r.data();
-    }
-  }catch(e){}}
+  const jobs=[rpc('config_publica').then(c=>{if(c&&typeof c==='object')state.cfg=c;}).catch(()=>{})];
+  if(state.code){
+    jobs.push(rpc('invitado_publico',{p_codigo:state.code}).then(g=>{if(g&&g.sobre)state.guest=normGuest(g);}).catch(()=>{}));
+    jobs.push(rpc('mi_respuesta',{p_codigo:state.code}).then(r=>{if(r)state.reply=r;}).catch(()=>{}));
+  }
+  await Promise.all(jobs);
   if(!state.reply&&state.code){try{const x=localStorage.getItem('ih-reply-'+state.code);if(x)state.reply=JSON.parse(x);}catch(e){}}
+  if(state.guest){let pref=null;try{pref=localStorage.getItem('ih-lang');}catch(e){}if(!pref)lang=state.guest.idioma;}
   applyText();
 }
 
@@ -718,14 +737,12 @@ form.addEventListener('submit',async e=>{
   }
   const r={codigo:state.code||'',nombre,asiste,personas,asistentes,acompanante,alergias:asiste?form.elements.alergias.value.trim().slice(0,300):'',
     mensaje:form.elements.mensaje.value.trim().slice(0,1200),idioma:lang,fecha:new Date().toISOString()};
-  const db=await dbReady;
-  if(!db||state.canWrite===false){msg.textContent=t('noSave');return;}
   msg.textContent=t('sending');
   try{
-    if(state.code)await db.doc('respuestas/'+state.code).set(r);else await db.collection('respuestas').add(r);
+    await rpc('responder',{p:r});
     if(state.code){try{localStorage.setItem('ih-reply-'+state.code,JSON.stringify(r));}catch(err){}}
     msg.textContent='';state.reply=r;showThanks(r);
-  }catch(err){msg.textContent=err&&err.code==='invalid_argument'?t('noSave'):t('saveFail');}
+  }catch(err){msg.textContent=t('saveFail');}
 });
 
 /* ================================================================
@@ -854,12 +871,12 @@ function startAdmin(){
   document.body.style.background='#F4EDE2';html.style.colorScheme='light';
   const body=$('admin-body'),status=$('admin-status');
   const pv=$('preview-link');pv.href=INVITE_URL;pv.target='_blank';pv.rel='noopener';
-  let G=[],R=[],C={},tab='invitados',db=null,query='',filter='todas',editing=null,detailsDirty=false,booted=false;
+  let G=[],R=[],C={},tab='invitados',KEY='',query='',filter='todas',editing=null,detailsDirty=false,booted=false;
   let statsHost,tabHost,listHost,filtersHost,gform=null;
   const TIPO_LABEL={persona:'Persona',pareja:'Pareja',familia:'Familia'};
   const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
   function el(tag,attrs={},...kids){const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='class')e.className=v;else if(k==='text')e.textContent=v;else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else if(v!==false&&v!=null)e.setAttribute(k,v===true?'':v);}e.append(...kids.filter(Boolean));return e;}
-  function newCode(){const a='abcdefghjkmnpqrstuvwxyz23456789';let x='';for(const b of crypto.getRandomValues(new Uint8Array(6)))x+=a[b%a.length];return G.some(g=>g.id===x)?newCode():x;}
+  function newCode(){const a='abcdefghjkmnpqrstuvwxyz23456789';let x='';for(const b of crypto.getRandomValues(new Uint8Array(8)))x+=a[b%a.length];return G.some(g=>g.id===x)?newCode():x;}
   const byCode=()=>Object.fromEntries(R.filter(r=>r.codigo).map(r=>[r.codigo,r]));
   const fmtDay=iso=>new Date(iso).toLocaleDateString('es',{day:'numeric',month:'short'});
   const seatsTxt=n=>`${n} ${n===1?'lugar':'lugares'}`;
@@ -871,7 +888,8 @@ function startAdmin(){
     return isPl(g)?`¡Hola, ${who}! Con mucha ilusión les compartimos la invitación a nuestra boda. Ábranla aquí:\n${link}\n\nCon cariño,\nIdanay & Humberto · 11 de marzo de 2027 · Orlando, FL`
                   :`¡Hola, ${who}! Con mucha ilusión te compartimos la invitación a nuestra boda. Ábrela aquí:\n${link}\n\nCon cariño,\nIdanay & Humberto · 11 de marzo de 2027 · Orlando, FL`;}
   function waHref(g){const d=String(g.telefono||'').replace(/\D/g,'');return 'https://wa.me/'+(d.length===10?'1'+d:d)+'?text='+encodeURIComponent(waText(g));}
-  async function markSent(g){if(g.enviada)return;try{await db.doc('invitados/'+g.id).update({enviada:new Date().toISOString()});}catch(e){}}
+  async function markSent(g){if(g.enviada)return;g.enviada=new Date().toISOString();try{await rpc('admin_marcar_enviada',{k:KEY,p_id:g.id,p_enviada:g.enviada});}catch(e){}reload();}
+  async function saveGuests(items){await rpc('admin_guardar_invitados',{k:KEY,items});await reload();}
   async function copyText(text,b){try{await navigator.clipboard.writeText(text);return true;}
     catch(e){const ta=el('textarea',{class:'copyfallback',readonly:true,rows:'3'});ta.value=text;b.closest('li,.panel').append(ta);ta.select();toast('Tu navegador no dejó copiar: selecciona el texto de abajo y cópialo.');return false;}}
 
@@ -945,11 +963,11 @@ function startAdmin(){
       e.preventDefault();const[d,err,focusOn]=collect(f);if(err){fst.textContent=err;f.elements[focusOn].focus();return;}
       save.disabled=true;fst.textContent='Guardando…';
       try{
-        if(editing){const old=G.find(x=>x.id===editing);const changed=!old||packGuest(old)!==packGuest(d);
-          await db.doc('invitados/'+editing).set({...d,creado:old&&old.creado||new Date().toISOString(),enviada:changed?null:(old&&old.enviada||null),actualizado:new Date().toISOString()});
-          fst.textContent=changed&&old&&old.enviada?`Guardado. ${d.sobre} ya tenía su enlace: envíaselo de nuevo para que vea el cambio.`:'Cambios guardados.';reset();}
-        else{await db.doc('invitados/'+newCode()).set({...d,creado:new Date().toISOString(),enviada:null});fst.textContent=`Listo: la invitación de ${d.sobre} está en la lista, lista para enviar.`;reset();f.elements.n1.focus();}
-      }catch(e2){fst.textContent=e2&&e2.code==='quota_exceeded'?'Se llenó el espacio de datos de la invitación.':'No se pudo guardar. Inténtalo de nuevo.';}
+        if(editing){const old=G.find(x=>x.id===editing);
+          await saveGuests([{...d,id:editing,creado:old&&old.creado||null,enviada:old&&old.enviada||null}]);
+          fst.textContent=old&&old.enviada?`Guardado. ${d.sobre} verá los cambios al abrir su enlace; no hace falta reenviarlo.`:'Cambios guardados.';reset();}
+        else{await saveGuests([{...d,id:newCode(),enviada:null}]);fst.textContent=`Listo: la invitación de ${d.sobre} está en la lista, lista para enviar.`;reset();f.elements.n1.focus();}
+      }catch(e2){fst.textContent=e2&&e2.status===401?'Tu clave de administración ya no es válida: vuelve a entrar.':'No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.';}
       save.disabled=false;
     });
     gform={load(g){reset();editing=g.id;f.elements.tipo.value=g.tipo;
@@ -989,10 +1007,10 @@ function startAdmin(){
     ta.addEventListener('input',upd);
     go.addEventListener('click',async()=>{
       go.disabled=true;ta.disabled=true;let ok=0;const total=items.length,lines=ta.value.split('\n').map(x=>x.trim()).filter(Boolean);
-      for(const g of items){st.textContent=`Agregando ${ok+1} de ${items.length}…`;
-        let done=false;for(let k=0;k<3&&!done;k++){try{await db.doc('invitados/'+newCode()).set({...g,creado:new Date().toISOString(),enviada:null});done=true;}
-          catch(e){if(e&&e.code==='quota_exceeded')break;await new Promise(r=>setTimeout(r,800*(k+1)));}}
-        if(!done)break;ok++;await new Promise(r=>setTimeout(r,60));}
+      const used=new Set(G.map(g=>g.id));const withIds=items.map(g=>{let id;do{id=newCode();}while(used.has(id));used.add(id);return{...g,id,enviada:null};});
+      for(let i=0;i<withIds.length;i+=100){st.textContent=`Agregando ${Math.min(i+100,total)} de ${total}…`;
+        try{await rpc('admin_guardar_invitados',{k:KEY,items:withIds.slice(i,i+100)});ok=Math.min(i+100,total);}catch(e){break;}}
+      await reload();
       ta.value=lines.slice(ok).join('\n');ta.disabled=false;upd();
       st.textContent=ok===total?`Listo: se ${ok===1?'agregó 1 invitación':`agregaron ${ok} invitaciones`}. Ya están en la lista.`:`Se agregaron ${ok} de ${total}. Las que faltan siguen en el cuadro: vuelve a tocar Agregar.`;
     });
@@ -1031,14 +1049,14 @@ function startAdmin(){
     let st;
     if(r)st=el('span',{class:'pill '+(r.asiste?'yes':'no'),text:r.asiste?`Asistirán · ${r.personas}`:'No asistirán'});
     else{st=el('button',{type:'button',class:'pill '+(g.enviada?'sent':'wait'),title:g.enviada?'Toca para marcarla como no enviada':'Toca para marcarla como enviada',text:g.enviada?'Enviada · '+fmtDay(g.enviada):'Sin enviar'});
-      st.addEventListener('click',async()=>{st.disabled=true;try{await db.doc('invitados/'+g.id).update({enviada:g.enviada?null:new Date().toISOString()});}catch(e){st.disabled=false;}});}
+      st.addEventListener('click',async()=>{st.disabled=true;try{await rpc('admin_marcar_enviada',{k:KEY,p_id:g.id,p_enviada:g.enviada?null:new Date().toISOString()});await reload();}catch(e){st.disabled=false;}});}
     const wa=el('a',{class:'mini wa',href:waHref(g),target:'_blank',rel:'noopener',text:'Enviar por WhatsApp'});wa.addEventListener('click',()=>{markSent(g);toast(`Se abrió WhatsApp con la invitación de ${g.sobre}.`);});
     const cm=el('button',{class:'mini',type:'button',text:'Copiar mensaje'});cm.addEventListener('click',async()=>{if(await copyText(waText(g),cm)){toast(`Mensaje para ${g.sobre} copiado: pégalo donde quieras enviarlo.`);markSent(g);}});
     const cl=el('button',{class:'mini',type:'button',text:'Copiar enlace'});cl.addEventListener('click',async()=>{if(await copyText(link,cl)){toast(`Enlace de ${g.sobre} copiado.`);markSent(g);}});
     const vw=el('a',{class:'mini',href:link,target:'_blank',rel:'noopener',text:'Ver su sobre'});
     const ed=el('button',{class:'mini',type:'button',text:'Editar',onclick:()=>gform&&gform.load(g)});
     const del=el('button',{class:'mini danger',type:'button',text:'Eliminar'});
-    del.addEventListener('click',async()=>{if(del.dataset.armed){del.disabled=true;try{await db.doc('invitados/'+g.id).delete();toast(`Se eliminó la invitación de ${g.sobre}.`);}catch(e){del.disabled=false;}}
+    del.addEventListener('click',async()=>{if(del.dataset.armed){del.disabled=true;try{await rpc('admin_borrar_invitado',{k:KEY,p_id:g.id});await reload();toast(`Se eliminó la invitación de ${g.sobre}.`);}catch(e){del.disabled=false;}}
       else{del.dataset.armed='1';del.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{if(del.isConnected){del.dataset.armed='';del.textContent='Eliminar';}},3500);}});
     return el('li',{class:'grow'},who,el('div',{class:'gstate'},st),el('div',{class:'rowacts'},wa,cm,cl,vw,ed,del));
   }
@@ -1078,7 +1096,7 @@ function startAdmin(){
       ['hospedaje','Hospedaje (opcional)','textarea','Hoteles cercanos y códigos de descuento…'],['preguntas','Preguntas frecuentes (una por línea: pregunta | respuesta)','textarea','¿Puedo llevar niños? | Celebraremos solo con adultos.']];
     const st=el('span',{class:'status'}),sv=el('button',{class:'btn solid',type:'submit',text:'Guardar detalles'});
     const f=el('form',{oninput:()=>{detailsDirty=true;},onsubmit:async e=>{e.preventDefault();const d={};F.forEach(([k])=>{d[k]=f.elements[k].value.trim();});d.actualizado=new Date().toISOString();
-      st.textContent='Guardando…';sv.disabled=true;try{await db.doc('config/boda').set(d);detailsDirty=false;st.textContent='Guardado. La invitación ya muestra los cambios.';}catch(err){st.textContent='No se pudo guardar. Inténtalo de nuevo.';}sv.disabled=false;}});
+      st.textContent='Guardando…';sv.disabled=true;try{await rpc('admin_guardar_config',{k:KEY,p_data:d});detailsDirty=false;C=d;st.textContent='Guardado. La invitación ya muestra los cambios.';}catch(err){st.textContent='No se pudo guardar. Inténtalo de nuevo.';}sv.disabled=false;}});
     const g2=el('div',{class:'grid2'});
     F.forEach(([k,lab,type,ph])=>{const inp=type==='textarea'?el('textarea',{name:k,placeholder:ph}):el('input',{name:k,type,placeholder:ph});inp.value=C[k]||'';const L=el('label',{class:'af'},el('span',{text:lab}),inp);if(type==='textarea')L.style.gridColumn='1/-1';g2.append(L);});
     f.append(el('div',{class:'panel'},el('h2',{text:'Detalles de la boda'}),el('p',{class:'help',text:'Los novios, la fecha (11 de marzo de 2027), el lugar (Orange Farm, Orlando) y el código de vestimenta ya están en la invitación. Lo que llenes aquí se agrega solo; lo que dejes vacío no aparece.'}),g2),el('div',{class:'savebar'},st,sv));
@@ -1095,22 +1113,48 @@ function startAdmin(){
   function refresh(){statsHost.replaceChildren(stats());if(tab==='invitados')renderList();else if(tab==='respuestas')renderReplies();else if(!detailsDirty)renderDetails();}
   document.querySelectorAll('.tabs [role=tab]').forEach(b=>b.addEventListener('click',()=>{tab=b.dataset.tab;status.textContent='';render();}));
 
+  /* ---------- data and access ---------- */
+  let pollT=0;
+  async function reload(){
+    try{const x=await rpc('admin_datos',{k:KEY});
+      G=(x.invitados||[]).map(d=>({...normGuest(d),id:d.id}));R=x.respuestas||[];C=x.config||{};
+      if(!booted){booted=true;status.textContent='';render();}else refresh();return true;}
+    catch(e){if(e.status===401)logout('Tu clave ya no es válida. Vuelve a entrar.');else if(!booted)status.textContent='No se pudieron cargar los datos. Revisa tu conexión y recarga la página.';return false;}
+  }
+  function logout(msg){try{localStorage.removeItem('ih-admin');}catch(e){}KEY='';booted=false;clearInterval(pollT);showLogin(msg);}
+  function showLogin(msg){
+    status.textContent='';document.querySelector('#admin .tabs').hidden=true;
+    const inp=el('input',{type:'password',id:'adm-key',autocomplete:'current-password',placeholder:'Tu clave de administración'});
+    const er=el('p',{class:'status',role:'alert',text:msg||''});
+    const f=el('form',{class:'panel',style:'max-width:440px;margin:8vh auto 0',onsubmit:async e=>{e.preventDefault();const k=inp.value.trim();if(!k){inp.focus();return;}
+        er.textContent='Revisando…';
+        try{if(await rpc('admin_ok',{k})){KEY=k;try{localStorage.setItem('ih-admin',k);}catch(e2){}start();}else{er.textContent='Esa clave no es correcta.';inp.select();}}
+        catch(e2){er.textContent='No se pudo conectar. Revisa tu conexión.';}}},
+      el('h2',{text:'Entrar al panel'}),el('p',{class:'help',text:'Este panel es solo para Idanay y Humberto. Escribe tu clave de administración o abre tu enlace privado.'}),
+      el('label',{class:'af'},el('span',{text:'Clave'}),inp),el('div',{class:'formacts'},el('button',{class:'btn solid',type:'submit',text:'Entrar'})),er);
+    body.replaceChildren(f);setTimeout(()=>inp.focus(),50);
+  }
+  function start(){
+    document.querySelector('#admin .tabs').hidden=false;statsHost=el('div');tabHost=el('div');body.replaceChildren(statsHost,tabHost);status.textContent='Cargando datos…';
+    reload();
+    clearInterval(pollT);pollT=setInterval(()=>{if(KEY&&!document.hidden&&!(tab==='detalles'&&detailsDirty))reload();},30000);
+  }
+  addEventListener('focus',()=>{if(KEY&&booted)reload();});
+  $('logout').addEventListener('click',()=>logout('Saliste del panel.'));
   (async()=>{
-    if(!window.claude||!window.claude.use){status.textContent='El panel funciona dentro de la vista de la invitación.';return;}
-    let user;[db,user]=await Promise.all([window.claude.use('db'),window.claude.use('user')]);
-    const allowed=user?(await user.isOwner())||(await user.canEdit()):false;
-    if(!db||!allowed){status.textContent='';body.replaceChildren(el('div',{class:'locked-msg'},el('h2',{class:'h2',style:'color:#2B1810',text:'Solo para los novios'}),el('p',{text:'Esta página administra la invitación. Si eres invitado, abre el enlace que te enviaron.'})));return;}
-    statsHost=el('div');tabHost=el('div');body.replaceChildren(statsHost,tabHost);
-    const timer=setTimeout(()=>{status.textContent='Los datos tardan en llegar. Revisa tu conexión; la página seguirá intentando.';},10000);
-    const ready={g:false,r:false,c:false};
-    const go=()=>{if(!(ready.g&&ready.r&&ready.c))return;clearTimeout(timer);if(!booted){booted=true;status.textContent='';render();}else refresh();};
-    db.collection('invitados').onSnapshot(x=>{G=x.docs.map(d=>({...normGuest(d.data()),id:d.id}));ready.g=true;go();},()=>{status.textContent='No se pudo leer la lista de invitados.';});
-    db.collection('respuestas').onSnapshot(x=>{R=x.docs.map(d=>({id:d.id,...d.data()}));ready.r=true;go();},()=>{ready.r=true;go();});
-    db.doc('config/boda').onSnapshot(x=>{C=x.exists?x.data():{};ready.c=true;go();},()=>{ready.c=true;go();});
+    const hm=/^admin=(.+)$/.exec(hash);let k=hm?decodeURIComponent(hm[1]):'';
+    if(hm)history.replaceState(null,'',location.pathname+location.search+'#admin');
+    if(!k){try{k=localStorage.getItem('ih-admin')||'';}catch(e){}}
+    if(!k){showLogin();return;}
+    status.textContent='Revisando acceso…';
+    try{if(await rpc('admin_ok',{k})){KEY=k;try{localStorage.setItem('ih-admin',k);}catch(e){}start();}else logout('Esa clave no es correcta.');}
+    catch(e){status.textContent='No se pudo conectar con la base de datos. Revisa tu conexión y recarga la página.';}
   })();
 }
 
 if(isAdmin)startAdmin();else startGuest();
-addEventListener('hashchange',()=>{const h=location.hash.replace(/^#/,'');if((h===ADMIN_HASH)!==isAdmin)location.reload();});
+addEventListener('hashchange',()=>{const h=location.hash.replace(/^#/,'');if(/^admin(=|$)/.test(h)!==isAdmin)location.reload();});
 })();
 </script>
+</body>
+</html>
