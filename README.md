@@ -1,21 +1,32 @@
-# Invitación digital de boda
+# Invitación de boda · Idanay & Humberto
 
-Sitio de invitaciones para una boda en el bosque. Cada invitado recibe un enlace único que abre un sobre animado con su nombre; dentro está la invitación y el sitio con toda la información. Un panel de administración maneja invitados y confirmaciones.
+**11 de marzo de 2027 · Orange Farm, Orlando, FL**
+
+Invitación digital hiperrealista: un sobre de papel artesanal con sello de cera en el bosque. El invitado toca el sello, la cera se rompe y de él se abre la invitación interactiva con el video de los novios de fondo.
+
+## Estructura
+
+| Archivo | Qué es |
+| --- | --- |
+| `invitacion/index.html` | Invitación completa. `#i-CODIGO` = enlace de cada invitado; `#admin` = panel de los novios |
+| `invitacion/media/` | Video de fondo, save the date, sobre y sello (capas) |
+| `invitacion/HIGGSFIELD.md` | Prompts para generar el sobre y la ruptura del sello en Higgsfield |
+| `tools/prep_video.sh` | Endereza y recorta el video original de los novios |
+| `tools/prep_sobre.py` | Borra el nombre impreso del sobre, cambia el monograma del sello y lo parte en dos |
 
 ## Paleta
 
 | Color | Uso |
 | --- | --- |
-| Deep Espresso `#3A261C` | Damas y cortejo (los invitados no lo usan) |
-| Burdeos `#621720` | Invitados |
-| Verde Olivo `#545530` | Invitados |
-| Olivo Suave `#9C9A6A` | Invitados |
-| Beige Claro `#DCC6AC` | Invitados |
-| Crema `#E6DAC6` | Papelería |
+| Deep Espresso `#3A2218` | Color principal · damas y cortejo (los invitados no lo usan) |
+| Beige claro `#DABFA4` | Invitados |
+| Verde olivo `#565024` | Invitados |
+| Olivo suave `#979364` | Invitados |
+| Burdeos `#5F1216` | Invitados |
+| Crema `#D4C2A8` | Papelería |
 
-## Proceso
+## Panel de administración (`#admin`)
 
-1. **El sobre**: `propuestas/01-sobres.html` (elegido: C, Papel de Bosque)
-2. **La apertura**: video de Gemini procesado con `tools/process_video.py` (borra el nombre impreso, corrige el texto ilegible de la tarjeta y guarda el seguimiento para escribir el nombre de cada invitado)
-3. **El sitio web**: `propuestas/invitacion.html` — réplica del sitio del video de Gemini (portada que se funde con la foto, Nuestra Historia, Ubicación, RSVP). Enlace por invitado: `#para-familia-lopez`
-4. Panel de administración, enlaces únicos y confirmaciones: pendiente
+- **Invitados:** nombre que aparece en el sobre, lugares, teléfono e idioma. Cada uno tiene su enlace y botón de WhatsApp.
+- **Respuestas:** quién confirma, cuántas personas y su mensaje.
+- **Detalles:** horarios, dirección, itinerario, fecha límite, regalos, hospedaje, historia y preguntas. Lo que se llena aparece en la invitación; lo vacío no se muestra.
