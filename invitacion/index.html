@@ -8,10 +8,10 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#21130C">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://idanay-y-humberto.vercel.app/">
+<meta property="og:url" content="https://www.idanay-y-humberto.com/">
 <meta property="og:title" content="Idanay &amp; Humberto · 11.03.2027">
 <meta property="og:description" content="Tienes una invitación esperándote. Toca el sello para abrir tu sobre.">
-<meta property="og:image" content="https://idanay-y-humberto.vercel.app/media/og.jpg">
+<meta property="og:image" content="https://www.idanay-y-humberto.com/media/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -502,7 +502,7 @@ button.pill{border:0;cursor:pointer;font:inherit;font-size:.78rem;font-weight:60
 (function(){
 'use strict';
 /* =============== constants =============== */
-const SITE_URL='https://idanay-y-humberto.vercel.app/';   /* dirección pública de la invitación */
+const SITE_URL='https://www.idanay-y-humberto.com/';   /* dirección pública de la invitación */
 const INVITE_URL=SITE_URL;
 const SUPA={url:'https://jvfopaaktgftvwnftcde.supabase.co',key:'sb_publishable_q4XVge1Ds5Ej4UZux80WCQ_D1q7IJNx'};   /* clave pública: solo llama funciones protegidas */
 async function rpc(fn,args){
@@ -674,13 +674,14 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close
 
 /* =============== data (Supabase) =============== */
 async function loadGuestData(){
+  let replyChecked=false;
   const jobs=[rpc('config_publica').then(c=>{if(c&&typeof c==='object')state.cfg=c;}).catch(()=>{})];
   if(state.code){
     jobs.push(rpc('invitado_publico',{p_codigo:state.code}).then(g=>{if(g&&g.sobre)state.guest=normGuest(g);}).catch(()=>{}));
-    jobs.push(rpc('mi_respuesta',{p_codigo:state.code}).then(r=>{if(r)state.reply=r;}).catch(()=>{}));
+    jobs.push(rpc('mi_respuesta',{p_codigo:state.code}).then(r=>{replyChecked=true;if(r)state.reply=r;}).catch(()=>{}));
   }
   await Promise.all(jobs);
-  if(!state.reply&&state.code){try{const x=localStorage.getItem('ih-reply-'+state.code);if(x)state.reply=JSON.parse(x);}catch(e){}}
+  if(!state.reply&&state.code){try{if(replyChecked)localStorage.removeItem('ih-reply-'+state.code);else{const x=localStorage.getItem('ih-reply-'+state.code);if(x)state.reply=JSON.parse(x);}}catch(e){}}
   if(state.guest){let pref=null;try{pref=localStorage.getItem('ih-lang');}catch(e){}if(!pref)lang=state.guest.idioma;}
   applyText();
 }
@@ -1040,6 +1041,21 @@ function startAdmin(){
     const rows=G.filter(g=>(filter==='todas'||stateOf(g,bc)===filter)&&(!q||norm(g.sobre+' '+g.personas.join(' ')).includes(q))).sort((a,b)=>norm(a.sobre).localeCompare(norm(b.sobre)));
     listHost.replaceChildren(rows.length?el('ul',{class:'glist'},...rows.map(g=>guestRow(g,bc[g.id]))):el('p',{class:'empty',text:'Ninguna invitación coincide.'}));
   }
+  /* two-tap delete: the "¿Seguro?" state is kept by key, so the auto-refresh (focus / every 30 s) cannot reset it between taps */
+  let armed={k:'',t:0};
+  const isArmed=k=>armed.k===k&&Date.now()-armed.t<4000;
+  function confirmBtn(key,label,ask,run){
+    const b=el('button',{class:'mini danger',type:'button',text:isArmed(key)?ask:label});
+    b.addEventListener('click',async()=>{
+      if(isArmed(key)){armed={k:'',t:0};b.disabled=true;b.textContent='Borrando…';
+        try{await run();}catch(e){b.disabled=false;b.textContent=label;toast(e&&e.status===401?'Tu clave ya no es válida: vuelve a entrar.':'No se pudo borrar. Revisa tu conexión e inténtalo de nuevo.');}}
+      else{armed={k:key,t:Date.now()};b.textContent=ask;setTimeout(()=>{if(b.isConnected&&!b.disabled&&!isArmed(key))b.textContent=label;},4100);}});
+    return b;
+  }
+  async function deleteReply(r,name){
+    await rpc('admin_borrar_respuesta',{k:KEY,p_id:r.id});await reload();
+    toast(`Se borró la respuesta de ${name}.`+(r.codigo?' Su invitación vuelve a “sin responder” y puede confirmar de nuevo.':''));
+  }
   function guestRow(g,r){
     const link=guestLink(g.id,g);
     const others=g.personas.length&&!(g.tipo==='persona'&&g.personas[0]===g.sobre)?g.personas.join(' · '):'';
@@ -1055,10 +1071,9 @@ function startAdmin(){
     const cl=el('button',{class:'mini',type:'button',text:'Copiar enlace'});cl.addEventListener('click',async()=>{if(await copyText(link,cl)){toast(`Enlace de ${g.sobre} copiado.`);markSent(g);}});
     const vw=el('a',{class:'mini',href:link,target:'_blank',rel:'noopener',text:'Ver su sobre'});
     const ed=el('button',{class:'mini',type:'button',text:'Editar',onclick:()=>gform&&gform.load(g)});
-    const del=el('button',{class:'mini danger',type:'button',text:'Eliminar'});
-    del.addEventListener('click',async()=>{if(del.dataset.armed){del.disabled=true;try{await rpc('admin_borrar_invitado',{k:KEY,p_id:g.id});await reload();toast(`Se eliminó la invitación de ${g.sobre}.`);}catch(e){del.disabled=false;}}
-      else{del.dataset.armed='1';del.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{if(del.isConnected){del.dataset.armed='';del.textContent='Eliminar';}},3500);}});
-    return el('li',{class:'grow'},who,el('div',{class:'gstate'},st),el('div',{class:'rowacts'},wa,cm,cl,vw,ed,del));
+    const del=confirmBtn('del-'+g.id,'Eliminar','¿Seguro? Toca otra vez',async()=>{await rpc('admin_borrar_invitado',{k:KEY,p_id:g.id});await reload();toast(`Se eliminó la invitación de ${g.sobre}.`);});
+    const dr=r?confirmBtn('resp-'+r.id,'Borrar respuesta','¿Borrar su respuesta? Toca otra vez',()=>deleteReply(r,g.sobre)):null;
+    return el('li',{class:'grow'},who,el('div',{class:'gstate'},st),el('div',{class:'rowacts'},wa,cm,cl,vw,ed,dr,del));
   }
 
   /* ---------- replies ---------- */
@@ -1072,17 +1087,21 @@ function startAdmin(){
   }
   function renderReplies(){
     const gmap=Object.fromEntries(G.map(g=>[g.id,g])),rows=R.slice().sort((a,b)=>String(b.fecha).localeCompare(String(a.fecha)));
-    const tbl=el('table',{},el('thead',{},el('tr',{},...['Fecha','Invitación','Respuesta','Quiénes','Alergias','Mensaje'].map(h=>el('th',{text:h})))));
+    const tbl=el('table',{},el('thead',{},el('tr',{},...['Fecha','Invitación','Respuesta','Quiénes','Alergias','Mensaje',''].map(h=>el('th',{text:h})))));
     const tb=el('tbody');
     rows.forEach(r=>{const d=r.fecha?new Date(r.fecha):null,g=gmap[r.codigo];
       tb.append(el('tr',{},el('td',{text:d?d.toLocaleDateString('es',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'}):''}),
         el('td',{},el('strong',{text:g?g.sobre:r.nombre||''}),g?null:el('div',{class:'sub',text:'Sin invitación personal'})),
         el('td',{},el('span',{class:'pill '+(r.asiste?'yes':'no'),text:r.asiste?`Asistirán · ${r.personas}`:'No asistirán'})),
-        el('td',{text:r.asiste?((r.asistentes||[]).join(', ')||String(r.personas)):'—'}),el('td',{text:r.alergias||''}),el('td',{text:r.mensaje||''})));});
+        el('td',{text:r.asiste?((r.asistentes||[]).join(', ')||String(r.personas)):'—'}),el('td',{text:r.alergias||''}),el('td',{text:r.mensaje||''}),
+        el('td',{},confirmBtn('resp-'+r.id,'Borrar','¿Seguro? Toca otra vez',()=>deleteReply(r,g?g.sobre:r.nombre||'este invitado')))));});
     tbl.append(tb);
     const cp=el('button',{class:'btn',type:'button',text:'Copiar lista para Excel o Sheets'});
     cp.addEventListener('click',async()=>{if(await copyText(sheetText(),cp))toast('Lista copiada: pégala en una hoja de Excel o Google Sheets.');});
-    tabHost.replaceChildren(el('div',{class:'panel'},el('div',{class:'listhead'},el('h2',{text:`Respuestas (${R.length})`}),cp),
+    const all=R.length?confirmBtn('all','Borrar todas',`¿Borrar las ${R.length}? Toca otra vez`,async()=>{
+      for(const r of R.slice())await rpc('admin_borrar_respuesta',{k:KEY,p_id:r.id});
+      await reload();toast('Se borraron todas las respuestas. Todas las invitaciones vuelven a “sin responder”.');}):null;
+    tabHost.replaceChildren(el('div',{class:'panel'},el('div',{class:'listhead'},el('h2',{text:`Respuestas (${R.length})`}),el('div',{class:'rowacts'},cp,all)),
       R.length?el('div',{class:'tablewrap'},tbl):el('p',{class:'empty',text:'Aún no llegan respuestas. Aparecerán aquí en cuanto un invitado confirme.'})));
   }
 
@@ -1114,14 +1133,15 @@ function startAdmin(){
   document.querySelectorAll('.tabs [role=tab]').forEach(b=>b.addEventListener('click',()=>{tab=b.dataset.tab;status.textContent='';render();}));
 
   /* ---------- data and access ---------- */
-  let pollT=0;
+  let pollT=0,lastSig='';
   async function reload(){
     try{const x=await rpc('admin_datos',{k:KEY});
-      G=(x.invitados||[]).map(d=>({...normGuest(d),id:d.id}));R=x.respuestas||[];C=x.config||{};
+      const sig=JSON.stringify(x);if(booted&&sig===lastSig)return true;   /* nothing changed: keep the screen (and any half-tapped button) as it is */
+      lastSig=sig;G=(x.invitados||[]).map(d=>({...normGuest(d),id:d.id}));R=x.respuestas||[];C=x.config||{};
       if(!booted){booted=true;status.textContent='';render();}else refresh();return true;}
     catch(e){if(e.status===401)logout('Tu clave ya no es válida. Vuelve a entrar.');else if(!booted)status.textContent='No se pudieron cargar los datos. Revisa tu conexión y recarga la página.';return false;}
   }
-  function logout(msg){try{localStorage.removeItem('ih-admin');}catch(e){}KEY='';booted=false;clearInterval(pollT);showLogin(msg);}
+  function logout(msg){try{localStorage.removeItem('ih-admin');}catch(e){}KEY='';booted=false;lastSig='';clearInterval(pollT);showLogin(msg);}
   function showLogin(msg){
     status.textContent='';document.querySelector('#admin .tabs').hidden=true;
     const inp=el('input',{type:'password',id:'adm-key',autocomplete:'current-password',placeholder:'Tu clave de administración'});
