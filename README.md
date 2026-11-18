@@ -38,7 +38,7 @@ Color principal de la invitación: Deep Espresso `#3A2218`.
 | Deep Espresso `#3A2218` | Las damas |
 | Del espresso al café (`#3A2218` → `#A3836A`, sin llegar al beige) | Los damos |
 
-Sugeridos para los invitados: Verde olivo `#565024`, Olivo suave `#979364`, Burdeos `#5F1216`.
+Sugeridos para los invitados: Salvia `#BBB69C`, Olivo suave `#979364`, Musgo `#827C65`, Verde olivo `#565024`, Camel `#A4895B`, Malva `#A29085`, Rosa antiguo `#81584D`, Burdeos `#5F1216`.
 
 Solo se puede confirmar asistencia con un enlace personal: la página sin enlace no muestra el formulario y la base de datos rechaza cualquier confirmación sin un código de invitación válido (y limita las personas a los lugares reservados).
 

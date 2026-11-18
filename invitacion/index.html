@@ -156,18 +156,19 @@ main{position:relative;z-index:2}
 .dlabel{margin:0;display:flex;align-items:center;gap:16px;font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;font-weight:600;color:var(--beige)}
 .dlabel::before,.dlabel::after{content:"";flex:1;height:1px;background:var(--line)}
 .tones{list-style:none;margin:0;padding:0;display:grid;gap:26px 14px;grid-template-columns:repeat(4,minmax(0,1fr))}
-.tones.guests{grid-template-columns:repeat(3,minmax(0,1fr));max-width:540px;width:100%;margin:0 auto}
+.tones.guests{grid-template-columns:repeat(4,minmax(0,1fr));max-width:640px;width:100%;margin:0 auto}
 .tones li{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;text-align:center}
 .tone{position:relative;overflow:hidden;width:min(100%,84px);aspect-ratio:3/4;margin-bottom:12px;border-radius:999px 999px 14px 14px;background:var(--c);
   box-shadow:inset 0 0 0 1px rgba(241,231,215,.3),0 22px 30px -20px rgba(0,0,0,.8)}
 .tone::before{content:"";position:absolute;inset:0;background:linear-gradient(118deg,rgba(255,255,255,.2),transparent 42%,rgba(0,0,0,.2))}
 .tone::after{content:"";position:absolute;inset:0;background-image:var(--leather);background-size:110px;mix-blend-mode:soft-light;opacity:.6}
-.tones.guests .tone{width:min(100%,104px)}
+.tones.guests .tone{width:min(100%,96px)}
 .tones b{font-family:var(--f-display);font-weight:400;font-style:italic;font-size:clamp(1.02rem,3.2vw,1.22rem);line-height:1.15}
 .tones .role{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(241,231,215,.68)}
 .dress-avoid{margin:0 auto;max-width:34rem;font-style:italic;font-size:1.12rem;color:rgba(241,231,215,.86)}
 .dress-note{margin:-28px auto 0;max-width:34rem;font-size:1.05rem;color:rgba(241,231,215,.75)}
-@media (max-width:560px){.tones{grid-template-columns:repeat(2,minmax(0,1fr))}.tones.guests{grid-template-columns:repeat(3,minmax(0,1fr))}.tone{width:min(100%,92px)}}
+@media (max-width:560px){.tones{grid-template-columns:repeat(2,minmax(0,1fr))}.tone{width:min(100%,92px)}
+  .tones.guests{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 8px}.tones.guests .tone{width:min(100%,70px);margin-bottom:8px}.tones.guests b{font-size:.95rem}}
 .rsvp-closed{max-width:30rem;margin:26px auto 0;padding-top:22px;border-top:1px solid var(--line)}
 .rsvp-closed p{margin:8px 0 0;font-size:1.15rem;color:rgba(241,231,215,.86)}
 
@@ -403,8 +404,13 @@ button.pill{border:0;cursor:pointer;font:inherit;font-size:.78rem;font-weight:60
         <div class="dgroup">
           <p class="dlabel" data-t="guestLabel">Sugeridos para ti</p>
           <ul class="tones guests">
-            <li><span class="tone" style="--c:#565024" aria-hidden="true"></span><b data-t="cOlive">Verde olivo</b></li>
+            <li><span class="tone" style="--c:#BBB69C" aria-hidden="true"></span><b data-t="cSage">Salvia</b></li>
             <li><span class="tone" style="--c:#979364" aria-hidden="true"></span><b data-t="cSoft">Olivo suave</b></li>
+            <li><span class="tone" style="--c:#827C65" aria-hidden="true"></span><b data-t="cMoss">Musgo</b></li>
+            <li><span class="tone" style="--c:#565024" aria-hidden="true"></span><b data-t="cOlive">Verde olivo</b></li>
+            <li><span class="tone" style="--c:#A4895B" aria-hidden="true"></span><b data-t="cCamel">Camel</b></li>
+            <li><span class="tone" style="--c:#A29085" aria-hidden="true"></span><b data-t="cMauve">Malva</b></li>
+            <li><span class="tone" style="--c:#81584D" aria-hidden="true"></span><b data-t="cRose">Rosa antiguo</b></li>
             <li><span class="tone" style="--c:#5F1216" aria-hidden="true"></span><b data-t="cBurg">Burdeos</b></li>
           </ul>
         </div>
@@ -530,7 +536,7 @@ es:{eyebrow:'Nos casamos',days:'Días',hours:'Horas',mins:'Minutos',secs:'Segund
   dressKicker:'Código de vestimenta',dressTitle:'Vístete con el bosque',
   dressLede:{s:'Elegimos los colores del bosque para nuestro día. Algunos tonos los guardamos para nosotros y nuestro cortejo; los demás son para ti.',p:'Elegimos los colores del bosque para nuestro día. Algunos tonos los guardamos para nosotros y nuestro cortejo; los demás son para ustedes.'},
   resLabel:'Reservados para el cortejo',cWhite:'Blanco',rBride:'La novia',cBeige:'Beige',rGroom:'El novio',cEsp:'Deep espresso',rMaids:'Las damas',cRange:'Del espresso al café',rMen:'Los damos',
-  guestLabel:{s:'Sugeridos para ti',p:'Sugeridos para ustedes'},cOlive:'Verde olivo',cSoft:'Olivo suave',cBurg:'Burdeos',
+  guestLabel:{s:'Sugeridos para ti',p:'Sugeridos para ustedes'},cOlive:'Verde olivo',cSoft:'Olivo suave',cBurg:'Burdeos',cSage:'Salvia',cMoss:'Musgo',cCamel:'Camel',cMauve:'Malva',cRose:'Rosa antiguo',
   dressAvoid:{s:'Por favor evita el blanco, el beige y los tonos café: son del cortejo.',p:'Por favor eviten el blanco, el beige y los tonos café: son del cortejo.'},
   closedTitle:'Tu invitación es personal',closedText:'Para confirmar tu asistencia, abre el enlace personal que te enviamos.',
   stdTitle:'Nuestra historia, en un minuto',storyKicker:'Nosotros',storyTitle:'Nuestra historia',giftKicker:'Regalos',giftTitle:'Mesa de regalos',giftBtn:'Ver mesa de regalos',
@@ -557,7 +563,7 @@ en:{eyebrow:"We're getting married",days:'Days',hours:'Hours',mins:'Minutes',sec
   dressKicker:'Dress code',dressTitle:'Dress like the forest',
   dressLede:'We chose the colors of the forest for our day. A few tones are saved for us and our wedding party; the rest are for you.',
   resLabel:'Reserved for the wedding party',cWhite:'White',rBride:'The bride',cBeige:'Beige',rGroom:'The groom',cEsp:'Deep espresso',rMaids:'Bridesmaids',cRange:'Espresso to mocha',rMen:'Groomsmen',
-  guestLabel:'Suggested for you',cOlive:'Olive green',cSoft:'Soft olive',cBurg:'Burgundy',
+  guestLabel:'Suggested for you',cOlive:'Olive green',cSoft:'Soft olive',cBurg:'Burgundy',cSage:'Sage',cMoss:'Moss',cCamel:'Camel',cMauve:'Mauve',cRose:'Antique rose',
   dressAvoid:'Please avoid white, beige and brown tones, as they belong to the wedding party.',
   closedTitle:'Your invitation is personal',closedText:'To RSVP, please open the personal link we sent you.',
   stdTitle:'Our story, in one minute',storyKicker:'Us',storyTitle:'Our story',giftKicker:'Gifts',giftTitle:'Gift registry',giftBtn:'View registry',
