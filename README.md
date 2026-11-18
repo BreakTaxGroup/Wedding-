@@ -35,8 +35,8 @@ Color principal de la invitación: Deep Espresso `#3A2218`.
 | --- | --- |
 | Blanco `#F6F1E8` | La novia |
 | Beige `#D9C3A5` | El novio |
-| Deep Espresso `#3A2218` | Las damas |
-| Del espresso al café (`#3A2218` → `#A3836A`, sin llegar al beige) | Los damos |
+| Deep Espresso `#3A2218` | Damas de honor |
+| Del espresso al café (`#3A2218` → `#A3836A`, sin llegar al beige) | Caballeros de honor |
 
 Sugeridos para los invitados: Salvia `#BBB69C`, Olivo suave `#979364`, Musgo `#827C65`, Verde olivo `#565024`, Camel `#A4895B`, Malva `#A29085`, Rosa antiguo `#81584D`, Burdeos `#5F1216`.
 

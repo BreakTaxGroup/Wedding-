@@ -164,7 +164,7 @@ main{position:relative;z-index:2}
 .tone::after{content:"";position:absolute;inset:0;background-image:var(--leather);background-size:110px;mix-blend-mode:soft-light;opacity:.6}
 .tones.guests .tone{width:min(100%,96px)}
 .tones b{font-family:var(--f-display);font-weight:400;font-style:italic;font-size:clamp(1.02rem,3.2vw,1.22rem);line-height:1.15}
-.tones .role{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(241,231,215,.68)}
+.tones .role{font-size:.66rem;letter-spacing:.24em;line-height:1.55;text-wrap:balance;text-transform:uppercase;color:rgba(241,231,215,.68)}
 .dress-avoid{margin:0 auto;max-width:34rem;font-style:italic;font-size:1.12rem;color:rgba(241,231,215,.86)}
 .dress-note{margin:-28px auto 0;max-width:34rem;font-size:1.05rem;color:rgba(241,231,215,.75)}
 @media (max-width:560px){.tones{grid-template-columns:repeat(2,minmax(0,1fr))}.tone{width:min(100%,92px)}
@@ -397,8 +397,8 @@ button.pill{border:0;cursor:pointer;font:inherit;font-size:.78rem;font-weight:60
           <ul class="tones">
             <li><span class="tone" style="--c:#F6F1E8" aria-hidden="true"></span><b data-t="cWhite">Blanco</b><span class="role" data-t="rBride">La novia</span></li>
             <li><span class="tone" style="--c:#D9C3A5" aria-hidden="true"></span><b data-t="cBeige">Beige</b><span class="role" data-t="rGroom">El novio</span></li>
-            <li><span class="tone" style="--c:#3A2218" aria-hidden="true"></span><b data-t="cEsp">Deep espresso</b><span class="role" data-t="rMaids">Las damas</span></li>
-            <li><span class="tone" style="--c:linear-gradient(180deg,#3A2218 0%,#5E412E 40%,#8C6B52 75%,#A3836A 100%)" aria-hidden="true"></span><b data-t="cRange">Del espresso al café</b><span class="role" data-t="rMen">Los damos</span></li>
+            <li><span class="tone" style="--c:#3A2218" aria-hidden="true"></span><b data-t="cEsp">Deep espresso</b><span class="role" data-t="rMaids">Damas de honor</span></li>
+            <li><span class="tone" style="--c:linear-gradient(180deg,#3A2218 0%,#5E412E 40%,#8C6B52 75%,#A3836A 100%)" aria-hidden="true"></span><b data-t="cRange">Del espresso al café</b><span class="role" data-t="rMen">Caballeros de honor</span></li>
           </ul>
         </div>
         <div class="dgroup">
@@ -535,7 +535,7 @@ es:{eyebrow:'Nos casamos',days:'Días',hours:'Horas',mins:'Minutos',secs:'Segund
   celebKicker:'11 · 03 · 2027',celebTitle:'La celebración',when:'Cuándo',where:'Dónde',directions:'Cómo llegar',schedKicker:'El día',
   dressKicker:'Código de vestimenta',dressTitle:'Vístete con el bosque',
   dressLede:{s:'Elegimos los colores del bosque para nuestro día. Algunos tonos los guardamos para nosotros y nuestro cortejo; los demás son para ti.',p:'Elegimos los colores del bosque para nuestro día. Algunos tonos los guardamos para nosotros y nuestro cortejo; los demás son para ustedes.'},
-  resLabel:'Reservados para el cortejo',cWhite:'Blanco',rBride:'La novia',cBeige:'Beige',rGroom:'El novio',cEsp:'Deep espresso',rMaids:'Las damas',cRange:'Del espresso al café',rMen:'Los damos',
+  resLabel:'Reservados para el cortejo',cWhite:'Blanco',rBride:'La novia',cBeige:'Beige',rGroom:'El novio',cEsp:'Deep espresso',rMaids:'Damas de honor',cRange:'Del espresso al café',rMen:'Caballeros de honor',
   guestLabel:{s:'Sugeridos para ti',p:'Sugeridos para ustedes'},cOlive:'Verde olivo',cSoft:'Olivo suave',cBurg:'Burdeos',cSage:'Salvia',cMoss:'Musgo',cCamel:'Camel',cMauve:'Malva',cRose:'Rosa antiguo',
   dressAvoid:{s:'Por favor evita el blanco, el beige y los tonos café: son del cortejo.',p:'Por favor eviten el blanco, el beige y los tonos café: son del cortejo.'},
   closedTitle:'Tu invitación es personal',closedText:'Para confirmar tu asistencia, abre el enlace personal que te enviamos.',
