@@ -55,13 +55,16 @@ create or replace function public.invitado_publico(p_codigo text) returns jsonb 
 create or replace function public.mi_respuesta(p_codigo text) returns jsonb language sql stable security definer set search_path = '' as $$
   select to_jsonb(r) - 'id' from public.respuestas r where r.codigo = p_codigo and p_codigo ~ '^[a-z0-9]{4,12}$' $$;
 
+-- Solo se confirma con el enlace personal (un código que exista en invitados) y nunca por más personas que los lugares reservados.
 create or replace function public.responder(p jsonb) returns jsonb language plpgsql security definer set search_path = '' as $$
-declare v_codigo text := nullif(trim(coalesce(p->>'codigo','')), ''); v jsonb;
+declare v_codigo text := nullif(trim(coalesce(p->>'codigo','')), ''); v_inv public.invitados; v jsonb;
 begin
-  if v_codigo is not null and v_codigo !~ '^[a-z0-9]{4,12}$' then raise exception 'codigo invalido'; end if;
-  if coalesce(trim(p->>'nombre'),'') = '' then raise exception 'falta nombre'; end if;
+  if v_codigo is null or v_codigo !~ '^[a-z0-9]{4,12}$' then raise exception 'invitacion requerida' using errcode = '42501'; end if;
+  select * into v_inv from public.invitados where id = v_codigo;
+  if not found then raise exception 'invitacion no encontrada' using errcode = '42501'; end if;
   insert into public.respuestas as r(codigo,nombre,asiste,personas,asistentes,acompanante,alergias,mensaje,idioma,fecha)
-  values(v_codigo, left(trim(p->>'nombre'),120), coalesce((p->>'asiste')::boolean,false), least(greatest(coalesce((p->>'personas')::int,0),0),20),
+  values(v_codigo, left(coalesce(nullif(trim(p->>'nombre'),''), v_inv.sobre),120), coalesce((p->>'asiste')::boolean,false),
+         case when coalesce((p->>'asiste')::boolean,false) then least(greatest(coalesce((p->>'personas')::int,1),1), v_inv.cupos) else 0 end,
          coalesce(array(select left(x,120) from jsonb_array_elements_text(coalesce(p->'asistentes','[]'::jsonb)) x limit 20),'{}'),
          left(coalesce(p->>'acompanante',''),80), left(coalesce(p->>'alergias',''),300), left(coalesce(p->>'mensaje',''),1200),
          case when p->>'idioma' = 'en' then 'en' else 'es' end, now())

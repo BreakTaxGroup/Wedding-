@@ -27,16 +27,20 @@ Invitación digital hiperrealista: un sobre de papel artesanal con sello de cera
 | `tools/prep_video.sh` | Endereza y recorta el video original de los novios |
 | `tools/prep_apertura.sh` | Corta el video de Higgsfield en loop de espera + apertura, saca la tarjeta y la música |
 
-## Paleta
+## Paleta y código de vestimenta
 
-| Color | Uso |
+Color principal de la invitación: Deep Espresso `#3A2218`.
+
+| Reservado | Para |
 | --- | --- |
-| Deep Espresso `#3A2218` | Color principal · damas y cortejo (los invitados no lo usan) |
-| Beige claro `#DABFA4` | Invitados |
-| Verde olivo `#565024` | Invitados |
-| Olivo suave `#979364` | Invitados |
-| Burdeos `#5F1216` | Invitados |
-| Crema `#D4C2A8` | Papelería |
+| Blanco `#F6F1E8` | La novia |
+| Beige `#D9C3A5` | El novio |
+| Deep Espresso `#3A2218` | Las damas |
+| Del espresso al café (`#3A2218` → `#A3836A`, sin llegar al beige) | Los damos |
+
+Sugeridos para los invitados: Verde olivo `#565024`, Olivo suave `#979364`, Burdeos `#5F1216`.
+
+Solo se puede confirmar asistencia con un enlace personal: la página sin enlace no muestra el formulario y la base de datos rechaza cualquier confirmación sin un código de invitación válido (y limita las personas a los lugares reservados).
 
 ## Panel de administración (privado)
 

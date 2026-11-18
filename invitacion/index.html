@@ -150,26 +150,26 @@ main{position:relative;z-index:2}
 .timeline li{display:grid;grid-template-columns:6.5rem 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
 .timeline time{font-family:var(--f-display);font-size:1.15rem;color:var(--beige);font-variant-numeric:lining-nums}
 
-/* dress code card, after the couple's own attire card */
-.attire{position:relative;max-width:560px;margin:40px auto 0;padding:46px clamp(22px,6vw,54px) 40px;color:#3A1D12;
-  background:#F7F0E4;border-radius:46px 46px 46px 46px/60px 60px 60px 60px;
-  box-shadow:0 0 0 7px #F7F0E4,0 0 0 9px #3A2218,0 0 0 14px #F7F0E4,0 0 0 16px rgba(58,34,24,.0),0 30px 60px -30px rgba(0,0,0,.6);
-  outline:1px solid #8A5A3C;outline-offset:-14px}
-.attire .sprig{display:block;width:120px;height:auto;margin:0 auto}
-.attire .cap{margin:10px 0 0;font-family:var(--f-display);font-weight:600;letter-spacing:.28em;padding-left:.28em;font-size:1.1rem;text-transform:uppercase;color:#4A2416}
-.attire .scr{margin:4px 0 0;font-family:var(--f-script);font-size:clamp(2.8rem,9vw,3.8rem);line-height:1.1;color:#4A2416}
-.attire .rule{display:flex;align-items:center;gap:10px;justify-content:center;margin:8px 0 14px;color:#4A2416}
-.attire .rule::before,.attire .rule::after{content:"";height:1px;width:72px;background:currentColor;opacity:.7}
-.attire p{margin:0;font-style:italic;font-size:1.15rem;line-height:1.45;color:#4A2416}
-.swatches{list-style:none;padding:0;margin:26px 0 22px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.swatches li{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0}
-.sw{width:100%;max-width:92px;aspect-ratio:1;border-radius:50%;background-color:var(--c);box-shadow:0 0 0 3px #F7F0E4,0 0 0 4px rgba(74,36,22,.18),inset 0 -6px 14px rgba(0,0,0,.18),inset 0 6px 10px rgba(255,255,255,.12);
-  background-image:var(--leather);background-blend-mode:soft-light}
-.swatches b{font-family:var(--f-display);font-weight:600;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;line-height:1.25;color:#4A2416}
-.attire .avoid{display:flex;align-items:center;gap:12px;justify-content:center;text-align:left}
-.attire .avoid .sw{width:30px;flex:none;--c:#3A2218}
-.attire .note{margin-top:14px;font-style:normal;font-size:1.02rem}
-@media (max-width:440px){.swatches{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:20px}}
+/* dress code: drawn in the invitation's own language (arched fabric swatches on the espresso ground) */
+.dress{max-width:780px;margin:34px auto 0;display:grid;gap:46px}
+.dgroup{display:grid;gap:24px}
+.dlabel{margin:0;display:flex;align-items:center;gap:16px;font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;font-weight:600;color:var(--beige)}
+.dlabel::before,.dlabel::after{content:"";flex:1;height:1px;background:var(--line)}
+.tones{list-style:none;margin:0;padding:0;display:grid;gap:26px 14px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.tones.guests{grid-template-columns:repeat(3,minmax(0,1fr));max-width:540px;width:100%;margin:0 auto}
+.tones li{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;text-align:center}
+.tone{position:relative;overflow:hidden;width:min(100%,84px);aspect-ratio:3/4;margin-bottom:12px;border-radius:999px 999px 14px 14px;background:var(--c);
+  box-shadow:inset 0 0 0 1px rgba(241,231,215,.3),0 22px 30px -20px rgba(0,0,0,.8)}
+.tone::before{content:"";position:absolute;inset:0;background:linear-gradient(118deg,rgba(255,255,255,.2),transparent 42%,rgba(0,0,0,.2))}
+.tone::after{content:"";position:absolute;inset:0;background-image:var(--leather);background-size:110px;mix-blend-mode:soft-light;opacity:.6}
+.tones.guests .tone{width:min(100%,104px)}
+.tones b{font-family:var(--f-display);font-weight:400;font-style:italic;font-size:clamp(1.02rem,3.2vw,1.22rem);line-height:1.15}
+.tones .role{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(241,231,215,.68)}
+.dress-avoid{margin:0 auto;max-width:34rem;font-style:italic;font-size:1.12rem;color:rgba(241,231,215,.86)}
+.dress-note{margin:-28px auto 0;max-width:34rem;font-size:1.05rem;color:rgba(241,231,215,.75)}
+@media (max-width:560px){.tones{grid-template-columns:repeat(2,minmax(0,1fr))}.tones.guests{grid-template-columns:repeat(3,minmax(0,1fr))}.tone{width:min(100%,92px)}}
+.rsvp-closed{max-width:30rem;margin:26px auto 0;padding-top:22px;border-top:1px solid var(--line)}
+.rsvp-closed p{margin:8px 0 0;font-size:1.15rem;color:rgba(241,231,215,.86)}
 
 .std{position:relative;display:block;width:100%;max-width:760px;margin:36px auto 0;padding:0;border:0;border-radius:22px;overflow:hidden;cursor:pointer;aspect-ratio:16/9;background:#000}
 .std img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
@@ -389,22 +389,27 @@ button.pill{border:0;cursor:pointer;font:inherit;font-size:.78rem;font-weight:60
     <section class="sec gut" id="vestimenta">
       <p class="kicker" data-t="dressKicker">Código de vestimenta</p>
       <h2 class="h2" data-t="dressTitle">Vístete con el bosque</h2>
-      <div class="attire">
-        <svg class="sprig" viewBox="0 0 120 40" aria-hidden="true"><g fill="none" stroke="#6B6230" stroke-width="1.6" stroke-linecap="round"><path d="M14 34C40 24 70 14 106 8"/></g><g fill="#B9B37E" stroke="#6B6230" stroke-width="1.3"><path d="M34 27c-2-8 3-15 10-17 1 8-3 14-10 17z"/><path d="M52 21c-1-8 4-14 11-15 0 8-4 13-11 15z"/><path d="M70 16c0-8 5-13 12-13-1 8-6 12-12 13z"/><path d="M88 11c1-7 6-11 13-10-2 7-7 10-13 10z"/><path d="M40 26c6 3 13 2 18-3-7-3-13-2-18 3z"/><path d="M58 20c6 3 13 1 17-4-7-2-12-1-17 4z"/><path d="M76 14c6 2 12 0 16-5-6-2-12 0-16 5z"/></g></svg>
-        <p class="cap" data-t="attireCap">Código de</p>
-        <p class="scr" data-t="attireScr">Vestimenta</p>
-        <div class="rule" aria-hidden="true">♡</div>
-        <p data-t="attireText">Nos encantaría que nuestros invitados vistan estos tonos, para acompañar nuestra celebración y la belleza natural del lugar.</p>
-        <ul class="swatches">
-          <li><span class="sw" style="--c:#DABFA4"></span><b data-t="cBeige">Beige claro</b></li>
-          <li><span class="sw" style="--c:#565024"></span><b data-t="cOlive">Verde olivo</b></li>
-          <li><span class="sw" style="--c:#979364"></span><b data-t="cSoft">Olivo suave</b></li>
-          <li><span class="sw" style="--c:#5F1216"></span><b data-t="cBurg">Burdeos</b></li>
-        </ul>
-        <div class="rule" aria-hidden="true">♡</div>
-        <p class="avoid"><span class="sw" aria-hidden="true"></span><span data-t="attireAvoid">Por favor eviten los tonos deep espresso: están reservados para el cortejo.</span></p>
-        <p class="note" id="dress-note" hidden></p>
-        <svg class="sprig" viewBox="0 0 120 40" aria-hidden="true" style="margin-top:18px;transform:scaleY(-1)"><g fill="none" stroke="#6B6230" stroke-width="1.6" stroke-linecap="round"><path d="M14 34C40 24 70 14 106 8"/></g><g fill="#B9B37E" stroke="#6B6230" stroke-width="1.3"><path d="M34 27c-2-8 3-15 10-17 1 8-3 14-10 17z"/><path d="M52 21c-1-8 4-14 11-15 0 8-4 13-11 15z"/><path d="M70 16c0-8 5-13 12-13-1 8-6 12-12 13z"/><path d="M88 11c1-7 6-11 13-10-2 7-7 10-13 10z"/><path d="M40 26c6 3 13 2 18-3-7-3-13-2-18 3z"/><path d="M58 20c6 3 13 1 17-4-7-2-12-1-17 4z"/><path d="M76 14c6 2 12 0 16-5-6-2-12 0-16 5z"/></g></svg>
+      <p class="lede" data-t="dressLede">Elegimos los colores del bosque para nuestro día. Algunos tonos los guardamos para nosotros y nuestro cortejo; los demás son para ti.</p>
+      <div class="dress">
+        <div class="dgroup">
+          <p class="dlabel" data-t="resLabel">Reservados para el cortejo</p>
+          <ul class="tones">
+            <li><span class="tone" style="--c:#F6F1E8" aria-hidden="true"></span><b data-t="cWhite">Blanco</b><span class="role" data-t="rBride">La novia</span></li>
+            <li><span class="tone" style="--c:#D9C3A5" aria-hidden="true"></span><b data-t="cBeige">Beige</b><span class="role" data-t="rGroom">El novio</span></li>
+            <li><span class="tone" style="--c:#3A2218" aria-hidden="true"></span><b data-t="cEsp">Deep espresso</b><span class="role" data-t="rMaids">Las damas</span></li>
+            <li><span class="tone" style="--c:linear-gradient(180deg,#3A2218 0%,#5E412E 40%,#8C6B52 75%,#A3836A 100%)" aria-hidden="true"></span><b data-t="cRange">Del espresso al café</b><span class="role" data-t="rMen">Los damos</span></li>
+          </ul>
+        </div>
+        <div class="dgroup">
+          <p class="dlabel" data-t="guestLabel">Sugeridos para ti</p>
+          <ul class="tones guests">
+            <li><span class="tone" style="--c:#565024" aria-hidden="true"></span><b data-t="cOlive">Verde olivo</b></li>
+            <li><span class="tone" style="--c:#979364" aria-hidden="true"></span><b data-t="cSoft">Olivo suave</b></li>
+            <li><span class="tone" style="--c:#5F1216" aria-hidden="true"></span><b data-t="cBurg">Burdeos</b></li>
+          </ul>
+        </div>
+        <p class="dress-avoid" data-t="dressAvoid">Por favor evita el blanco, el beige y los tonos café: son del cortejo.</p>
+        <p class="dress-note" id="dress-note" hidden></p>
       </div>
     </section>
 
@@ -426,6 +431,7 @@ button.pill{border:0;cursor:pointer;font:inherit;font-size:.78rem;font-weight:60
       <p class="kicker">RSVP</p>
       <h2 class="h2" data-t="rsvpTitle">¿Nos acompañas?</h2>
       <p class="lede" id="rsvp-lede" data-t="rsvpLede">Confirma tu asistencia para preparar todo con cariño.</p>
+      <div class="rsvp-closed" id="rsvp-closed" hidden><p class="rfor" data-t="closedTitle">Tu invitación es personal</p><p data-t="closedText">Para confirmar tu asistencia, abre el enlace personal que te enviamos.</p></div>
       <form class="rsvp" id="rsvp-form" novalidate>
         <p class="rfor" id="r-for" hidden></p>
         <label class="field" for="r-name" id="name-field"><span data-t="fName">Nombre</span><input id="r-name" name="nombre" type="text" autocomplete="name"></label>
@@ -521,9 +527,12 @@ const html=document.documentElement;
 const T={
 es:{eyebrow:'Nos casamos',days:'Días',hours:'Horas',mins:'Minutos',secs:'Segundos',rsvpCta:'Confirmar asistencia',stdCta:'Ver save the date',
   celebKicker:'11 · 03 · 2027',celebTitle:'La celebración',when:'Cuándo',where:'Dónde',directions:'Cómo llegar',schedKicker:'El día',
-  dressKicker:'Código de vestimenta',dressTitle:'Vístete con el bosque',attireCap:'Código de',attireScr:'Vestimenta',
-  attireText:'Nos encantaría que nuestros invitados vistan estos tonos, para acompañar nuestra celebración y la belleza natural del lugar.',
-  cBeige:'Beige claro',cOlive:'Verde olivo',cSoft:'Olivo suave',cBurg:'Burdeos',attireAvoid:'Por favor eviten los tonos deep espresso: están reservados para el cortejo.',
+  dressKicker:'Código de vestimenta',dressTitle:'Vístete con el bosque',
+  dressLede:{s:'Elegimos los colores del bosque para nuestro día. Algunos tonos los guardamos para nosotros y nuestro cortejo; los demás son para ti.',p:'Elegimos los colores del bosque para nuestro día. Algunos tonos los guardamos para nosotros y nuestro cortejo; los demás son para ustedes.'},
+  resLabel:'Reservados para el cortejo',cWhite:'Blanco',rBride:'La novia',cBeige:'Beige',rGroom:'El novio',cEsp:'Deep espresso',rMaids:'Las damas',cRange:'Del espresso al café',rMen:'Los damos',
+  guestLabel:{s:'Sugeridos para ti',p:'Sugeridos para ustedes'},cOlive:'Verde olivo',cSoft:'Olivo suave',cBurg:'Burdeos',
+  dressAvoid:{s:'Por favor evita el blanco, el beige y los tonos café: son del cortejo.',p:'Por favor eviten el blanco, el beige y los tonos café: son del cortejo.'},
+  closedTitle:'Tu invitación es personal',closedText:'Para confirmar tu asistencia, abre el enlace personal que te enviamos.',
   stdTitle:'Nuestra historia, en un minuto',storyKicker:'Nosotros',storyTitle:'Nuestra historia',giftKicker:'Regalos',giftTitle:'Mesa de regalos',giftBtn:'Ver mesa de regalos',
   stayKicker:'Hospedaje',stayTitle:'Dónde quedarse',faqKicker:'Preguntas',faqTitle:'Lo que quizás te preguntes',
   noteKicker:{s:'Para ti',p:'Para ustedes'},withLove:'Con cariño,',
@@ -545,9 +554,12 @@ es:{eyebrow:'Nos casamos',days:'Días',hours:'Horas',mins:'Minutos',secs:'Segund
   noSave:'Esta vista previa todavía no guarda respuestas de invitados.'},
 en:{eyebrow:"We're getting married",days:'Days',hours:'Hours',mins:'Minutes',secs:'Seconds',rsvpCta:'RSVP',stdCta:'Watch the save the date',
   celebKicker:'03 · 11 · 2027',celebTitle:'The celebration',when:'When',where:'Where',directions:'Get directions',schedKicker:'The day',
-  dressKicker:'Dress code',dressTitle:'Dress like the forest',attireCap:'Wedding',attireScr:'Guest Attire',
-  attireText:"We'd love for our guests to dress in these tones to complement our celebration and the natural beauty of the venue.",
-  cBeige:'Light beige',cOlive:'Olive green',cSoft:'Soft olive',cBurg:'Burgundy',attireAvoid:'Please avoid deep espresso tones, as they will be reserved for the wedding party.',
+  dressKicker:'Dress code',dressTitle:'Dress like the forest',
+  dressLede:'We chose the colors of the forest for our day. A few tones are saved for us and our wedding party; the rest are for you.',
+  resLabel:'Reserved for the wedding party',cWhite:'White',rBride:'The bride',cBeige:'Beige',rGroom:'The groom',cEsp:'Deep espresso',rMaids:'Bridesmaids',cRange:'Espresso to mocha',rMen:'Groomsmen',
+  guestLabel:'Suggested for you',cOlive:'Olive green',cSoft:'Soft olive',cBurg:'Burgundy',
+  dressAvoid:'Please avoid white, beige and brown tones, as they belong to the wedding party.',
+  closedTitle:'Your invitation is personal',closedText:'To RSVP, please open the personal link we sent you.',
   stdTitle:'Our story, in one minute',storyKicker:'Us',storyTitle:'Our story',giftKicker:'Gifts',giftTitle:'Gift registry',giftBtn:'View registry',
   stayKicker:'Accommodation',stayTitle:'Where to stay',faqKicker:'Questions',faqTitle:'Things you might wonder',
   noteKicker:'For you',withLove:'With love,',
@@ -640,6 +652,10 @@ function renderData(){
   const fg=$('forguest');
   if(g&&g.sobre){const st=document.createElement('strong');st.textContent=g.sobre;fg.replaceChildren(st,document.createTextNode(tp('forGuest')));fg.hidden=false;}else fg.hidden=true;
   $('nota').hidden=!(g&&g.nota);$('nota-text').textContent=g&&g.nota||'';
+  /* only guests opening their personal link can confirm (the database refuses anything else too) */
+  $('rsvp-closed').hidden=!!g;$('rsvp-lede').hidden=!g;
+  const cta=document.querySelector('.hero-actions a[href="#rsvp"]');if(cta)cta.hidden=!g;
+  if(!g){$('rsvp-form').hidden=true;$('thanks').hidden=true;}else if($('thanks').hidden)$('rsvp-form').hidden=false;
   buildRsvp();
   if(state.reply)showThanks(state.reply);
 }
